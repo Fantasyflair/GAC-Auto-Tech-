@@ -1,0 +1,6 @@
+{
+  "name": "GAC Auto Tech | Vehicle Sourcing, Electronics & Global Shipping",
+  "description": "GAC Auto Tech coordinates auction vehicle sourcing, tech and electronics, and international logistics from Canada, USA, and UK to Ghana and beyond.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

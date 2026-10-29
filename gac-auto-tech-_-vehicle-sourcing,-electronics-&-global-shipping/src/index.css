@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+:root {
+  --color-brand-red: #D90816;
+  --color-brand-red-hover: #B80713;
+  --color-primary-dark: #09090B;
+  --color-surface-charcoal: #17171C;
+  --color-silver-gray: #BFC2C8;
+}
+
+/* Custom smooth focus ring */
+:focus-visible {
+  outline: 2px solid #D90816;
+  outline-offset: 2px;
+}
