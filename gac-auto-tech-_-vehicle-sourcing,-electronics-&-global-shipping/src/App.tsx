@@ -4,22 +4,20 @@
  */
 
 import React, { useState } from 'react';
+import { MotionConfig } from 'motion/react';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
-import { UtilityBar } from './components/UtilityBar';
+import { EnquiryListProvider } from './context/EnquiryListContext';
 import { Header } from './components/Header';
+import { EnquiryDrawer } from './components/EnquiryDrawer';
+import { SignInModal } from './components/SignInModal';
 import { Hero } from './components/Hero';
-import { SourcingStrip } from './components/SourcingStrip';
-import { ServicesSection } from './components/ServicesSection';
-import { VehicleSourcingFeature } from './components/VehicleSourcingFeature';
+import { Marquee } from './components/Marquee';
+import { Reveal } from './components/Reveal';
+import { BentoHome } from './components/BentoHome';
+import { ElectronicsShop } from './components/ElectronicsShop';
 import { FeaturedVehicles } from './components/FeaturedVehicles';
-import { ElectronicsShowcase } from './components/ElectronicsShowcase';
-import { ShippingLogistics } from './components/ShippingLogistics';
-import { HowItWorks } from './components/HowItWorks';
-import { WhyGacAutoTech } from './components/WhyGacAutoTech';
-import { AboutPreview } from './components/AboutPreview';
 import { QuoteRequestSection } from './components/QuoteRequestSection';
 import { FaqSection } from './components/FaqSection';
-import { FinalCta } from './components/FinalCta';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { VehicleDetailModal } from './components/VehicleDetailModal';
@@ -27,6 +25,18 @@ import { ProductDetailModal } from './components/ProductDetailModal';
 import { AboutModal } from './components/AboutModal';
 import { LegalModal } from './components/LegalModal';
 import { VehicleListing, ElectronicProduct, ServiceType } from './types';
+
+const guessService = (query: string): ServiceType => {
+  const text = query.toLowerCase();
+  if (/(laptop|macbook|iphone|phone|samsung|playstation|ps5|xbox|console|controller|tablet|ipad|airpods)/.test(text)) {
+    return 'electronics_enquiry';
+  }
+  if (/(ship|container|freight|cargo|roro|clearing)/.test(text)) return 'shipping_quote';
+  if (/(car|suv|sedan|truck|toyota|honda|lexus|bmw|audi|mercedes|porsche|benz|copart|iaai|vehicle)/.test(text)) {
+    return 'vehicle_sourcing';
+  }
+  return 'general_merchandise';
+};
 
 function MainApp() {
   const { theme } = useTheme();
@@ -36,6 +46,7 @@ function MainApp() {
   const [selectedProduct, setSelectedProduct] = useState<ElectronicProduct | null>(null);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [legalModalType, setLegalModalType] = useState<'privacy' | 'terms' | null>(null);
+  const [isSignInOpen, setIsSignInOpen] = useState(false);
 
   // Quote form pre-fill state
   const [quoteService, setQuoteService] = useState<ServiceType>('vehicle_sourcing');
@@ -70,86 +81,56 @@ function MainApp() {
   };
 
   return (
-    <div id="top" className={`min-h-screen flex flex-col font-sans transition-colors duration-200 selection:bg-[#D90816] selection:text-white ${
+    <div id="top" className={`min-h-screen flex flex-col font-sans transition-colors duration-200 selection:bg-[#E9DCDC] selection:text-[#1A1212] ${
       theme === 'dark' ? 'bg-[#09090B] text-white' : 'bg-white text-[#18181B]'
     }`}>
       
-      {/* 1. STICKY MAIN HEADER (Matching reference top bar layout) */}
       <Header
-        onRequestQuote={() => scrollToQuote('vehicle_sourcing')}
+        onRequestQuote={(service, details) => scrollToQuote(service || 'vehicle_sourcing', details || '')}
         onNavigateAbout={() => setIsAboutOpen(true)}
+        onOpenSignIn={() => setIsSignInOpen(true)}
+        onSearch={(query) => scrollToQuote(guessService(query), `Looking for: ${query}`)}
       />
 
       <main className="flex-1">
         {/* 3. HERO SECTION (Showroom Backdrop & Floating Search/Quote Bar) */}
         <Hero
           onRequestQuote={(service, details) => scrollToQuote(service || 'vehicle_sourcing', details || '')}
-          onExploreServices={() => scrollToSection('services')}
+          onNavigate={scrollToSection}
         />
 
-        {/* 4. INTERNATIONAL SOURCING STRIP */}
-        <SourcingStrip />
+        <Marquee />
 
-        {/* 5. SERVICES SECTION (4 Tall Editorial Cards with ↗ Circular Buttons matching reference UI) */}
-        <ServicesSection
+        <BentoHome
           onSelectService={(service) => scrollToQuote(service)}
-          onExploreElectronics={() => scrollToSection('electronics')}
-          onExploreVehicles={() => scrollToSection('vehicle-sourcing')}
-          onExploreShipping={() => scrollToSection('shipping')}
+          onExploreVehicles={() => scrollToSection('vehicles')}
         />
 
-        {/* 6. FEATURED VEHICLES ('Trend vehicles' columnar grid matching reference UI) */}
+        <ElectronicsShop
+          onViewProduct={(product) => setSelectedProduct(product)}
+          onBuyNow={(product) => scrollToQuote('electronics_enquiry', `${product.title} (Ref: ${product.listingRef})`)}
+          onRequestProduct={() => scrollToQuote('electronics_enquiry', '')}
+        />
+
         <FeaturedVehicles
           onViewDetails={(vehicle) => setSelectedVehicle(vehicle)}
           onRequestPrice={(vehicle) => scrollToQuote('vehicle_sourcing', `${vehicle.year} ${vehicle.make} ${vehicle.model} (Ref: ${vehicle.listingRef})`)}
           onBrowseAll={() => scrollToQuote('vehicle_sourcing', 'All vehicle listings inquiry')}
         />
 
-        {/* 7. WHY GAC AUTO TECH (4-icon dark benefit bar matching reference UI) */}
-        <WhyGacAutoTech />
+        <Reveal>
+          <QuoteRequestSection
+            initialService={quoteService}
+            initialItemTitle={quoteItemTitle}
+            onOpenPrivacy={() => setLegalModalType('privacy')}
+          />
+        </Reveal>
 
-        {/* 8. VEHICLE SOURCING FEATURE (Tesla-style spotlight banner with Copart & IAAI support) */}
-        <VehicleSourcingFeature
-          onRequestSourcing={() => scrollToQuote('vehicle_sourcing')}
-          onViewAvailable={() => scrollToSection('vehicles')}
-        />
-
-        {/* 9. ELECTRONICS SHOWCASE */}
-        <ElectronicsShowcase
-          onEnquirePrice={(product) => scrollToQuote('electronics_enquiry', `${product.title} (Ref: ${product.listingRef})`)}
-          onViewDetails={(product) => setSelectedProduct(product)}
-          onRequestWholesale={() => scrollToQuote('electronics_enquiry', 'Wholesale Electronics Bulk Order Enquiry')}
-        />
-
-        {/* 10. SHIPPING AND LOGISTICS */}
-        <ShippingLogistics
-          onRequestShippingQuote={() => scrollToQuote('shipping_quote')}
-        />
-
-        {/* 11. HOW IT WORKS */}
-        <HowItWorks />
-
-        {/* 12. ABOUT PREVIEW */}
-        <AboutPreview
-          onOpenAboutModal={() => setIsAboutOpen(true)}
-        />
-
-        {/* 13. QUOTE REQUEST SECTION */}
-        <QuoteRequestSection
-          initialService={quoteService}
-          initialItemTitle={quoteItemTitle}
-          onOpenPrivacy={() => setLegalModalType('privacy')}
-        />
-
-        {/* 14. FAQ ACCORDION */}
-        <div id="faq">
-          <FaqSection />
-        </div>
-
-        {/* 15. FINAL CALL TO ACTION */}
-        <FinalCta
-          onRequestQuote={() => scrollToQuote('vehicle_sourcing')}
-        />
+        <Reveal>
+          <div id="faq">
+            <FaqSection />
+          </div>
+        </Reveal>
       </main>
 
       {/* 16. FOOTER (Matching reference layout with email subscribe pill and 3 columns) */}
@@ -191,6 +172,10 @@ function MainApp() {
         onClose={() => setLegalModalType(null)}
       />
 
+      <SignInModal isOpen={isSignInOpen} onClose={() => setIsSignInOpen(false)} />
+
+      <EnquiryDrawer onRequestQuote={(service, details) => scrollToQuote(service, details)} />
+
     </div>
   );
 }
@@ -198,7 +183,11 @@ function MainApp() {
 export default function App() {
   return (
     <ThemeProvider>
-      <MainApp />
+      <EnquiryListProvider>
+        <MotionConfig reducedMotion="user">
+          <MainApp />
+        </MotionConfig>
+      </EnquiryListProvider>
     </ThemeProvider>
   );
 }

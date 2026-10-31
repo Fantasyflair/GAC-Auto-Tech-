@@ -32,11 +32,11 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReque
         </button>
 
         {/* Header Banner */}
-        <div className="bg-[#09090B] p-6 sm:p-8 text-white border-b border-[#22232B]">
+        <div className="bg-[#09090B] p-6 sm:p-8 text-white border-b border-[#26262A]">
           <div className="mb-4">
             <GacLogo size="md" />
           </div>
-          <h2 id="about-modal-title" className="text-2xl font-extrabold tracking-tight">
+          <h2 id="about-modal-title" className="text-2xl font-bold tracking-tight">
             About GAC Auto Tech Canada Inc.
           </h2>
           <p className="text-xs sm:text-sm text-[#BFC2C8] mt-1">
@@ -48,7 +48,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReque
         <div className="p-6 sm:p-8 max-h-[60vh] overflow-y-auto space-y-6 text-sm text-[#606570] leading-relaxed">
           <div>
             <h3 className="text-base font-bold text-[#18181B] mb-2 flex items-center gap-2">
-              <Car className="w-4 h-4 text-[#D90816]" />
+              <Car className="w-4 h-4 text-accent" />
               <span>Automotive Sourcing</span>
             </h3>
             <p>
@@ -61,7 +61,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReque
 
           <div>
             <h3 className="text-base font-bold text-[#18181B] mb-2 flex items-center gap-2">
-              <Laptop className="w-4 h-4 text-[#D90816]" />
+              <Laptop className="w-4 h-4 text-accent" />
               <span>Technology & Electronics</span>
             </h3>
             <p>
@@ -73,7 +73,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReque
 
           <div>
             <h3 className="text-base font-bold text-[#18181B] mb-2 flex items-center gap-2">
-              <Truck className="w-4 h-4 text-[#D90816]" />
+              <Truck className="w-4 h-4 text-accent" />
               <span>International Shipping & Logistics</span>
             </h3>
             <p>
@@ -86,7 +86,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReque
 
           <div>
             <h3 className="text-base font-bold text-[#18181B] mb-2 flex items-center gap-2">
-              <Globe className="w-4 h-4 text-[#D90816]" />
+              <Globe className="w-4 h-4 text-accent" />
               <span>General Merchandise & Custom Sourcing</span>
             </h3>
             <p>
@@ -99,7 +99,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReque
 
         {/* Footer Actions */}
         <div className="p-6 bg-[#F6F7F9] border-t border-[#E4E6EB] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-[#8E939D]">
+          <span className="text-xs text-muted">
             Official corporate entity: GAC AUTO TECH CANADA INC.
           </span>
           <button
@@ -108,7 +108,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReque
               onClose();
               onRequestQuote();
             }}
-            className="w-full sm:w-auto px-5 py-2.5 text-xs font-bold text-white bg-[#D90816] hover:bg-[#B80713] rounded-xl transition-colors cursor-pointer"
+            className="w-full sm:w-auto px-5 py-2.5 text-xs font-semibold btn-ink rounded-xl transition-colors cursor-pointer"
           >
             Start Your Enquiry
           </button>

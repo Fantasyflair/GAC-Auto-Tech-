@@ -7,9 +7,9 @@ export const UtilityBar: React.FC = () => {
         {/* Left copy */}
         <div className="flex items-center gap-2 font-medium tracking-wide">
           <span>Vehicle sourcing</span>
-          <span className="text-[#D90816]" aria-hidden="true">•</span>
+          <span className="text-accent" aria-hidden="true">•</span>
           <span>Electronics</span>
-          <span className="text-[#D90816]" aria-hidden="true">•</span>
+          <span className="text-accent" aria-hidden="true">•</span>
           <span>International shipping</span>
         </div>
 

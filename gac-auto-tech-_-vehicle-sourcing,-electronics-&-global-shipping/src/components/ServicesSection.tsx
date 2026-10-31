@@ -116,7 +116,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
         {/* Section Header (Exact match to 'Car Category' heading in reference image) */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
           <div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-2">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-2">
               Car Category
             </h2>
             <p className="text-sm sm:text-base text-[#8E939D]">
@@ -166,15 +166,15 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                     card.onClick();
                   }
                 }}
-                className={`group relative rounded-3xl overflow-hidden aspect-[3/4] sm:aspect-[2.75/4] border transition-all duration-300 ease-out cursor-pointer flex flex-col justify-between p-6 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D90816]
+                className={`group relative rounded-3xl overflow-hidden aspect-[3/4] sm:aspect-[2.75/4] border transition-all duration-300 ease-out cursor-pointer flex flex-col justify-between p-6 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#111113]/25
                   /* Desktop Hover Effects */
                   [@media(hover:hover)]:hover:-translate-y-2
                   [@media(hover:hover)]:hover:shadow-[0_20px_40px_rgba(0,0,0,0.35)]
                   ${card.isPrimaryAccent 
-                    ? 'border-[#D90816]/40 [@media(hover:hover)]:hover:border-[#D90816]' 
-                    : 'border-[#E4E6EB] dark:border-[#272832] [@media(hover:hover)]:hover:border-[#D90816]/60'
+                    ? 'border-blush [@media(hover:hover)]:hover:border-white/50' 
+                    : 'border-[#E4E6EB] dark:border-[#272832] [@media(hover:hover)]:hover:border-white/40'
                   }
-                  active:scale-[0.985] active:border-[#D90816]
+                  active:scale-[0.985] active:border-white/50
                 `}
               >
                 {/* Background Image */}
@@ -185,19 +185,19 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                       (e.currentTarget as HTMLImageElement).src = card.fallbackUrl;
                     }}
                     alt={card.title}
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out brightness-[0.82] contrast-[1.08]"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out brightness-[0.62] contrast-[1.05]"
                     loading="lazy"
                   />
                   {/* Atmospheric Scrim Gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/30 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/35 pointer-events-none" />
                 </div>
 
                 {/* Top: Category Title & Subtitle (Like reference screenshot) */}
                 <div className="relative z-10 text-white">
-                  <h3 className="text-2xl font-black tracking-tight leading-tight mb-1 text-balance">
+                  <h3 className="text-2xl font-bold tracking-tight leading-tight mb-1 text-balance">
                     {card.title}
                   </h3>
-                  <p className="text-xs font-mono font-medium text-white/70 tracking-wide">
+                  <p className="text-xs font-medium text-white/70 tracking-wide">
                     {card.subtitle}
                   </p>
                 </div>
@@ -210,10 +210,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
 
                   {/* Circular Action Button from reference screenshot */}
                   <div 
-                    className={`w-11 h-11 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 shadow-lg ${
+                    className={`w-11 h-11 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 shadow-lg shadow-black/25 ${
                       card.isPrimaryAccent
-                        ? 'bg-[#D90816] text-white group-hover:bg-[#B80713] group-hover:scale-110 shadow-[#D90816]/40'
-                        : 'bg-white text-[#18181B] group-hover:bg-[#D90816] group-hover:text-white group-hover:scale-110'
+                        ? 'bg-[#111113] text-white ring-1 ring-[#e7d4d4]/70 group-hover:scale-110'
+                        : 'bg-white text-[#111113] group-hover:bg-[#111113] group-hover:text-white group-hover:scale-110'
                     }`}
                     aria-hidden="true"
                   >

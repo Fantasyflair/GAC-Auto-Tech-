@@ -23,7 +23,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
       >
         <div className="flex items-center justify-between p-6 border-b border-[#E4E6EB] bg-[#F6F7F9]">
           <div className="flex items-center gap-2.5">
-            <Shield className="w-5 h-5 text-[#D90816]" />
+            <Shield className="w-5 h-5 text-accent" />
             <h2 className="text-lg font-bold text-[#18181B]">
               {isPrivacy ? 'Privacy Policy' : 'Terms of Service'}
             </h2>

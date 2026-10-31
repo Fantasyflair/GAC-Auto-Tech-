@@ -25,7 +25,7 @@ export const GacLogo: React.FC<GacLogoProps> = ({
 
   return (
     <div 
-      className={`inline-flex items-center shrink-0 select-none transition-opacity duration-200 hover:opacity-95 ${className}`}
+      className={`inline-flex items-center shrink-0 select-none overflow-hidden rounded-lg bg-black px-1.5 py-0.5 shadow-[0_4px_14px_rgba(0,0,0,0.25)] transition-opacity duration-200 hover:opacity-95 ${className}`}
       aria-label="GAC AUTO TECH CANADA INC."
     >
       <img

@@ -12,7 +12,7 @@ export const AboutPreview: React.FC<AboutPreviewProps> = ({ onOpenAboutModal }) 
       
       {/* Background ambient detail */}
       <div 
-        className="absolute -right-20 top-1/2 -translate-y-1/2 w-96 h-96 bg-[#D90816]/10 rounded-full blur-[100px] pointer-events-none"
+        className="absolute -right-20 top-1/2 -translate-y-1/2 w-96 h-96 bg-accent-soft rounded-full blur-[100px] pointer-events-none"
         aria-hidden="true" 
       />
 
@@ -23,13 +23,13 @@ export const AboutPreview: React.FC<AboutPreviewProps> = ({ onOpenAboutModal }) 
           <div className="lg:col-span-7 flex flex-col items-start">
             
             <div className="inline-flex items-center gap-2 mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D90816]" />
-              <span className="text-xs font-bold tracking-[0.2em] text-[#8E939D] uppercase font-mono">
+              <span className="w-1.5 h-1.5 rounded-full dot-accent" />
+              <span className="text-xs font-bold tracking-[0.2em] text-[#8E939D] uppercase">
                 COMPANY BACKGROUND
               </span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-6">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-6">
               Meet GAC Auto Tech.
             </h2>
 
@@ -45,7 +45,7 @@ export const AboutPreview: React.FC<AboutPreviewProps> = ({ onOpenAboutModal }) 
               className="inline-flex items-center gap-2 px-6 py-3.5 text-xs sm:text-sm font-bold text-white bg-[#1C1D24] hover:bg-[#252630] border border-[#2B2D38] hover:border-[#3E4050] rounded-xl transition-colors cursor-pointer"
             >
               <span>About Our Business</span>
-              <ArrowRight className="w-4 h-4 text-[#D90816]" />
+              <ArrowRight className="w-4 h-4 text-accent" />
             </button>
           </div>
 
@@ -54,7 +54,7 @@ export const AboutPreview: React.FC<AboutPreviewProps> = ({ onOpenAboutModal }) 
             <div className="p-8 sm:p-10 rounded-2xl bg-[#09090B] border border-[#272832] shadow-2xl relative">
               
               {/* Subtle metallic hairline corner accent */}
-              <div className="absolute top-0 right-0 w-24 h-24 border-t-2 border-r-2 border-[#D90816]/40 rounded-tr-2xl pointer-events-none" />
+              <div className="absolute top-0 right-0 w-24 h-24 border-t-2 border-r-2 border-blush rounded-tr-2xl pointer-events-none" />
 
               <div className="mb-6">
                 <GacLogo size="lg" />
@@ -62,7 +62,7 @@ export const AboutPreview: React.FC<AboutPreviewProps> = ({ onOpenAboutModal }) 
 
               <div className="space-y-4 pt-6 border-t border-[#1C1D24] text-xs text-[#BFC2C8]">
                 <div className="flex items-start gap-3">
-                  <Compass className="w-4 h-4 text-[#D90816] shrink-0 mt-0.5" />
+                  <Compass className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                   <div>
                     <span className="text-white font-semibold block">North American & UK Origin Support</span>
                     <span className="text-[#8E939D]">Direct coordination with leading vehicle auctions and technology distributors.</span>
@@ -70,7 +70,7 @@ export const AboutPreview: React.FC<AboutPreviewProps> = ({ onOpenAboutModal }) 
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Shield className="w-4 h-4 text-[#D90816] shrink-0 mt-0.5" />
+                  <Shield className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                   <div>
                     <span className="text-white font-semibold block">Transparent Next Steps</span>
                     <span className="text-[#8E939D]">Clear breakdowns of sourcing criteria, freight scope, and transit procedures.</span>
@@ -78,7 +78,7 @@ export const AboutPreview: React.FC<AboutPreviewProps> = ({ onOpenAboutModal }) 
                 </div>
               </div>
 
-              <div className="mt-8 pt-4 border-t border-[#1C1D24] flex items-center justify-between text-[11px] font-mono text-[#8E939D]">
+              <div className="mt-8 pt-4 border-t border-[#1C1D24] flex items-center justify-between text-[11px] text-[#8E939D]">
                 <span>Registered Trade Entity</span>
                 <span className="text-[#BFC2C8]">Canada Inc.</span>
               </div>

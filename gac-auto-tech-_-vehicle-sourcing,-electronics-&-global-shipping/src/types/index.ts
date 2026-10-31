@@ -29,7 +29,7 @@ export interface VehicleListing {
 export interface ElectronicProduct {
   id: string;
   title: string;
-  category: 'laptops' | 'phones' | 'gaming' | 'accessories';
+  category: 'laptops' | 'phones' | 'tablets' | 'audio' | 'gaming' | 'wearables' | 'accessories';
   specs: string[];
   condition: 'Brand New' | 'Certified Refurbished' | 'Open Box' | 'Grade A Pre-Owned';
   availability: 'Available' | 'Incoming' | 'On request';

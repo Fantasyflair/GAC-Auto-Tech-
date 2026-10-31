@@ -36,13 +36,13 @@ export const HowItWorks: React.FC = () => {
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
           <div className="inline-flex items-center gap-2 mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D90816]" />
-            <span className="text-xs font-bold tracking-[0.2em] text-[#606570] uppercase font-mono">
+            <span className="w-1.5 h-1.5 rounded-full dot-accent" />
+            <span className="text-xs font-bold tracking-[0.2em] text-[#606570] uppercase">
               PROCESS
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#18181B] mb-4 text-balance">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#18181B] mb-4 text-balance">
             Tell Us What You Need. We’ll Help With the Next Steps.
           </h2>
 
@@ -63,10 +63,10 @@ export const HowItWorks: React.FC = () => {
                 <div>
                   {/* Step Number & Icon */}
                   <div className="flex items-center justify-between mb-6">
-                    <span className="text-2xl font-black font-mono text-[#D90816] tracking-tight">
+                    <span className="text-2xl font-bold text-accent tracking-tight">
                       {step.num}
                     </span>
-                    <div className="w-10 h-10 rounded-xl bg-[#F6F7F9] border border-[#E4E6EB] flex items-center justify-center text-[#18181B] group-hover:text-[#D90816] group-hover:bg-[#FDF2F2] transition-colors">
+                    <div className="w-10 h-10 rounded-xl bg-[#F6F7F9] border border-[#E4E6EB] flex items-center justify-center text-[#18181B] group-hover:text-accent group-hover:bg-[#F4F4F5] transition-colors">
                       <Icon className="w-5 h-5 stroke-[1.8]" />
                     </div>
                   </div>
@@ -84,7 +84,7 @@ export const HowItWorks: React.FC = () => {
 
                 {/* Subtle bottom progress bar highlight */}
                 <div className="mt-6 pt-4 border-t border-[#F0F2F5]">
-                  <div className="w-8 h-1 bg-[#E4E6EB] rounded-full group-hover:w-full group-hover:bg-[#D90816] transition-all duration-300" />
+                  <div className="w-8 h-1 bg-[#E4E6EB] rounded-full group-hover:w-full group-hover:bg-[#111113] transition-all duration-300" />
                 </div>
               </div>
             );

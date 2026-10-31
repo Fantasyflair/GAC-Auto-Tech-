@@ -25,7 +25,7 @@ export const VehicleSourcingFeature: React.FC<VehicleSourcingFeatureProps> = ({
       
       {/* Background glow */}
       <div 
-        className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-[#D90816]/10 rounded-full blur-[140px] pointer-events-none"
+        className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-accent-soft rounded-full blur-[140px] pointer-events-none"
         aria-hidden="true" 
       />
 
@@ -36,11 +36,11 @@ export const VehicleSourcingFeature: React.FC<VehicleSourcingFeatureProps> = ({
           
           {/* Left: Big Headline & Action */}
           <div className="lg:col-span-5 flex flex-col items-start">
-            <span className="text-xs font-mono font-bold tracking-[0.2em] text-[#D90816] uppercase mb-2">
+            <span className="text-xs font-bold tracking-[0.2em] text-accent uppercase mb-2">
               AUCTION SOURCING & EXPORT
             </span>
 
-            <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white mb-4 text-balance">
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4 text-balance">
               Source Auction Vehicles<br />
               with Heavy Savings
             </h2>
@@ -54,7 +54,7 @@ export const VehicleSourcingFeature: React.FC<VehicleSourcingFeatureProps> = ({
               <button
                 type="button"
                 onClick={onRequestSourcing}
-                className="px-6 py-3 rounded-full bg-[#D90816] hover:bg-[#B80713] text-white font-bold text-xs transition-all shadow-md shadow-[#D90816]/30 active:scale-95 cursor-pointer whitespace-nowrap"
+                className="px-6 py-3 rounded-full btn-on-dark font-semibold text-xs transition-all shadow-sm active:scale-95 cursor-pointer whitespace-nowrap"
               >
                 Enquire Now
               </button>
@@ -71,7 +71,7 @@ export const VehicleSourcingFeature: React.FC<VehicleSourcingFeatureProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#BFC2C8]">
               {featureBullets.map((bullet, idx) => (
                 <div key={idx} className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#D90816] shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-accent shrink-0" />
                   <span>{bullet}</span>
                 </div>
               ))}
@@ -93,12 +93,13 @@ export const VehicleSourcingFeature: React.FC<VehicleSourcingFeatureProps> = ({
 
           {/* Right: Accent Callout Block (Exact match to '50% For everyone Tesla cars' in reference) */}
           <div className="lg:col-span-3">
-            <div className="rounded-3xl p-6 sm:p-7 bg-[#D90816] text-white flex flex-col justify-between shadow-xl shadow-[#D90816]/25 h-full min-h-[220px]">
-              <div>
-                <span className="text-4xl sm:text-5xl font-black tracking-tight block mb-1">
+            <div className="relative overflow-hidden rounded-3xl p-6 sm:p-7 bg-[#121214] text-white flex flex-col justify-between shadow-xl shadow-black/30 h-full min-h-[220px] border border-white/10">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#c4a0a0]/30 via-transparent to-transparent pointer-events-none" aria-hidden="true" />
+              <div className="relative">
+                <span className="text-4xl sm:text-5xl font-bold tracking-tight block mb-1">
                   50%
                 </span>
-                <span className="text-xs font-mono uppercase tracking-wider text-white/90 block mb-2 font-bold">
+                <span className="text-xs uppercase tracking-wider text-white/90 block mb-2 font-bold">
                   Potential Savings
                 </span>
                 <p className="text-xs text-white/95 leading-relaxed">
@@ -106,7 +107,7 @@ export const VehicleSourcingFeature: React.FC<VehicleSourcingFeatureProps> = ({
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-white/20 text-[11px] font-mono text-white/80">
+              <div className="relative pt-4 border-t border-white/15 text-[11px] text-white/75">
                 Canada · USA · UK ➔ Ghana
               </div>
             </div>

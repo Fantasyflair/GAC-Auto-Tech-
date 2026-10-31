@@ -13,24 +13,24 @@ export const FaqSection: React.FC = () => {
 
   return (
     <section className={`py-20 lg:py-28 border-b transition-colors duration-200 ${
-      theme === 'dark' ? 'bg-[#0E0F13] border-[#1C1D24] text-white' : 'bg-white border-[#E4E6EB] text-[#18181B]'
+      theme === 'dark' ? 'bg-[#09090B] border-[#26262A] text-white' : 'bg-white border-[#E4E6EB] text-[#18181B]'
     }`}>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D90816]" />
-            <span className="text-xs font-bold tracking-[0.2em] text-[#8E939D] uppercase font-mono">
+            <span className="w-1.5 h-1.5 rounded-full dot-accent" />
+            <span className="text-xs font-bold tracking-[0.2em] text-muted uppercase">
               COMMON QUESTIONS
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
             Frequently Asked Questions
           </h2>
 
-          <p className="text-base text-[#8E939D]">
+          <p className="text-base text-muted">
             Clear answers about sourcing scope, auctions, wholesale, and destinations.
           </p>
         </div>
@@ -47,12 +47,12 @@ export const FaqSection: React.FC = () => {
                 key={index}
                 className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
                   isOpen
-                    ? 'border-[#D90816]/40 shadow-md'
+                    ? 'border-blush shadow-md'
                     : theme === 'dark'
-                      ? 'border-[#262732] bg-[#141419] hover:border-[#333544]'
+                      ? 'border-[#26262A] bg-[#141416] hover:border-[#333338]'
                       : 'border-[#E4E6EB] bg-[#F6F7F9] hover:border-[#D0D4DC]'
                 } ${
-                  theme === 'dark' ? 'bg-[#141419]' : isOpen ? 'bg-white' : 'bg-[#F6F7F9]'
+                  theme === 'dark' ? 'bg-[#141416]' : isOpen ? 'bg-white' : 'bg-[#F6F7F9]'
                 }`}
               >
                 <h3>
@@ -62,7 +62,7 @@ export const FaqSection: React.FC = () => {
                     aria-expanded={isOpen}
                     aria-controls={contentId}
                     onClick={() => toggle(index)}
-                    className="w-full px-6 py-4 sm:py-5 text-left flex items-center justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D90816]"
+                    className="w-full px-6 py-4 sm:py-5 text-left flex items-center justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#09090B]/25"
                   >
                     <span className="text-base sm:text-lg font-bold">
                       {item.question}
@@ -70,9 +70,9 @@ export const FaqSection: React.FC = () => {
                     <span 
                       className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 border transition-transform duration-200 ${
                         isOpen 
-                          ? 'rotate-180 bg-[#D90816] text-white border-[#D90816]' 
+                          ? 'rotate-180 btn-theme border-transparent' 
                           : theme === 'dark'
-                            ? 'bg-[#1D1E26] text-[#BFC2C8] border-[#2E303D]'
+                            ? 'bg-[#141416] text-[#BFC2C8] border-[#26262A]'
                             : 'bg-white text-[#606570] border-[#E4E6EB]'
                       }`}
                       aria-hidden="true"
@@ -88,7 +88,7 @@ export const FaqSection: React.FC = () => {
                     role="region"
                     aria-labelledby={headerId}
                     className={`px-6 pb-5 pt-1 text-sm sm:text-base leading-relaxed border-t ${
-                      theme === 'dark' ? 'border-[#262732] text-[#BFC2C8]' : 'border-[#E4E6EB]/60 text-[#606570]'
+                      theme === 'dark' ? 'border-[#26262A] text-[#BFC2C8]' : 'border-[#E4E6EB]/60 text-[#606570]'
                     }`}
                   >
                     {item.answer}

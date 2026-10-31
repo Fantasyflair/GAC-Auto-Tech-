@@ -1,21 +1,214 @@
 @import "tailwindcss";
 
-@layer base {
-  body {
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Urbanist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Urbanist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  animation: marquee 38s linear infinite;
+}
+
+.pill-light {
+  color: #111113;
+  background-color: #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.accent-bar {
+  background-color: #d9c4c4;
+}
+
+.surface-ink {
+  background-color: #111113;
+}
+
+/* Minimal surfaces: a soft grey canvas with flat, quiet cards on top. */
+.ui-canvas {
+  background-color: #ececec;
+}
+
+.dark .ui-canvas {
+  background-color: #0b0b0d;
+}
+
+.ui-card {
+  background-color: #f8f8f8;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.35s ease, background-color 0.35s ease;
+}
+
+.ui-card:hover {
+  background-color: #ffffff;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.07);
+}
+
+.dark .ui-card {
+  background-color: #151517;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.dark .ui-card:hover {
+  background-color: #19191c;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.ui-icon {
+  color: #111113;
+  background-color: #ececec;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.group:hover .ui-icon,
+.ui-icon:hover {
+  color: #ffffff;
+  background-color: #111113;
+}
+
+.dark .ui-icon {
+  color: #f4f4f5;
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+.dark .group:hover .ui-icon,
+.dark .ui-icon:hover {
+  color: #111113;
+  background-color: #ffffff;
+}
+
+.ui-well {
+  background-color: #ececec;
+}
+
+.dark .ui-well {
+  background-color: #1c1c1f;
+}
+
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(380px circle at var(--x, 50%) var(--y, 50%), rgba(0, 0, 0, 0.035), transparent 65%);
+}
+
+.dark .spotlight::before {
+  background: radial-gradient(380px circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.05), transparent 65%);
+}
+
+.spotlight:hover::before {
+  opacity: 1;
+}
+
+.text-muted {
+  color: #6b6b72;
+}
+
+.dark .text-muted {
+  color: #a1a1aa;
+}
+
+.dark .bg-white .text-muted {
+  color: #6b6b72;
+}
+
+.dark .bg-white .text-accent {
+  color: #a18484;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
   }
 }
 
-:root {
-  --color-brand-red: #D90816;
-  --color-brand-red-hover: #B80713;
-  --color-primary-dark: #09090B;
-  --color-surface-charcoal: #17171C;
-  --color-silver-gray: #BFC2C8;
+@layer base {
+  html,
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
 }
 
-/* Custom smooth focus ring */
 :focus-visible {
-  outline: 2px solid #D90816;
+  outline: 2px solid rgba(17, 17, 19, 0.4);
   outline-offset: 2px;
+}
+
+@layer components {
+  /* Primary action. Flips with the light/dark theme so it stays visible. */
+  .btn-theme {
+    background-color: #111113;
+    color: #ffffff;
+  }
+  .btn-theme:hover {
+    background-color: #000000;
+  }
+  .dark .btn-theme {
+    background-color: #f4f4f5;
+    color: #111113;
+  }
+  .dark .btn-theme:hover {
+    background-color: #ffffff;
+  }
+
+  /* Always black. Use on white cards that do not follow the theme. */
+  .btn-ink {
+    background-color: #111113;
+    color: #ffffff;
+  }
+  .btn-ink:hover {
+    background-color: #000000;
+  }
+
+  /* Always light. Use on sections that stay black in both themes. */
+  .btn-on-dark {
+    background-color: #f5f5f6;
+    color: #111113;
+  }
+  .btn-on-dark:hover {
+    background-color: #ffffff;
+  }
+
+  .text-accent {
+    color: #a18484;
+  }
+
+  .dark .text-accent {
+    color: #e4d4d4;
+  }
+
+  .bg-accent-soft {
+    background-color: rgba(176, 120, 120, 0.12);
+  }
+
+  .border-blush {
+    border-color: rgba(168, 120, 120, 0.32);
+  }
+
+  .dot-accent {
+    background-color: #c9b0b0;
+  }
 }

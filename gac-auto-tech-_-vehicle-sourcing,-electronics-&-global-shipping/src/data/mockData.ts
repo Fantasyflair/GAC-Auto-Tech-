@@ -27,7 +27,7 @@ export const SAMPLE_VEHICLES: VehicleListing[] = [
     condition: 'Clean Title · Verified Battery Health 98%',
     availability: 'Available',
     listingRef: 'GAC-VEH-2023-BI4',
-    imageUrl: '/src/assets/images/trend_bmw_i4_studio_1793244775267.jpg',
+    imageUrl: '/images/bmw.jpg',
     notes: 'M-Sport package with curved display, wireless charging, and verified Copart clean-title inspection report. Export ready for Ghana.',
     sourceType: 'Copart'
   },
@@ -48,50 +48,50 @@ export const SAMPLE_VEHICLES: VehicleListing[] = [
     condition: 'Run & Drive Certified · Full Inspection Report',
     availability: 'Available',
     listingRef: 'GAC-VEH-2023-AA7',
-    imageUrl: '/src/assets/images/trend_audi_a7_studio_1793244776245.jpg',
+    imageUrl: '/images/audi-a7.jpg',
     notes: 'Premium Plus trim with Matrix LED headlights, Bang & Olufsen sound, and verified mechanical running condition from IAAI auction.',
     sourceType: 'IAAI'
   },
   {
     id: 'veh-03',
-    title: 'Mercedes-Benz GLE 450 4MATIC',
+    title: 'Mercedes-AMG GLC 43 Coupé',
     make: 'Mercedes-Benz',
-    model: 'GLE 450 AMG Line',
-    year: 2023,
-    category: 'Luxury SUV',
+    model: 'AMG GLC 43 Coupé',
+    year: 2024,
+    category: 'Performance SUV Coupé',
     specs: {
-      mileage: '21,100 km',
-      engine: '3.0L Turbo Inline-6 EQ Boost (362 hp)',
-      transmission: '9G-TRONIC 9-Speed Automatic',
-      drivetrain: '4MATIC All-Wheel Drive',
+      mileage: '14,600 km',
+      engine: '2.0L Turbo Inline-4 with Electric Turbocharger (416 hp)',
+      transmission: 'AMG SPEEDSHIFT MCT 9-Speed',
+      drivetrain: '4MATIC+ All-Wheel Drive',
       fuelType: 'Mild Hybrid'
     },
     condition: 'Clean Title · Zero Accident History',
     availability: 'Incoming',
-    listingRef: 'GAC-VEH-2023-MGLE',
-    imageUrl: '/src/assets/images/trend_merc_gle_studio_1793244777362.jpg',
-    notes: 'AMG exterior styling, panoramic roof, third row seating, and air suspension. High demand model for West African export.',
+    listingRef: 'GAC-VEH-2024-GLC43',
+    imageUrl: '/images/amg-gle-white.jpg',
+    notes: 'AMG Night Package, panoramic roof, quad exhaust, and adaptive suspension. High demand model for West African export.',
     sourceType: 'Dealer Network'
   },
   {
     id: 'veh-04',
-    title: 'Porsche 911 Carrera 4S (992)',
+    title: 'Porsche Panamera Turbo',
     make: 'Porsche',
-    model: '911 Carrera 4S',
-    year: 2023,
-    category: 'High Performance Coupe',
+    model: 'Panamera Turbo',
+    year: 2021,
+    category: 'Luxury Sport Sedan',
     specs: {
-      mileage: '9,800 km',
-      engine: '3.0L Twin-Turbo Boxer 6 (443 hp)',
+      mileage: '28,300 km',
+      engine: '4.0L Twin-Turbo V8 (550 hp)',
       transmission: '8-Speed Porsche Doppelkupplung (PDK)',
       drivetrain: 'All-Wheel Drive',
       fuelType: 'Gasoline'
     },
     condition: 'Pristine Inspection · Minor Bumper Scrape',
     availability: 'On request',
-    listingRef: 'GAC-VEH-2023-P911',
-    imageUrl: '/src/assets/images/trend_porsche_911_studio_1793244777372.jpg',
-    notes: 'Sport Chrono package with active exhaust, 20/21 Carrera Classic wheels. Sourced via specialist Copart premier salvage/recovery division.',
+    listingRef: 'GAC-VEH-2021-PNMT',
+    imageUrl: '/images/porsche-911.jpg',
+    notes: 'Sport Chrono package, active rear spoiler, and adaptive air suspension. Sourced via specialist Copart premier recovery division.',
     sourceType: 'Copart'
   }
 ];
@@ -99,37 +99,37 @@ export const SAMPLE_VEHICLES: VehicleListing[] = [
 export const SAMPLE_ELECTRONICS: ElectronicProduct[] = [
   {
     id: 'elec-01',
-    title: 'Apple MacBook Pro 16" (M3 Pro)',
+    title: 'Apple MacBook Pro 16"',
     category: 'laptops',
     specs: ['Apple M3 Pro Chip (12-Core CPU / 18-Core GPU)', '36GB Unified Memory', '512GB High-Speed NVMe SSD', 'Liquid Retina XDR Display'],
     condition: 'Brand New',
     availability: 'Available',
     listingRef: 'GAC-TECH-MBP16',
-    imageUrl: '/src/assets/images/electronics_tech_collection_1793244792880.jpg',
+    imageUrl: '/images/macbook-pro.jpg',
     wholesaleEligible: true,
     notes: 'Factory sealed units. Canadian/US keyboard layout. Wholesale cartons available for bulk orders.'
   },
   {
     id: 'elec-02',
-    title: 'Apple iPhone 15 Pro Max 256GB',
+    title: 'Apple iPhone 15 Pro 256GB',
     category: 'phones',
     specs: ['Natural Titanium Finish', 'A17 Pro Bionic Chip', 'Factory Unlocked (Dual eSIM / Physical SIM)', 'Super Retina XDR OLED'],
     condition: 'Brand New',
     availability: 'Available',
-    listingRef: 'GAC-TECH-IP15PM',
-    imageUrl: '/src/assets/images/hero_tech_devices_1793210759484.jpg',
+    listingRef: 'GAC-TECH-IP15P',
+    imageUrl: '/images/iphone-15-pro.jpg',
     wholesaleEligible: true,
     notes: 'Global carrier unlocked. Tested and verified for networks across North America, Europe, and Ghana.'
   },
   {
     id: 'elec-03',
-    title: 'Sony PlayStation 5 Slim 1TB Console',
+    title: 'Sony PlayStation 5 Console',
     category: 'gaming',
-    specs: ['Ultra-High Speed 1TB SSD', 'Ray Tracing & 4K 120Hz Output', 'DualSense Wireless Controller Included', 'Disc Edition'],
+    specs: ['Ultra-High Speed 825GB SSD', 'Ray Tracing & 4K 120Hz Output', 'DualSense Wireless Controller Included', 'Digital Edition'],
     condition: 'Brand New',
     availability: 'Available',
-    listingRef: 'GAC-TECH-PS5SLM',
-    imageUrl: '/src/assets/images/electronics_showcase_group_1793210760329.jpg',
+    listingRef: 'GAC-TECH-PS5',
+    imageUrl: '/images/ps5.jpg',
     wholesaleEligible: true,
     notes: 'Original manufacturer packaging with regional power cable. Wholesale pallet orders supported.'
   },
@@ -137,15 +137,84 @@ export const SAMPLE_ELECTRONICS: ElectronicProduct[] = [
     id: 'elec-04',
     title: 'PlayStation DualSense Wireless Controller',
     category: 'accessories',
-    specs: ['Haptic Feedback & Adaptive Triggers', 'Integrated Microphone & Audio Jack', 'USB-C Fast Charging', 'Midnight Black Edition'],
+    specs: ['Haptic Feedback & Adaptive Triggers', 'Integrated Microphone & Audio Jack', 'USB-C Fast Charging', 'White Edition'],
     condition: 'Brand New',
     availability: 'Incoming',
-    listingRef: 'GAC-TECH-DSE-BLK',
-    imageUrl: '/src/assets/images/hero_tech_devices_1793210759484.jpg',
+    listingRef: 'GAC-TECH-DSE-WHT',
+    imageUrl: '/images/dualsense.jpg',
     wholesaleEligible: true,
     notes: 'High turnover gaming accessory. Ideal for electronics retailers and retail consumers.'
+  },
+  {
+    id: 'elec-05',
+    title: 'Samsung Galaxy S24 Ultra 512GB',
+    category: 'phones',
+    specs: ['Titanium Gray Finish', 'Built-in S Pen', '200MP Main Camera', 'Factory Unlocked'],
+    condition: 'Brand New',
+    availability: 'Available',
+    listingRef: 'GAC-TECH-S24U',
+    imageUrl: '/images/galaxy-s24-ultra.jpg',
+    wholesaleEligible: true,
+    notes: 'International unlocked units that work on Ghanaian networks. Bulk orders welcome.'
+  },
+  {
+    id: 'elec-06',
+    title: 'Apple iPad Pro 12.9"',
+    category: 'tablets',
+    specs: ['Liquid Retina XDR Display', 'Apple Pencil Support', 'Wi-Fi + Cellular Options', '256GB Storage'],
+    condition: 'Brand New',
+    availability: 'Available',
+    listingRef: 'GAC-TECH-IPADP',
+    imageUrl: '/images/ipad-pro.jpg',
+    wholesaleEligible: false,
+    notes: 'Sealed units with Canadian warranty. Apple Pencil can be added to the same order.'
+  },
+  {
+    id: 'elec-07',
+    title: 'Apple AirPods Pro',
+    category: 'audio',
+    specs: ['Active Noise Cancellation', 'Transparency Mode', 'MagSafe Charging Case', 'Spatial Audio'],
+    condition: 'Brand New',
+    availability: 'Available',
+    listingRef: 'GAC-TECH-APP',
+    imageUrl: '/images/airpods-pro.jpg',
+    wholesaleEligible: true,
+    notes: 'Popular retail item. Wholesale cartons available for resellers.'
+  },
+  {
+    id: 'elec-08',
+    title: 'Sony WH-1000XM5 Headphones',
+    category: 'audio',
+    specs: ['Industry-Leading Noise Cancelling', '30-Hour Battery Life', 'Multipoint Bluetooth', 'Black Edition'],
+    condition: 'Brand New',
+    availability: 'Incoming',
+    listingRef: 'GAC-TECH-WHXM5',
+    imageUrl: '/images/sony-wh1000xm5.jpg',
+    wholesaleEligible: true,
+    notes: 'Next shipment is being consolidated. Reserve units ahead of arrival.'
+  },
+  {
+    id: 'elec-09',
+    title: 'Apple Watch Ultra',
+    category: 'wearables',
+    specs: ['49mm Titanium Case', 'Precision Dual-Frequency GPS', 'Cellular Built In', 'Up to 36-Hour Battery'],
+    condition: 'Brand New',
+    availability: 'On request',
+    listingRef: 'GAC-TECH-AWU',
+    imageUrl: '/images/apple-watch-ultra.jpg',
+    wholesaleEligible: false,
+    notes: 'Sourced to order. Tell us your preferred band and size.'
   }
 ];
+
+// Replace these with GAC Auto Tech's real profile links.
+export const SOCIAL_LINKS = {
+  instagram: 'https://www.instagram.com/',
+  facebook: 'https://www.facebook.com/',
+  x: 'https://x.com/',
+  tiktok: 'https://www.tiktok.com/',
+  linkedin: 'https://www.linkedin.com/',
+};
 
 export const FAQ_ITEMS = [
   {

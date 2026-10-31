@@ -12,7 +12,7 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ onRequestQuote }) => {
       
       {/* Restrained red accent lighting */}
       <div 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-[#D90816]/12 rounded-full blur-[140px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-accent-soft rounded-full blur-[140px] pointer-events-none"
         aria-hidden="true" 
       />
 
@@ -20,15 +20,15 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ onRequestQuote }) => {
         
         {/* Subtle accent emblem line */}
         <div className="inline-flex items-center gap-2 mb-4">
-          <span className="w-8 h-px bg-[#D90816]" />
-          <span className="text-xs font-bold tracking-[0.2em] text-[#BFC2C8] uppercase font-mono">
+          <span className="w-8 h-px accent-bar" />
+          <span className="text-xs font-bold tracking-[0.2em] text-[#BFC2C8] uppercase">
             NEXT STEPS
           </span>
-          <span className="w-8 h-px bg-[#D90816]" />
+          <span className="w-8 h-px accent-bar" />
         </div>
 
         {/* Heading */}
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-5 text-balance">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-5 text-balance">
           Ready to Source, Buy, or Ship?
         </h2>
 
@@ -42,7 +42,7 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ onRequestQuote }) => {
           <button
             type="button"
             onClick={onRequestQuote}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 text-sm font-bold text-white bg-[#D90816] hover:bg-[#B80713] rounded-xl transition-all shadow-md shadow-[#D90816]/30 active:scale-[0.98] cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 text-sm font-semibold btn-on-dark rounded-xl transition-all active:scale-[0.98] cursor-pointer"
           >
             <span>Request a Quote</span>
             <ArrowRight className="w-4 h-4" />
@@ -54,7 +54,7 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ onRequestQuote }) => {
             rel="noopener noreferrer"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-white/90 hover:text-white bg-[#141419] hover:bg-[#1C1D24] border border-[#2B2D38] hover:border-[#3E4050] rounded-xl transition-colors"
           >
-            <MessageCircle className="w-4 h-4 text-[#25D366] fill-current" />
+            <MessageCircle className="w-4 h-4 fill-current" />
             <span>Chat on WhatsApp</span>
           </a>
         </div>

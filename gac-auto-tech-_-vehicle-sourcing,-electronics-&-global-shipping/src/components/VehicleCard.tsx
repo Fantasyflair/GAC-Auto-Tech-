@@ -15,8 +15,8 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
   onRequestPrice
 }) => {
   const availabilityColors: Record<VehicleListing['availability'], { bg: string; text: string; dot: string }> = {
-    'Available': { bg: 'bg-[#18181B] text-white', text: 'text-white', dot: 'bg-[#25D366]' },
-    'Incoming': { bg: 'bg-[#17171C] text-[#BFC2C8]', text: 'text-[#BFC2C8]', dot: 'bg-[#D90816]' },
+    'Available': { bg: 'bg-[#18181B] text-white', text: 'text-white', dot: 'bg-[#111113]' },
+    'Incoming': { bg: 'bg-[#17171C] text-[#BFC2C8]', text: 'text-[#BFC2C8]', dot: 'dot-accent' },
     'On request': { bg: 'bg-[#242630] text-[#D0D4DC]', text: 'text-[#D0D4DC]', dot: 'bg-[#3B82F6]' },
     'Sold': { bg: 'bg-[#3F424E] text-[#BFC2C8]', text: 'text-[#8E939D]', dot: 'bg-[#6B7280]' }
   };
@@ -46,7 +46,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
           </div>
 
           {/* Source Network Tag */}
-          <div className="absolute top-3 right-3 px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-black/60 text-white/80 backdrop-blur-sm">
+          <div className="absolute top-3 right-3 px-2 py-0.5 rounded text-[10px] font-medium bg-black/60 text-white/80 backdrop-blur-sm">
             {vehicle.sourceType}
           </div>
         </div>
@@ -55,13 +55,13 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
         <div className="p-5">
           
           {/* Metadata Row */}
-          <div className="flex items-center justify-between text-xs text-[#606570] mb-2 font-mono">
+          <div className="flex items-center justify-between text-xs text-[#606570] mb-2">
             <span>{vehicle.category}</span>
             <span className="text-[11px] text-[#8E939D]">REF: {vehicle.listingRef}</span>
           </div>
 
           {/* Title */}
-          <h3 className="text-lg font-bold text-[#18181B] mb-3 group-hover:text-[#D90816] transition-colors leading-snug">
+          <h3 className="text-lg font-bold text-[#18181B] mb-3 group-hover:text-accent transition-colors leading-snug">
             {vehicle.title}
           </h3>
 
@@ -100,7 +100,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
           <button
             type="button"
             onClick={() => onRequestPrice(vehicle)}
-            className="text-xs font-bold text-[#D90816] hover:text-[#B80713] transition-colors flex items-center gap-1 cursor-pointer"
+            className="text-xs font-semibold text-accent hover:opacity-70 transition-opacity flex items-center gap-1 cursor-pointer"
           >
             <span>Request Price</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -111,7 +111,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
             <button
               type="button"
               onClick={() => onViewDetails(vehicle)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#18181B] hover:text-[#D90816] bg-[#F6F7F9] hover:bg-[#EAECEF] border border-[#E4E6EB] rounded-lg transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#18181B] hover:text-accent bg-[#F6F7F9] hover:bg-[#EAECEF] border border-[#E4E6EB] rounded-lg transition-colors cursor-pointer"
             >
               <Eye className="w-3.5 h-3.5 text-[#606570]" />
               <span>View Details</span>
@@ -121,7 +121,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
               href={getWhatsAppUrl(whatsAppEnquiryMessage)}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-1.5 text-[#25D366] hover:bg-[#25D366]/10 border border-[#E4E6EB] hover:border-[#25D366]/40 rounded-lg transition-colors"
+              className="p-1.5 hover:bg-black/5 border border-[#E4E6EB] hover:border-black/30 rounded-lg transition-colors"
               title="Enquire on WhatsApp"
               aria-label={`Enquire about ${vehicle.title} on WhatsApp`}
             >

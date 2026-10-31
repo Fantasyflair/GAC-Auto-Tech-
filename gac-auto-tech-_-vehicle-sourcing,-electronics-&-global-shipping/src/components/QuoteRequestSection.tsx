@@ -111,7 +111,7 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
 
   return (
     <section id="quote-form" className={`py-20 lg:py-28 border-b transition-colors duration-200 ${
-      theme === 'dark' ? 'bg-[#0E0F13] border-[#1C1D24] text-white' : 'bg-[#F6F7F9] border-[#E4E6EB] text-[#18181B]'
+      theme === 'dark' ? 'bg-[#09090B] border-[#26262A] text-white' : 'bg-[#F6F7F9] border-[#E4E6EB] text-[#18181B]'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start">
@@ -120,40 +120,40 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
           <div className="lg:col-span-5 flex flex-col items-start pt-2">
             
             <div className="inline-flex items-center gap-2 mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D90816]" />
-              <span className="text-xs font-bold tracking-[0.2em] text-[#8E939D] uppercase font-mono">
+              <span className="w-1.5 h-1.5 rounded-full dot-accent" />
+              <span className="text-xs font-bold tracking-[0.2em] text-muted uppercase">
                 GET IN TOUCH
               </span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-5 text-balance">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-5 text-balance">
               Let’s Discuss What You Need.
             </h2>
 
-            <p className="text-base text-[#8E939D] leading-relaxed mb-10">
+            <p className="text-base text-muted leading-relaxed mb-10">
               Tell us about your vehicle, electronics, merchandise, or shipping requirements. 
               Share the details below so we can review your enquiry.
             </p>
 
             {/* WhatsApp Alternative */}
             <div className={`w-full p-6 rounded-3xl border shadow-sm ${
-              theme === 'dark' ? 'bg-[#141419] border-[#272832]' : 'bg-white border-[#E4E6EB]'
+              theme === 'dark' ? 'bg-[#141416] border-[#26262A]' : 'bg-white border-[#E4E6EB]'
             }`}>
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-9 h-9 rounded-full bg-[#25D366]/10 flex items-center justify-center text-[#25D366]">
+                <div className="w-9 h-9 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center">
                   <MessageCircle className="w-5 h-5 fill-current" />
                 </div>
                 <div>
                   <h3 className="text-sm font-bold">
                     Prefer a conversation?
                   </h3>
-                  <span className="text-xs text-[#8E939D]">
+                  <span className="text-xs text-muted">
                     Chat with our team directly
                   </span>
                 </div>
               </div>
 
-              <p className="text-xs text-[#8E939D] mb-4 leading-relaxed">
+              <p className="text-xs text-muted mb-4 leading-relaxed">
                 Send vehicle links, electronics specs, or shipping questions directly on WhatsApp for real-time discussion.
               </p>
 
@@ -161,34 +161,28 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                 href={getWhatsAppUrl('Hello GAC Auto Tech, I would like to discuss my requirements.')}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-bold text-white bg-[#141419] hover:bg-[#202129] border border-[#2B2D38] rounded-full transition-colors"
+                className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-bold text-white bg-[#141416] hover:bg-[#0B0B0D] border border-[#26262A] rounded-full transition-colors"
               >
-                <MessageCircle className="w-4 h-4 text-[#25D366] fill-current" />
+                <MessageCircle className="w-4 h-4 fill-current" />
                 <span>Chat on WhatsApp</span>
               </a>
             </div>
-
-            {/* Implementation Disclosure Notice */}
-            <div className="mt-6 text-[11px] text-[#8E939D] leading-relaxed">
-              Designed client interface ready for integration with your CRM or mail endpoint.
-            </div>
-
           </div>
 
           {/* Right Column: Form Card */}
           <div className="lg:col-span-7">
             <div className={`rounded-3xl p-6 sm:p-9 border shadow-xl ${
-              theme === 'dark' ? 'bg-[#141419] border-[#272832]' : 'bg-white border-[#E4E6EB]'
+              theme === 'dark' ? 'bg-[#141416] border-[#26262A]' : 'bg-white border-[#E4E6EB]'
             } relative`}>
               
               {isSuccess ? (
                 /* Successful Submission Visual State */
                 <div className="py-10 text-center flex flex-col items-center">
-                  <div className="w-16 h-16 rounded-full bg-[#25D366]/10 flex items-center justify-center text-[#25D366] mb-5">
+                  <div className="w-16 h-16 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center mb-5">
                     <CheckCircle2 className="w-10 h-10" />
                   </div>
                   
-                  <h3 className="text-2xl font-extrabold text-[#18181B] mb-2">
+                  <h3 className="text-2xl font-bold text-[#18181B] mb-2">
                     Thank you. Your enquiry has been received.
                   </h3>
                   
@@ -207,7 +201,7 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold text-white bg-[#18181B] hover:bg-black rounded-xl transition-colors"
                     >
-                      <MessageCircle className="w-4 h-4 text-[#25D366] fill-current" />
+                      <MessageCircle className="w-4 h-4 fill-current" />
                       <span>Follow Up on WhatsApp</span>
                     </a>
 
@@ -228,8 +222,8 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                     <h3 className="text-lg font-bold text-[#18181B]">
                       Enquiry Details
                     </h3>
-                    <p className="text-xs text-[#8E939D]">
-                      Fields marked with <span className="text-[#D90816]">*</span> are required.
+                    <p className="text-xs text-muted">
+                      Fields marked with <span className="text-accent">*</span> are required.
                     </p>
                   </div>
 
@@ -237,7 +231,7 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="fullName" className="block text-xs font-semibold text-[#18181B] mb-1.5">
-                        Full Name <span className="text-[#D90816]">*</span>
+                        Full Name <span className="text-accent">*</span>
                       </label>
                       <input
                         type="text"
@@ -246,11 +240,11 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                         onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                         placeholder="e.g. Alex Morgan"
                         className={`w-full px-3.5 py-2.5 rounded-xl text-sm bg-white border ${
-                          errors.fullName ? 'border-[#D90816] bg-[#FFF8F8]' : 'border-[#E4E6EB]'
-                        } focus:border-[#D90816] focus:ring-1 focus:ring-[#D90816] transition-colors placeholder:text-[#BFC2C8]`}
+                          errors.fullName ? 'border-[#C9A8A8] bg-[#FBF7F7]' : 'border-[#E4E6EB]'
+                        } focus:border-[#09090B] focus:ring-1 focus:ring-[#09090B]/15 transition-colors placeholder:text-[#BFC2C8]`}
                       />
                       {errors.fullName && (
-                        <p className="mt-1 text-xs text-[#D90816] flex items-center gap-1">
+                        <p className="mt-1 text-xs text-accent flex items-center gap-1">
                           <AlertCircle className="w-3 h-3" />
                           <span>{errors.fullName}</span>
                         </p>
@@ -259,7 +253,7 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
 
                     <div>
                       <label htmlFor="email" className="block text-xs font-semibold text-[#18181B] mb-1.5">
-                        Email Address <span className="text-[#D90816]">*</span>
+                        Email Address <span className="text-accent">*</span>
                       </label>
                       <input
                         type="email"
@@ -268,11 +262,11 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="alex@example.com"
                         className={`w-full px-3.5 py-2.5 rounded-xl text-sm bg-white border ${
-                          errors.email ? 'border-[#D90816] bg-[#FFF8F8]' : 'border-[#E4E6EB]'
-                        } focus:border-[#D90816] focus:ring-1 focus:ring-[#D90816] transition-colors placeholder:text-[#BFC2C8]`}
+                          errors.email ? 'border-[#C9A8A8] bg-[#FBF7F7]' : 'border-[#E4E6EB]'
+                        } focus:border-[#09090B] focus:ring-1 focus:ring-[#09090B]/15 transition-colors placeholder:text-[#BFC2C8]`}
                       />
                       {errors.email && (
-                        <p className="mt-1 text-xs text-[#D90816] flex items-center gap-1">
+                        <p className="mt-1 text-xs text-accent flex items-center gap-1">
                           <AlertCircle className="w-3 h-3" />
                           <span>{errors.email}</span>
                         </p>
@@ -284,7 +278,7 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="whatsappNumber" className="block text-xs font-semibold text-[#18181B] mb-1.5">
-                        WhatsApp Number <span className="text-[#8E939D] font-normal">(Optional, include country code)</span>
+                        WhatsApp Number <span className="text-muted font-normal">(Optional, include country code)</span>
                       </label>
                       <input
                         type="tel"
@@ -292,13 +286,13 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                         value={formData.whatsappNumber}
                         onChange={(e) => setFormData({ ...formData, whatsappNumber: e.target.value })}
                         placeholder="+1 (555) 000-0000 or +233 ..."
-                        className="w-full px-3.5 py-2.5 rounded-xl text-sm bg-white border border-[#E4E6EB] focus:border-[#D90816] focus:ring-1 focus:ring-[#D90816] transition-colors placeholder:text-[#BFC2C8]"
+                        className="w-full px-3.5 py-2.5 rounded-xl text-sm bg-white border border-[#E4E6EB] focus:border-[#09090B] focus:ring-1 focus:ring-[#09090B]/15 transition-colors placeholder:text-[#BFC2C8]"
                       />
                     </div>
 
                     <div>
                       <label htmlFor="destinationCountry" className="block text-xs font-semibold text-[#18181B] mb-1.5">
-                        Destination Country <span className="text-[#8E939D] font-normal">(Optional)</span>
+                        Destination Country <span className="text-muted font-normal">(Optional)</span>
                       </label>
                       <input
                         type="text"
@@ -306,7 +300,7 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                         value={formData.destinationCountry}
                         onChange={(e) => setFormData({ ...formData, destinationCountry: e.target.value })}
                         placeholder="e.g. Ghana, Canada, UK, USA"
-                        className="w-full px-3.5 py-2.5 rounded-xl text-sm bg-white border border-[#E4E6EB] focus:border-[#D90816] focus:ring-1 focus:ring-[#D90816] transition-colors placeholder:text-[#BFC2C8]"
+                        className="w-full px-3.5 py-2.5 rounded-xl text-sm bg-white border border-[#E4E6EB] focus:border-[#09090B] focus:ring-1 focus:ring-[#09090B]/15 transition-colors placeholder:text-[#BFC2C8]"
                       />
                     </div>
                   </div>
@@ -314,13 +308,13 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                   {/* Service Required Dropdown */}
                   <div>
                     <label htmlFor="serviceRequired" className="block text-xs font-semibold text-[#18181B] mb-1.5">
-                      Service Required <span className="text-[#D90816]">*</span>
+                      Service Required <span className="text-accent">*</span>
                     </label>
                     <select
                       id="serviceRequired"
                       value={formData.serviceRequired}
                       onChange={(e) => setFormData({ ...formData, serviceRequired: e.target.value as ServiceType })}
-                      className="w-full px-3.5 py-2.5 rounded-xl text-sm bg-white border border-[#E4E6EB] focus:border-[#D90816] focus:ring-1 focus:ring-[#D90816] transition-colors cursor-pointer text-[#18181B]"
+                      className="w-full px-3.5 py-2.5 rounded-xl text-sm bg-white border border-[#E4E6EB] focus:border-[#09090B] focus:ring-1 focus:ring-[#09090B]/15 transition-colors cursor-pointer text-[#18181B]"
                     >
                       <option value="vehicle_sourcing">Vehicle Sourcing (Auctions & Export)</option>
                       <option value="electronics_enquiry">Electronics Enquiry (Retail & Wholesale)</option>
@@ -341,9 +335,9 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                         value={formData.vehicleMakeModelOrLink}
                         onChange={(e) => setFormData({ ...formData, vehicleMakeModelOrLink: e.target.value })}
                         placeholder="e.g. 2022 Audi Q5 or Copart Lot #12345678"
-                        className="w-full px-3 py-2 rounded-lg text-xs bg-white border border-[#E4E6EB] focus:border-[#D90816] focus:ring-1 focus:ring-[#D90816] transition-colors placeholder:text-[#BFC2C8]"
+                        className="w-full px-3 py-2 rounded-lg text-xs bg-white border border-[#E4E6EB] focus:border-[#09090B] focus:ring-1 focus:ring-[#09090B]/15 transition-colors placeholder:text-[#BFC2C8]"
                       />
-                      <span className="block mt-1 text-[11px] text-[#8E939D]">
+                      <span className="block mt-1 text-[11px] text-muted">
                         Mention Copart or IAAI lot numbers if already identified.
                       </span>
                     </div>
@@ -360,7 +354,7 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                         value={formData.shippingOriginAndCargo}
                         onChange={(e) => setFormData({ ...formData, shippingOriginAndCargo: e.target.value })}
                         placeholder="e.g. Origin: Toronto, Canada · Cargo: 1 vehicle & 2 barrels"
-                        className="w-full px-3 py-2 rounded-lg text-xs bg-white border border-[#E4E6EB] focus:border-[#D90816] focus:ring-1 focus:ring-[#D90816] transition-colors placeholder:text-[#BFC2C8]"
+                        className="w-full px-3 py-2 rounded-lg text-xs bg-white border border-[#E4E6EB] focus:border-[#09090B] focus:ring-1 focus:ring-[#09090B]/15 transition-colors placeholder:text-[#BFC2C8]"
                       />
                     </div>
                   )}
@@ -376,7 +370,7 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                         value={formData.electronicsModelAndQty}
                         onChange={(e) => setFormData({ ...formData, electronicsModelAndQty: e.target.value })}
                         placeholder="e.g. 5x iPhone 15 Pro Max 256GB, Brand New"
-                        className="w-full px-3 py-2 rounded-lg text-xs bg-white border border-[#E4E6EB] focus:border-[#D90816] focus:ring-1 focus:ring-[#D90816] transition-colors placeholder:text-[#BFC2C8]"
+                        className="w-full px-3 py-2 rounded-lg text-xs bg-white border border-[#E4E6EB] focus:border-[#09090B] focus:ring-1 focus:ring-[#09090B]/15 transition-colors placeholder:text-[#BFC2C8]"
                       />
                     </div>
                   )}
@@ -392,7 +386,7 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                         value={formData.merchandiseDescriptionOrLink}
                         onChange={(e) => setFormData({ ...formData, merchandiseDescriptionOrLink: e.target.value })}
                         placeholder="e.g. Industrial tools, specialized parts, or store web URL"
-                        className="w-full px-3 py-2 rounded-lg text-xs bg-white border border-[#E4E6EB] focus:border-[#D90816] focus:ring-1 focus:ring-[#D90816] transition-colors placeholder:text-[#BFC2C8]"
+                        className="w-full px-3 py-2 rounded-lg text-xs bg-white border border-[#E4E6EB] focus:border-[#09090B] focus:ring-1 focus:ring-[#09090B]/15 transition-colors placeholder:text-[#BFC2C8]"
                       />
                     </div>
                   )}
@@ -400,9 +394,9 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                   {/* Budget Amount and Currency Selector */}
                   <div>
                     <label className="block text-xs font-semibold text-[#18181B] mb-1.5">
-                      Budget & Preferred Currency <span className="text-[#8E939D] font-normal">(Optional)</span>
+                      Budget & Preferred Currency <span className="text-muted font-normal">(Optional)</span>
                     </label>
-                    <div className="flex rounded-xl overflow-hidden border border-[#E4E6EB] focus-within:border-[#D90816] focus-within:ring-1 focus-within:ring-[#D90816]">
+                    <div className="flex rounded-xl overflow-hidden border border-[#E4E6EB] focus-within:border-[#09090B] focus-within:ring-1 focus-within:ring-[#09090B]/15">
                       <select
                         value={formData.currency}
                         onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
@@ -429,7 +423,7 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                   {/* Requirements or Message */}
                   <div>
                     <label htmlFor="requirements" className="block text-xs font-semibold text-[#18181B] mb-1.5">
-                      Requirements or Message <span className="text-[#D90816]">*</span>
+                      Requirements or Message <span className="text-accent">*</span>
                     </label>
                     <textarea
                       id="requirements"
@@ -438,11 +432,11 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                       onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
                       placeholder="Please describe your specific purchase, condition requirements, or timeline..."
                       className={`w-full px-3.5 py-2.5 rounded-xl text-sm bg-white border ${
-                        errors.requirements ? 'border-[#D90816] bg-[#FFF8F8]' : 'border-[#E4E6EB]'
-                      } focus:border-[#D90816] focus:ring-1 focus:ring-[#D90816] transition-colors placeholder:text-[#BFC2C8]`}
+                        errors.requirements ? 'border-[#C9A8A8] bg-[#FBF7F7]' : 'border-[#E4E6EB]'
+                      } focus:border-[#09090B] focus:ring-1 focus:ring-[#09090B]/15 transition-colors placeholder:text-[#BFC2C8]`}
                     />
                     {errors.requirements && (
-                      <p className="mt-1 text-xs text-[#D90816] flex items-center gap-1">
+                      <p className="mt-1 text-xs text-accent flex items-center gap-1">
                         <AlertCircle className="w-3 h-3" />
                         <span>{errors.requirements}</span>
                       </p>
@@ -456,21 +450,21 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                         type="checkbox"
                         checked={formData.consentAgreed}
                         onChange={(e) => setFormData({ ...formData, consentAgreed: e.target.checked })}
-                        className="mt-0.5 rounded text-[#D90816] focus:ring-[#D90816] border-[#E4E6EB]"
+                        className="mt-0.5 rounded text-accent focus:ring-[#09090B]/15 border-[#E4E6EB]"
                       />
                       <span>
                         I agree that GAC Auto Tech may contact me about this enquiry.{' '}
                         <button
                           type="button"
                           onClick={onOpenPrivacy}
-                          className="text-[#D90816] hover:underline font-medium inline"
+                          className="text-accent hover:underline font-medium inline"
                         >
                           See the Privacy Policy.
                         </button>
                       </span>
                     </label>
                     {errors.consentAgreed && (
-                      <p className="mt-1 text-xs text-[#D90816] flex items-center gap-1">
+                      <p className="mt-1 text-xs text-accent flex items-center gap-1">
                         <AlertCircle className="w-3 h-3" />
                         <span>{errors.consentAgreed}</span>
                       </p>
@@ -481,7 +475,7 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full flex items-center justify-center gap-2 py-3.5 px-6 text-sm font-bold text-white bg-[#D90816] hover:bg-[#B80713] disabled:opacity-70 rounded-xl transition-all shadow-md shadow-[#D90816]/30 cursor-pointer"
+                    className="w-full flex items-center justify-center gap-2 py-3.5 px-6 text-sm font-bold btn-theme disabled:opacity-70 rounded-xl transition-all shadow-sm shadow-black/10 cursor-pointer"
                   >
                     {isSubmitting ? (
                       <>

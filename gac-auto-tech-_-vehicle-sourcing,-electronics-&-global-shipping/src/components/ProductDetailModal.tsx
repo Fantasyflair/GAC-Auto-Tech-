@@ -50,7 +50,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               {product.availability}
             </span>
             {product.wholesaleEligible && (
-              <span className="px-2.5 py-1 rounded-md text-xs font-mono bg-[#D90816] text-white font-semibold">
+              <span className="px-2.5 py-1 rounded-md text-xs bg-accent-soft text-accent font-semibold">
                 Wholesale Supported
               </span>
             )}
@@ -60,33 +60,33 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         {/* Modal Body */}
         <div className="p-6 sm:p-8">
           
-          <div className="text-xs font-mono text-[#8E939D] uppercase tracking-wider mb-1">
+          <div className="text-xs text-muted uppercase tracking-wider mb-1">
             REF: {product.listingRef} · {product.category}
           </div>
 
-          <h2 id="product-modal-title" className="text-xl sm:text-2xl font-extrabold text-[#18181B] mb-3">
+          <h2 id="product-modal-title" className="text-xl sm:text-2xl font-bold text-[#18181B] mb-3">
             {product.title}
           </h2>
 
           <div className="flex items-center gap-4 py-2.5 px-3 bg-[#F6F7F9] rounded-xl border border-[#E4E6EB] text-xs text-[#18181B] mb-5">
             <div>
-              <span className="text-[#8E939D] block text-[11px]">Condition</span>
+              <span className="text-muted block text-[11px]">Condition</span>
               <span className="font-semibold">{product.condition}</span>
             </div>
             <div className="h-6 w-px bg-[#E4E6EB]" />
             <div>
-              <span className="text-[#8E939D] block text-[11px]">Availability</span>
+              <span className="text-muted block text-[11px]">Availability</span>
               <span className="font-semibold">{product.availability}</span>
             </div>
           </div>
 
-          <h3 className="text-xs font-bold text-[#8E939D] uppercase tracking-wider font-mono mb-2">
+          <h3 className="text-xs font-bold text-muted uppercase tracking-wider mb-2">
             Key Specifications
           </h3>
           <div className="space-y-2 mb-5">
             {product.specs.map((spec, i) => (
               <div key={i} className="flex items-center gap-2 text-xs text-[#606570]">
-                <Check className="w-3.5 h-3.5 text-[#D90816] shrink-0" />
+                <Check className="w-3.5 h-3.5 text-accent shrink-0" />
                 <span>{spec}</span>
               </div>
             ))}
@@ -103,7 +103,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 onClose();
                 onEnquire(product);
               }}
-              className="w-full sm:flex-1 py-3 px-5 text-xs sm:text-sm font-bold text-white bg-[#D90816] hover:bg-[#B80713] rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+              className="w-full sm:flex-1 py-3 px-5 text-xs sm:text-sm font-semibold btn-ink rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
             >
               <span>Enquire for Price & Sourcing</span>
               <ArrowRight className="w-4 h-4" />
@@ -115,7 +115,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               rel="noopener noreferrer"
               className="w-full sm:w-auto py-3 px-5 text-xs sm:text-sm font-semibold text-[#18181B] bg-[#F6F7F9] hover:bg-[#EAECEF] border border-[#E4E6EB] rounded-xl transition-colors flex items-center justify-center gap-2"
             >
-              <MessageCircle className="w-4 h-4 text-[#25D366] fill-current" />
+              <MessageCircle className="w-4 h-4 fill-current" />
               <span>WhatsApp</span>
             </a>
           </div>

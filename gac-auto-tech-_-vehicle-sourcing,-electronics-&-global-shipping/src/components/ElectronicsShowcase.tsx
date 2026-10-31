@@ -41,13 +41,13 @@ export const ElectronicsShowcase: React.FC<ElectronicsShowcaseProps> = ({
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <div>
             <div className="inline-flex items-center gap-2 mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D90816]" />
-              <span className="text-xs font-bold tracking-[0.2em] text-[#8E939D] uppercase font-mono">
+              <span className="w-1.5 h-1.5 rounded-full dot-accent" />
+              <span className="text-xs font-bold tracking-[0.2em] text-[#8E939D] uppercase">
                 TECH FOR WORK & PLAY
               </span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-2">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2">
               Your Next Upgrade Starts Here.
             </h2>
 
@@ -59,7 +59,7 @@ export const ElectronicsShowcase: React.FC<ElectronicsShowcaseProps> = ({
           <button
             type="button"
             onClick={onRequestWholesale}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#D90816] hover:bg-[#B80713] text-white text-xs font-bold transition-all shadow-md shadow-[#D90816]/30 active:scale-95 cursor-pointer self-start md:self-auto shrink-0"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full btn-theme text-xs font-bold transition-all shadow-sm shadow-black/10 active:scale-95 cursor-pointer self-start md:self-auto shrink-0"
           >
             <span>Explore Electronics</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -108,7 +108,7 @@ export const ElectronicsShowcase: React.FC<ElectronicsShowcaseProps> = ({
         {/* Wholesale Callout Banner */}
         <div className="bg-white rounded-2xl border border-[#E4E6EB] p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-[#F6F7F9] border border-[#E4E6EB] flex items-center justify-center text-[#D90816] shrink-0">
+            <div className="w-12 h-12 rounded-xl bg-[#F6F7F9] border border-[#E4E6EB] flex items-center justify-center text-accent shrink-0">
               <Building2 className="w-6 h-6 stroke-[1.8]" />
             </div>
             <div>
@@ -124,7 +124,7 @@ export const ElectronicsShowcase: React.FC<ElectronicsShowcaseProps> = ({
           <button
             type="button"
             onClick={onRequestWholesale}
-            className="inline-flex items-center gap-2 px-5 py-3 text-xs font-bold text-white bg-[#D90816] hover:bg-[#B80713] rounded-xl transition-all shadow-sm shadow-[#D90816]/25 whitespace-nowrap cursor-pointer shrink-0"
+            className="inline-flex items-center gap-2 px-5 py-3 text-xs font-bold btn-theme rounded-xl transition-all shadow-sm shadow-black/10 whitespace-nowrap cursor-pointer shrink-0"
           >
             <span>Submit Wholesale Enquiry</span>
             <ArrowRight className="w-4 h-4" />

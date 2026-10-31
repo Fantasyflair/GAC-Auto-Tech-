@@ -38,7 +38,7 @@ export const WhyGacAutoTech: React.FC = () => {
                 key={idx}
                 className="flex items-start gap-4 pt-6 sm:pt-0 sm:px-4 first:px-0 group"
               >
-                <div className="w-10 h-10 rounded-full border border-[#272832] flex items-center justify-center text-white/90 group-hover:text-[#D90816] group-hover:border-[#D90816] transition-colors shrink-0">
+                <div className="w-10 h-10 rounded-full border border-[#272832] flex items-center justify-center text-white/90 group-hover:text-accent group-hover:border-[#d9c4c4] transition-colors shrink-0">
                   <Icon className="w-5 h-5 stroke-[1.5]" />
                 </div>
 

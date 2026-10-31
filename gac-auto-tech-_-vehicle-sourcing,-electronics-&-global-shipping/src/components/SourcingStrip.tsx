@@ -8,7 +8,7 @@ export const SourcingStrip: React.FC = () => {
         
         {/* Left origin markets */}
         <div className="flex items-center gap-2.5">
-          <div className="w-6 h-6 rounded-md bg-[#1B1C23] border border-[#2B2D38] flex items-center justify-center shrink-0 text-[#D90816]">
+          <div className="w-6 h-6 rounded-md bg-[#1B1C23] border border-[#2B2D38] flex items-center justify-center shrink-0 text-accent">
             <Globe className="w-3.5 h-3.5" />
           </div>
           <span className="font-medium text-white/95">

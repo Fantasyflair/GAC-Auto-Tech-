@@ -21,7 +21,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <div className={`rounded-3xl border overflow-hidden transition-all duration-300 flex flex-col justify-between group ${
       theme === 'dark'
-        ? 'bg-[#121316] border-[#272832] hover:border-[#D90816]/50 shadow-md shadow-black/40'
+        ? 'bg-[#121316] border-[#272832] hover:border-[#111113]/25 shadow-md shadow-black/40'
         : 'bg-white border-[#E4E6EB] hover:border-[#D0D4DC] shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-xl'
     }`}>
       
@@ -43,7 +43,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
           {/* Wholesale Indicator if eligible */}
           {product.wholesaleEligible && (
-            <div className="absolute top-3 right-3 px-2 py-0.5 rounded text-[10px] font-mono text-[#D90816] bg-[#D90816]/10 border border-[#D90816]/20 font-semibold">
+            <div className="absolute top-3 right-3 px-2 py-0.5 rounded text-[10px] text-accent bg-accent-soft border border-blush font-semibold">
               Wholesale Ready
             </div>
           )}
@@ -52,7 +52,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Card Content */}
         <div className="p-5">
           {/* Category & Ref */}
-          <div className="flex items-center justify-between text-xs text-[#8E939D] mb-1.5 font-mono">
+          <div className="flex items-center justify-between text-xs text-[#8E939D] mb-1.5">
             <span className="uppercase text-[11px]">{product.category}</span>
             <span className="text-[10px]">REF: {product.listingRef}</span>
           </div>
@@ -60,7 +60,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {/* Product Name */}
           <h3 
             onClick={() => onViewDetails(product)}
-            className={`text-base font-bold group-hover:text-[#D90816] transition-colors leading-snug mb-3 cursor-pointer ${
+            className={`text-base font-bold group-hover:text-accent transition-colors leading-snug mb-3 cursor-pointer ${
               theme === 'dark' ? 'text-white' : 'text-[#18181B]'
             }`}
           >
@@ -71,7 +71,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <div className="space-y-1.5 mb-4 text-xs text-[#8E939D]">
             {product.specs.slice(0, 3).map((spec, i) => (
               <div key={i} className="flex items-start gap-1.5 line-clamp-1">
-                <Check className="w-3.5 h-3.5 text-[#D90816] shrink-0 mt-0.5" />
+                <Check className="w-3.5 h-3.5 text-accent shrink-0 mt-0.5" />
                 <span className="truncate">{spec}</span>
               </div>
             ))}
@@ -99,7 +99,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <button
             type="button"
             onClick={() => onEnquirePrice(product)}
-            className="text-xs font-bold text-[#D90816] hover:text-[#B80713] transition-colors flex items-center gap-1 cursor-pointer"
+            className="text-xs font-semibold text-accent hover:opacity-70 transition-opacity flex items-center gap-1 cursor-pointer"
           >
             <span>Enquire for Price</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -109,7 +109,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             href={getWhatsAppUrl(whatsAppEnquiryMessage)}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-[#25D366] hover:bg-[#25D366]/10 border border-[#E4E6EB] hover:border-[#25D366]/40 rounded-lg transition-colors"
+            className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold hover:bg-black/5 border border-[#E4E6EB] hover:border-black/30 rounded-lg transition-colors"
             aria-label={`Enquire about ${product.title} on WhatsApp`}
           >
             <MessageCircle className="w-3.5 h-3.5 fill-current" />
