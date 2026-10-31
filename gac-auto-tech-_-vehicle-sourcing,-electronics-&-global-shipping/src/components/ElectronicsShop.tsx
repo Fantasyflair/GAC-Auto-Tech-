@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
   ArrowLeft,
@@ -145,8 +145,6 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
   const [activeFilters, setActiveFilters] = useState<FilterId[]>([]);
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
-  const railRef = useRef<HTMLDivElement>(null);
-
   const counts = useMemo(() => {
     const map: Record<string, number> = { all: SAMPLE_ELECTRONICS.length };
     SAMPLE_ELECTRONICS.forEach((p) => {
@@ -168,8 +166,6 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
   const pageCount = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
   const currentPage = Math.min(page, pageCount);
   const visible = results.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
-  const recommendations = SAMPLE_ELECTRONICS.filter((p) => p.wholesaleEligible || p.availability === 'Available');
-
   const pickCategory = (id: CategoryId) => {
     setCategory(id);
     setPage(1);
@@ -178,12 +174,6 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
   const toggleFilter = (id: FilterId) => {
     setActiveFilters((current) => (current.includes(id) ? current.filter((f) => f !== id) : [...current, id]));
     setPage(1);
-  };
-
-  const scrollRail = (direction: 1 | -1) => {
-    const rail = railRef.current;
-    if (!rail) return;
-    rail.scrollBy({ left: direction * rail.clientWidth * 0.8, behavior: 'smooth' });
   };
 
   const sidebarItem = (selected: boolean) =>
@@ -375,43 +365,7 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
           </div>
         </div>
 
-        {/* Recommendations */}
-        <div className="mt-20">
-          <div className="flex items-end justify-between gap-4">
-            <h3 className="text-2xl font-semibold sm:text-3xl">Explore our recommendations</h3>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => scrollRail(-1)}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-black/15 hover:bg-black/5 cursor-pointer dark:border-white/20 dark:hover:bg-white/10"
-                aria-label="Scroll recommendations left"
-              >
-                <ArrowLeft className="w-4 h-4" />
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollRail(1)}
-                className="btn-theme flex h-10 w-10 items-center justify-center rounded-full cursor-pointer"
-                aria-label="Scroll recommendations right"
-              >
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-          <div
-            ref={railRef}
-            className="mt-6 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {recommendations.map((product, i) => (
-              <div key={product.id} className="w-[72%] shrink-0 snap-start sm:w-[42%] lg:w-[23.5%]">
-                <ProductTile product={product} index={i} compact onView={() => onViewProduct(product)} onBuy={() => onBuyNow(product)} />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Call to action */}
-        <Reveal className="mt-20">
+        <Reveal className="mt-16">
           <div className="grid grid-cols-1 items-end gap-8 rounded-[28px] bg-[#111113] p-8 text-white sm:p-10 md:grid-cols-2 dark:bg-[#151517] dark:ring-1 dark:ring-white/10">
             <div>
               <h3 className="text-3xl font-semibold leading-tight sm:text-4xl">

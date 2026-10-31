@@ -56,7 +56,7 @@ const links = [
   { id: 'quote-form', label: 'Contact' },
 ];
 
-const spyIds = ['services', 'electronics', 'vehicles', 'quote-form', 'faq'];
+const spyIds = ['services', 'vehicles', 'electronics', 'quote-form', 'faq'];
 
 const searchExamples = [
   '2021 Toyota Land Cruiser under $40,000 from Copart',
@@ -548,23 +548,23 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="fixed inset-0 z-40 overflow-y-auto bg-[#09090B] px-6 pt-28 pb-10 text-white xl:hidden"
+            className="fixed inset-0 z-40 overflow-y-auto bg-white px-6 pt-28 pb-10 text-[#111113] dark:bg-[#09090B] dark:text-white xl:hidden"
             initial={{ clipPath: 'inset(0 0 100% 0)' }}
             animate={{ clipPath: 'inset(0 0 0% 0)' }}
             exit={{ clipPath: 'inset(0 0 100% 0)' }}
             transition={{ duration: 0.55, ease: EASE }}
           >
             <form onSubmit={submitSearch} className="relative mb-6">
-              <Search className="pointer-events-none absolute left-4 top-1/2 w-4 h-4 -translate-y-1/2 text-white/50" />
+              <Search className="pointer-events-none absolute left-4 top-1/2 w-4 h-4 -translate-y-1/2 text-black/40 dark:text-white/50" />
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search vehicles, electronics, shipping"
-                className="w-full rounded-2xl border border-white/15 bg-white/[0.06] py-3.5 pl-11 pr-4 text-sm text-white placeholder:text-white/40 focus:outline-none"
+                className="w-full rounded-2xl border border-black/10 bg-[#f4f4f4] py-3.5 pl-11 pr-4 text-sm placeholder:text-black/40 focus:outline-none dark:border-white/15 dark:bg-white/[0.06] dark:placeholder:text-black/30 dark:text-white/40"
               />
             </form>
 
-            <p className="text-[11px] uppercase tracking-[0.18em] text-white/45">Categories</p>
+            <p className="text-[11px] uppercase tracking-[0.18em] text-muted">Categories</p>
             <div className="mt-3 grid grid-cols-2 gap-2">
               {categories.map((category) => {
                 const Icon = category.icon;
@@ -573,7 +573,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                     key={category.title}
                     type="button"
                     onClick={() => go(category.section)}
-                    className="flex items-center gap-2 rounded-2xl border border-white/10 px-3 py-3 text-left text-sm font-semibold cursor-pointer"
+                    className="flex items-center gap-2 rounded-2xl border border-black/10 dark:border-white/10 px-3 py-3 text-left text-sm font-semibold cursor-pointer"
                   >
                     <Icon className="w-4 h-4" />
                     {category.title}
@@ -594,23 +594,23 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.45, delay: 0.15 + i * 0.05, ease: EASE }}
-                  className="flex items-center justify-between border-b border-white/10 py-3.5 text-left font-display text-2xl font-semibold cursor-pointer"
+                  className="flex items-center justify-between border-b border-black/10 dark:border-white/10 py-3.5 text-left font-display text-2xl font-semibold cursor-pointer"
                 >
                   {link.label}
-                  <ArrowUpRight className="w-5 h-5 text-white/40" />
+                  <ArrowUpRight className="w-5 h-5 text-black/30 dark:text-white/40" />
                 </motion.button>
               ))}
               <button
                 type="button"
                 onClick={() => { closeAll(); onNavigateAbout(); }}
-                className="flex items-center justify-between border-b border-white/10 py-3.5 text-left font-display text-2xl font-semibold cursor-pointer"
+                className="flex items-center justify-between border-b border-black/10 dark:border-white/10 py-3.5 text-left font-display text-2xl font-semibold cursor-pointer"
               >
                 About
-                <ArrowUpRight className="w-5 h-5 text-white/40" />
+                <ArrowUpRight className="w-5 h-5 text-black/30 dark:text-white/40" />
               </button>
             </nav>
 
-            <p className="mt-8 text-[11px] uppercase tracking-[0.18em] text-white/45">Partners</p>
+            <p className="mt-8 text-[11px] uppercase tracking-[0.18em] text-muted">Partners</p>
             <div className="mt-3 grid grid-cols-2 gap-2">
               {partners.map((partner) => {
                 const Icon = partner.icon;
@@ -619,7 +619,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                     key={partner.title}
                     type="button"
                     onClick={() => quote('general_merchandise', `Partner enquiry: ${partner.title}`)}
-                    className="flex items-center gap-2 rounded-2xl border border-white/10 px-3 py-3 text-left text-sm cursor-pointer"
+                    className="flex items-center gap-2 rounded-2xl border border-black/10 dark:border-white/10 px-3 py-3 text-left text-sm cursor-pointer"
                   >
                     <Icon className="w-4 h-4 shrink-0" />
                     {partner.title}
@@ -632,7 +632,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
               <button
                 type="button"
                 onClick={() => { closeAll(); onOpenSignIn(); }}
-                className="flex items-center justify-center gap-2 rounded-full border border-white/15 py-3 text-sm font-semibold cursor-pointer"
+                className="flex items-center justify-center gap-2 rounded-full border border-black/15 dark:border-white/15 py-3 text-sm font-semibold cursor-pointer"
               >
                 <UserRound className="w-4 h-4" />
                 Sign in
@@ -640,7 +640,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
               <button
                 type="button"
                 onClick={() => quote('vehicle_sourcing', '')}
-                className="rounded-full btn-on-dark py-3 text-sm font-semibold cursor-pointer"
+                className="rounded-full btn-theme py-3 text-sm font-semibold cursor-pointer"
               >
                 Get a quote
               </button>
@@ -648,7 +648,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                 href={getWhatsAppUrl('Hello GAC Auto Tech, I would like to chat regarding an enquiry.')}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="col-span-2 flex items-center justify-center gap-2 rounded-full border border-white/15 py-3 text-sm font-semibold"
+                className="col-span-2 flex items-center justify-center gap-2 rounded-full border border-black/15 dark:border-white/15 py-3 text-sm font-semibold"
               >
                 <WhatsAppIcon className="w-4 h-4" />
                 Chat on WhatsApp
@@ -656,7 +656,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="col-span-2 flex items-center justify-center gap-2 rounded-full border border-white/15 py-3 text-sm font-semibold cursor-pointer sm:hidden"
+                className="col-span-2 flex items-center justify-center gap-2 rounded-full border border-black/15 dark:border-white/15 py-3 text-sm font-semibold cursor-pointer sm:hidden"
               >
                 {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
                 {theme === 'dark' ? 'Light mode' : 'Dark mode'}

@@ -177,7 +177,7 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
           {...fadeUp(0.1)}
           className="relative overflow-hidden rounded-[28px] bg-[#d9d9d9] p-5 sm:p-7 dark:bg-[#151517] lg:col-span-8 lg:min-h-[580px]"
         >
-          <div className="relative z-10 flex h-full flex-col lg:max-w-[44%]">
+          <div className="relative z-10 flex flex-col lg:h-full lg:max-w-[44%]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={current.tab}

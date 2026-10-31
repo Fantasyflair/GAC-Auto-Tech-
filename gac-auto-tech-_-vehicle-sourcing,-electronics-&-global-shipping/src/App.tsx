@@ -106,16 +106,16 @@ function MainApp() {
           onExploreVehicles={() => scrollToSection('vehicles')}
         />
 
-        <ElectronicsShop
-          onViewProduct={(product) => setSelectedProduct(product)}
-          onBuyNow={(product) => scrollToQuote('electronics_enquiry', `${product.title} (Ref: ${product.listingRef})`)}
-          onRequestProduct={() => scrollToQuote('electronics_enquiry', '')}
-        />
-
         <FeaturedVehicles
           onViewDetails={(vehicle) => setSelectedVehicle(vehicle)}
           onRequestPrice={(vehicle) => scrollToQuote('vehicle_sourcing', `${vehicle.year} ${vehicle.make} ${vehicle.model} (Ref: ${vehicle.listingRef})`)}
           onBrowseAll={() => scrollToQuote('vehicle_sourcing', 'All vehicle listings inquiry')}
+        />
+
+        <ElectronicsShop
+          onViewProduct={(product) => setSelectedProduct(product)}
+          onBuyNow={(product) => scrollToQuote('electronics_enquiry', `${product.title} (Ref: ${product.listingRef})`)}
+          onRequestProduct={() => scrollToQuote('electronics_enquiry', '')}
         />
 
         <Reveal>
