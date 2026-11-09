@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { GacLogo } from './GacLogo';
 import { SocialIcons } from './SocialIcons';
 import { getWhatsAppUrl } from '../data/mockData';
@@ -6,23 +7,17 @@ import { ServiceType } from '../types';
 import { ArrowRight, MessageCircle, CheckCircle2 } from 'lucide-react';
 
 interface FooterProps {
-  onNavigateHome: () => void;
+  onNavigate: (sectionId: string) => void;
   onNavigateAbout: () => void;
-  onNavigateVehicles: () => void;
-  onNavigateElectronics: () => void;
   onSelectService: (service: ServiceType) => void;
-  onRequestQuote: () => void;
   onOpenPrivacy: () => void;
   onOpenTerms: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
-  onNavigateHome,
+  onNavigate,
   onNavigateAbout,
-  onNavigateVehicles,
-  onNavigateElectronics,
   onSelectService,
-  onRequestQuote,
   onOpenPrivacy,
   onOpenTerms
 }) => {
@@ -150,16 +145,21 @@ export const Footer: React.FC<FooterProps> = ({
                 <li>
                   <button
                     type="button"
-                    onClick={onNavigateHome}
+                    onClick={() => onNavigate('top')}
                     className="hover:text-accent transition-colors cursor-pointer"
                   >
                     Home
                   </button>
                 </li>
                 <li>
+                  <Link href="/products" className="hover:text-accent transition-colors">
+                    All products
+                  </Link>
+                </li>
+                <li>
                   <button
                     type="button"
-                    onClick={onNavigateVehicles}
+                    onClick={() => onNavigate('vehicles')}
                     className="hover:text-accent transition-colors cursor-pointer"
                   >
                     Featured Vehicles
@@ -168,7 +168,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <li>
                   <button
                     type="button"
-                    onClick={onNavigateElectronics}
+                    onClick={() => onNavigate('electronics')}
                     className="hover:text-accent transition-colors cursor-pointer"
                   >
                     Electronics Showcase
@@ -209,7 +209,10 @@ export const Footer: React.FC<FooterProps> = ({
             © {currentYear} GAC Auto Tech Canada Inc. All rights reserved.
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+            <Link href="/admin" className="hover:text-black dark:hover:text-white transition-colors">
+              Admin
+            </Link>
             <button
               type="button"
               onClick={onOpenTerms}

@@ -6,17 +6,10 @@ import { WhatsAppIcon } from './WhatsAppIcon';
 import { EASE } from './Reveal';
 import { useDialogBehavior } from './ModalShell';
 
-const topics = [
-  { label: 'A vehicle', message: "Hello GAC Auto Tech, I'm looking for a vehicle: " },
-  { label: 'Electronics', message: "Hello GAC Auto Tech, I'd like a price on: " },
-  { label: 'Shipping', message: 'Hello GAC Auto Tech, I need a shipping quote from ' },
-];
-
 export const FloatingWhatsApp: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [quickMessage, setQuickMessage] = useState('');
   const panelRef = useRef<HTMLDivElement>(null);
-  const messageRef = useRef<HTMLTextAreaElement>(null);
 
   useDialogBehavior(isOpen, () => setIsOpen(false), panelRef, { lockScroll: false, trapFocus: false });
 
@@ -26,16 +19,6 @@ export const FloatingWhatsApp: React.FC = () => {
     window.open(url, '_blank', 'noopener,noreferrer');
     setIsOpen(false);
     setQuickMessage('');
-  };
-
-  const pickTopic = (message: string) => {
-    setQuickMessage(message);
-    requestAnimationFrame(() => {
-      const field = messageRef.current;
-      if (!field) return;
-      field.focus();
-      field.setSelectionRange(message.length, message.length);
-    });
   };
 
   return (
@@ -76,51 +59,26 @@ export const FloatingWhatsApp: React.FC = () => {
               </button>
             </div>
 
-            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-5 pt-4">
-              {/* Reads as the first message in a chat, so the prompt feels like a conversation. */}
-              <div className="max-w-[90%] rounded-media rounded-tl-none bg-white/[0.07] px-4 py-3">
-                <p className="text-[0.9375rem] font-semibold leading-snug">Hi, how can we help?</p>
-                <p className="mt-1 text-sm leading-relaxed text-white/70">
-                  Send a car link, a product name, or your shipping route and our team will reply on WhatsApp.
-                </p>
-              </div>
-
-              <div className="mt-4 flex flex-wrap gap-2" aria-label="Quick topics">
-                {topics.map((topic) => (
-                  <button
-                    key={topic.label}
-                    type="button"
-                    onClick={() => pickTopic(topic.message)}
-                    className="rounded-control border border-white/15 px-3 py-1.5 text-[0.8125rem] font-semibold text-white/85 transition-colors hover:border-white/40 hover:text-white cursor-pointer"
-                  >
-                    {topic.label}
-                  </button>
-                ))}
-              </div>
-
-              <form onSubmit={handleSend} className="mt-4">
-                <label htmlFor="whatsapp-message" className="text-[0.8125rem] font-semibold text-white/70">
-                  Your message
-                </label>
-                <textarea
-                  id="whatsapp-message"
-                  ref={messageRef}
-                  rows={3}
-                  value={quickMessage}
-                  onChange={(e) => setQuickMessage(e.target.value)}
-                  placeholder="e.g. 2021 Lexus RX 350, budget $30k, shipping to Tema"
-                  className="mt-1.5 w-full resize-none rounded-control border border-white/15 bg-white/[0.03] px-3.5 py-3 text-base leading-relaxed text-white placeholder:text-[0.9375rem] placeholder:text-white/40 focus:border-white/45 focus:outline-none transition-colors"
-                />
-                <button
-                  type="submit"
-                  className="mt-3 flex w-full items-center justify-center gap-2 rounded-control bg-white px-4 py-3.5 text-[0.9375rem] font-bold text-[#111113] transition-colors hover:bg-[#ececec] cursor-pointer"
-                >
-                  Continue in WhatsApp
-                  <ArrowUpRight className="w-4 h-4" />
-                </button>
-                <p className="mt-2.5 text-center text-xs text-white/50">Opens WhatsApp in a new tab</p>
-              </form>
-            </div>
+            <form onSubmit={handleSend} className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-5">
+              <label htmlFor="whatsapp-message" className="sr-only">
+                Your message
+              </label>
+              <textarea
+                id="whatsapp-message"
+                rows={4}
+                value={quickMessage}
+                onChange={(e) => setQuickMessage(e.target.value)}
+                placeholder="Type your message…"
+                className="w-full resize-none rounded-control border border-white/15 bg-white/[0.03] px-3.5 py-3 text-base leading-relaxed text-white placeholder:text-white/45 focus:border-white/45 focus:outline-none transition-colors"
+              />
+              <button
+                type="submit"
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-control bg-white px-4 py-3.5 text-[0.9375rem] font-bold text-[#111113] transition-colors hover:bg-[#ececec] cursor-pointer"
+              >
+                Send on WhatsApp
+                <ArrowUpRight className="w-4 h-4" />
+              </button>
+            </form>
           </motion.div>
         )}
       </AnimatePresence>

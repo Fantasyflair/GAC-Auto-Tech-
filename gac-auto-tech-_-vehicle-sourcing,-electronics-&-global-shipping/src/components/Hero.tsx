@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowRight, Boxes, CarFront, Container, MonitorSmartphone } from 'lucide-react';
 import { ServiceType } from '../types';
@@ -79,10 +79,35 @@ const slides: Slide[] = [
   },
 ];
 
+const SLIDE_MS = 3000;
+
 export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
-  // Vehicles lead; the banner only changes when the visitor picks another tab.
   const [slide, setSlide] = useState(0);
+  // Pauses while the visitor is reading or about to click, so the copy doesn't change under them.
+  const [paused, setPaused] = useState(false);
   const current = slides[slide];
+
+  useEffect(() => {
+    slides.forEach((s) => {
+      const img = new Image();
+      img.src = s.image;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (paused) return;
+    const timer = window.setTimeout(() => setSlide((i) => (i + 1) % slides.length), SLIDE_MS);
+    return () => window.clearTimeout(timer);
+  }, [slide, paused]);
+
+  const pauseHandlers = {
+    onMouseEnter: () => setPaused(true),
+    onMouseLeave: () => setPaused(false),
+    onFocus: () => setPaused(true),
+    onBlur: (e: React.FocusEvent) => {
+      if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setPaused(false);
+    },
+  };
 
   const primaryAction = () => {
     if (current.service === 'electronics_enquiry') {
@@ -126,6 +151,7 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.35, ease: EASE }}
             className="max-w-2xl"
+            {...pauseHandlers}
           >
             <p className="eyebrow flex items-center gap-3 text-white/75">
               <span className="h-[2px] w-7 bg-signal" aria-hidden />
@@ -172,8 +198,8 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
         </AnimatePresence>
       </div>
 
-      {/* Service tabs. Starts on vehicles and switches only on a tab press. */}
-      <div className="relative z-10 border-t border-white/15 bg-black/35 backdrop-blur-md">
+      {/* Service tabs. Advance every few seconds; the red bar on the active tab shows the countdown. */}
+      <div className="relative z-10 border-t border-white/15 bg-black/35 backdrop-blur-md" {...pauseHandlers}>
         <div className="mx-auto grid max-w-7xl grid-cols-4 sm:px-3 lg:px-5">
           {slides.map((s, i) => {
             const Icon = s.icon;
@@ -189,11 +215,15 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
                 } ${active ? 'text-white' : 'text-white/55 hover:text-white'}`}
               >
                 {active && (
-                  <motion.span
-                    layoutId="hero-tab-marker"
-                    className="absolute inset-x-0 top-0 h-[2px] bg-signal"
-                    transition={{ duration: 0.35, ease: EASE }}
-                  />
+                  <span className="absolute inset-x-0 top-0 h-[2px] overflow-hidden bg-white/15" aria-hidden>
+                    <motion.span
+                      key={`${slide}-${paused}`}
+                      className="block h-full origin-left bg-signal"
+                      initial={{ scaleX: paused ? 1 : 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: paused ? 0 : SLIDE_MS / 1000, ease: 'linear' }}
+                    />
+                  </span>
                 )}
                 <span className="hidden font-semibold tabular-nums text-white/40 lg:inline">0{i + 1}</span>
                 <Icon className="w-4 h-4 shrink-0" strokeWidth={1.8} />

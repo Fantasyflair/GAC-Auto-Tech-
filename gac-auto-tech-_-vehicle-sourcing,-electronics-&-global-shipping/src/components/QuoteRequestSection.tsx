@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CURRENCIES, getWhatsAppUrl } from '../data/mockData';
+import { addEnquiry } from '../data/enquiries';
 import { ServiceType, QuoteFormData } from '../types';
 import { MessageCircle, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 
@@ -85,6 +86,21 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
     if (!validate()) return;
 
     setIsSubmitting(true);
+    const specificDetail =
+      formData.vehicleMakeModelOrLink ||
+      formData.electronicsModelAndQty ||
+      formData.shippingOriginAndCargo ||
+      formData.merchandiseDescriptionOrLink ||
+      '';
+    addEnquiry({
+      name: formData.fullName.trim(),
+      email: formData.email.trim(),
+      whatsapp: formData.whatsappNumber.trim(),
+      service: formData.serviceRequired,
+      destination: formData.destinationCountry.trim(),
+      budget: formData.budgetAmount ? `${formData.currency} ${formData.budgetAmount}` : '',
+      details: [specificDetail.trim(), formData.requirements.trim()].filter(Boolean).join(' — '),
+    });
     // Simulate real UI transition
     setTimeout(() => {
       setIsSubmitting(false);

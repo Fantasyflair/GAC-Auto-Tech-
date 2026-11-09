@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'motion/react';
 import {
   ArrowUpRight,
+  LayoutDashboard,
+  LayoutGrid,
   Sun,
   Moon,
   Search,
@@ -29,6 +33,7 @@ import { EASE } from './Reveal';
 
 interface HeaderProps {
   onRequestQuote: (service?: ServiceType, details?: string) => void;
+  onNavigate: (sectionId: string) => void;
   onNavigateAbout: () => void;
   onOpenSignIn: () => void;
   onSearch: (query: string) => void;
@@ -65,8 +70,9 @@ const searchExamples = [
   'iPhone 15 Pro, unlocked, 256GB',
 ];
 
-export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout, onOpenSignIn, onSearch }) => {
+export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigate, onNavigateAbout, onOpenSignIn, onSearch }) => {
   const { theme, toggleTheme } = useTheme();
+  const onHome = usePathname() === '/';
   const enquiryList = useEnquiryList();
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -139,13 +145,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
 
   const go = (id: string) => {
     closeAll();
-    if (id === 'top') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-    const el = document.getElementById(id);
-    if (!el) return;
-    window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 84, behavior: 'smooth' });
+    onNavigate(id);
   };
 
   const quote = (service: ServiceType, details: string) => {
@@ -163,7 +163,9 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
   };
 
   const categoriesActive = active === 'services' || active === 'electronics';
-  const indicator = hovered ?? openMenu ?? (categoriesActive ? 'categories' : active === 'vehicles' ? 'vehicles' : active);
+  // Section highlighting only applies on the home page, where those sections live.
+  const sectionIndicator = onHome ? (categoriesActive ? 'categories' : active === 'vehicles' ? 'vehicles' : active) : null;
+  const indicator = hovered ?? openMenu ?? sectionIndicator;
 
   const pill = (id: string) =>
     indicator === id && (
@@ -202,9 +204,13 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
           }`}
         >
           <div className="flex h-16 items-center justify-between gap-3 px-4 sm:px-5">
-            <a
-              href="#top"
+            <Link
+              href="/"
               onClick={(e) => {
+                if (!onHome) {
+                  closeAll();
+                  return;
+                }
                 e.preventDefault();
                 go('top');
               }}
@@ -212,7 +218,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
               aria-label="GAC Auto Tech home"
             >
               <GacLogo size="sm" className="h-8" />
-            </a>
+            </Link>
 
             <nav className="hidden xl:flex items-center rounded-full border border-white/10 bg-white/[0.04] p-1">
               <button type="button" onClick={() => go('top')} onMouseEnter={() => { setHovered('top'); setOpenMenu(null); }} className={navText('top')}>
@@ -608,6 +614,22 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                 About
                 <ArrowUpRight className="w-5 h-5 text-muted" />
               </button>
+              <Link
+                href="/products"
+                onClick={closeAll}
+                className="flex items-center justify-between border-b ui-divider py-4 text-left font-display text-2xl"
+              >
+                All products
+                <LayoutGrid className="w-5 h-5 text-muted" />
+              </Link>
+              <Link
+                href="/admin"
+                onClick={closeAll}
+                className="flex items-center justify-between border-b ui-divider py-4 text-left font-display text-2xl"
+              >
+                Admin dashboard
+                <LayoutDashboard className="w-5 h-5 text-muted" />
+              </Link>
             </nav>
 
             <p className="mt-8 eyebrow text-muted">Partners</p>

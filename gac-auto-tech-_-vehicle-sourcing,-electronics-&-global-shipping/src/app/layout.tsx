@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Urbanist } from 'next/font/google';
 import '../index.css';
+import { Providers } from './providers';
 
 const urbanist = Urbanist({
   subsets: ['latin'],
@@ -10,7 +11,11 @@ const urbanist = Urbanist({
 });
 
 export const metadata: Metadata = {
-  title: 'GAC Auto Tech | Vehicle Sourcing, Electronics & Global Shipping',
+  metadataBase: new URL('https://gac-auto-tech.vercel.app'),
+  title: {
+    default: 'GAC Auto Tech | Vehicle Sourcing, Electronics & Global Shipping',
+    template: '%s | GAC Auto Tech',
+  },
   description:
     'Vehicle sourcing through Copart & IAAI, electronics retail & wholesale, and international shipping from Canada, USA, and UK to Ghana and supported destinations.',
   openGraph: {
@@ -33,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`scroll-smooth ${urbanist.variable}`}>
       <body className="bg-white text-[#18181B] antialiased selection:bg-[#E9DCDC] selection:text-[#1A1212]">
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
