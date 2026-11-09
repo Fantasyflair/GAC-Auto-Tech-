@@ -27,10 +27,13 @@
   --text-5xl: 3.0625rem;
   --text-5xl--line-height: 1.04;
 
-  /* Three radii only: panels, media, controls. Pills stay fully rounded. */
-  --radius-panel: 24px;
-  --radius-media: 16px;
-  --radius-control: 12px;
+  /* Three radii only: panels, media, controls. Kept tight for a crisp, engineered edge. */
+  --radius-panel: 8px;
+  --radius-media: 6px;
+  --radius-control: 4px;
+
+  /* Brand red, used sparingly as a signal rather than a fill. */
+  --color-signal: #d7262f;
 }
 
 .pill-light {

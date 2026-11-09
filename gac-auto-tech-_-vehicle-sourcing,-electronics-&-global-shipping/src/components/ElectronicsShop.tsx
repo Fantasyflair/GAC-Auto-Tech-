@@ -34,7 +34,7 @@ interface ElectronicsShopProps {
 type CategoryId = 'all' | ElectronicProduct['category'];
 type FilterId = 'available' | 'incoming' | 'wholesale';
 
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 12;
 
 const categories: { id: CategoryId; label: string; icon: React.ElementType }[] = [
   { id: 'all', label: 'All products', icon: LayoutGrid },
@@ -58,8 +58,7 @@ const ProductTile: React.FC<{
   index: number;
   onView: () => void;
   onBuy: () => void;
-  compact?: boolean;
-}> = ({ product, index, onView, onBuy, compact }) => {
+}> = ({ product, index, onView, onBuy }) => {
   const cart = useEnquiryList();
   const inCart = cart.has(product.id);
 
@@ -78,7 +77,7 @@ const ProductTile: React.FC<{
   };
 
   return (
-    <motion.article {...rise(index % 3)} className="group flex flex-col">
+    <motion.article {...rise(index % 4)} className="group flex flex-col">
       <button
         type="button"
         onClick={onView}
@@ -92,42 +91,41 @@ const ProductTile: React.FC<{
           loading="lazy"
         />
         {product.availability !== 'Available' && (
-          <span className="absolute left-3 top-3 rounded-full bg-[#111113] px-3 py-1 text-xs font-bold text-white">
+          <span className="absolute left-2 top-2 rounded-control bg-[#111113] px-2 py-0.5 text-xs font-bold text-white">
             {product.availability === 'Incoming' ? 'Arriving soon' : 'Sourced to order'}
           </span>
         )}
       </button>
 
-      <div className={`flex flex-1 flex-col ${compact ? 'pt-3' : 'pt-4'}`}>
-        <div className="flex items-start justify-between gap-3">
-          <h3 className="clamp-2 text-base leading-snug">{product.title}</h3>
-          <span className="shrink-0 text-sm font-bold">On request</span>
-        </div>
-        <p className="mt-1.5 text-sm text-muted">
+      <div className="flex flex-1 flex-col pt-3">
+        <h3 className="clamp-2 min-h-[2.7em] text-sm leading-snug sm:text-base">{product.title}</h3>
+        <p className="mt-1 truncate text-xs text-muted">
           {product.condition}
-          {product.wholesaleEligible ? ' · Wholesale available' : ''}
+          {product.wholesaleEligible ? ' · Wholesale' : ''}
         </p>
+        <p className="mt-1.5 text-sm font-bold">On request</p>
 
-        <div className="mt-auto grid grid-cols-2 gap-2 pt-4">
+        <div className="mt-auto flex gap-2 pt-3">
+          <button
+            type="button"
+            onClick={onBuy}
+            className="btn-theme min-w-0 flex-1 rounded-control px-3 py-2.5 text-sm font-bold cursor-pointer"
+          >
+            Buy now
+          </button>
           <button
             type="button"
             onClick={toggleCart}
             aria-pressed={inCart}
-            className={`inline-flex items-center justify-center gap-1.5 rounded-full border px-3 py-2.5 text-sm font-bold transition-colors cursor-pointer ${
+            aria-label={inCart ? `Remove ${product.title} from cart` : `Add ${product.title} to cart`}
+            title={inCart ? 'In cart' : 'Add to cart'}
+            className={`flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-control border transition-colors cursor-pointer ${
               inCart
-                ? 'border-transparent bg-[#ececec] dark:bg-white/10'
+                ? 'border-transparent bg-[#111113] text-white dark:bg-white dark:text-[#111113]'
                 : 'border-black/20 hover:bg-black/5 dark:border-white/25 dark:hover:bg-white/10'
             }`}
           >
             {inCart ? <Check className="w-4 h-4" /> : <ShoppingCart className="w-4 h-4" />}
-            {inCart ? 'In cart' : 'Add to cart'}
-          </button>
-          <button
-            type="button"
-            onClick={onBuy}
-            className="btn-theme rounded-full px-3 py-2.5 text-sm font-bold cursor-pointer"
-          >
-            Buy now
           </button>
         </div>
       </div>
@@ -301,7 +299,7 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.25 }}
-                  className="grid grid-cols-1 gap-x-5 gap-y-9 sm:grid-cols-2 xl:grid-cols-3"
+                  className="grid grid-cols-2 gap-x-3 gap-y-7 sm:gap-x-4 md:grid-cols-3 xl:grid-cols-4"
                 >
                   {visible.map((product, i) => (
                     <ProductTile

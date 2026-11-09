@@ -67,7 +67,7 @@ export const FeaturedVehicles: React.FC<FeaturedVehiclesProps> = ({
           </div>
         </Reveal>
 
-        <div className="mt-8 grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4">
+        <div className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-5 lg:grid-cols-4">
           {SAMPLE_VEHICLES.map((vehicle, idx) => (
             <motion.article
               key={vehicle.id}
@@ -89,29 +89,30 @@ export const FeaturedVehicles: React.FC<FeaturedVehiclesProps> = ({
                   loading="lazy"
                 />
                 {vehicle.availability !== 'Available' && (
-                  <span className="absolute left-3 top-3 rounded-full bg-[#111113] px-3 py-1 text-xs font-bold text-white">
+                  <span className="absolute left-2 top-2 rounded-control bg-[#111113] px-2 py-0.5 text-xs font-bold text-white">
                     {vehicle.availability}
                   </span>
                 )}
               </button>
 
-              <div className="flex flex-1 flex-col p-5">
-                <p className="text-xs font-semibold text-muted">
+              <div className="flex flex-1 flex-col p-3 sm:p-5">
+                <p className="truncate text-xs font-semibold text-muted">
                   {vehicle.sourceType} · {vehicle.year}
                 </p>
-                <h3 className="clamp-2 mt-1.5 min-h-[2.4em] font-display text-lg leading-snug">
+                <h3 className="clamp-2 mt-1.5 min-h-[2.4em] font-display text-base leading-snug sm:text-lg">
                   {vehicle.title}
                 </h3>
 
-                <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 border-t ui-divider pt-4">
+                {/* Phones show two cards per row, so the spec sheet waits for the details view. */}
+                <dl className="mt-4 hidden grid-cols-2 gap-x-4 gap-y-3 border-t ui-divider pt-4 sm:grid">
                   <Spec label="Mileage" value={vehicle.specs.mileage ?? '—'} />
                   <Spec label="Fuel" value={vehicle.specs.fuelType} />
                   <Spec label="Drivetrain" value={shortDrivetrain(vehicle.specs.drivetrain)} />
                   <Spec label="Condition" value={shortCondition(vehicle.condition)} />
                 </dl>
 
-                <div className="mt-auto pt-5">
-                  <div className="flex items-center justify-between gap-3">
+                <div className="mt-auto pt-3 sm:pt-5">
+                  <div className="flex items-center justify-between gap-2">
                     <div>
                       <p className="text-xs text-muted">Pricing</p>
                       <p className="text-sm font-bold">On enquiry</p>
@@ -127,18 +128,18 @@ export const FeaturedVehicles: React.FC<FeaturedVehiclesProps> = ({
                     />
                   </div>
 
-                  <div className="mt-3 grid grid-cols-2 gap-2">
+                  <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
                     <button
                       type="button"
                       onClick={() => onViewDetails(vehicle)}
-                      className="rounded-full border ui-divider px-3 py-2.5 text-sm font-bold cursor-pointer transition-colors hover:bg-black/5 dark:hover:bg-white/10"
+                      className="hidden rounded-control border ui-divider px-3 py-2.5 text-sm font-bold cursor-pointer transition-colors hover:bg-black/5 sm:block dark:hover:bg-white/10"
                     >
                       Details
                     </button>
                     <button
                       type="button"
                       onClick={() => onRequestPrice(vehicle)}
-                      className="rounded-full btn-theme px-3 py-2.5 text-sm font-bold cursor-pointer"
+                      className="rounded-control btn-theme px-2 py-2.5 text-sm font-bold cursor-pointer"
                     >
                       Request price
                     </button>
