@@ -3,7 +3,6 @@ import { motion } from 'motion/react';
 import { SAMPLE_VEHICLES } from '../data/mockData';
 import { VehicleListing } from '../types';
 import { ArrowRight } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
 import { Reveal, rise, trackSpotlight } from './Reveal';
 import { AddToListButton } from './AddToListButton';
 
@@ -13,121 +12,137 @@ interface FeaturedVehiclesProps {
   onBrowseAll: () => void;
 }
 
+const Spec: React.FC<{ label: string; value: string }> = ({ label, value }) => (
+  <div className="min-w-0">
+    <dt className="text-xs text-muted">{label}</dt>
+    <dd className="truncate text-sm font-semibold">{value}</dd>
+  </div>
+);
+
+/* Auction listings spell drivetrains a dozen ways; the card only has room for one word. */
+const shortDrivetrain = (value: string) => {
+  if (/all-wheel|awd|quattro|4matic|xdrive|4wd/i.test(value)) return 'All-wheel';
+  if (/rear-wheel|rwd/i.test(value)) return 'Rear-wheel';
+  if (/front-wheel|fwd/i.test(value)) return 'Front-wheel';
+  return value.split(' ')[0];
+};
+
+/* Condition strings carry a headline plus notes; the card shows only the headline. */
+const shortCondition = (value: string) => {
+  const headline = value.split('·')[0].trim();
+  if (/clean title/i.test(headline)) return 'Clean';
+  if (/run ?(&|and) ?drive/i.test(headline)) return 'Run & drive';
+  if (/pristine/i.test(headline)) return 'Pristine';
+  return headline.split(' ')[0];
+};
+
 export const FeaturedVehicles: React.FC<FeaturedVehiclesProps> = ({
   onViewDetails,
   onRequestPrice,
   onBrowseAll
 }) => {
-  const { theme } = useTheme();
-  const dark = theme === 'dark';
-
-  const card = 'ui-card border-transparent';
-
   return (
-    <section id="vehicles" className={`ui-canvas py-16 lg:py-24 ${dark ? 'text-white' : 'text-[#111113]'}`}>
+    <section id="vehicles" className="ui-canvas py-14 sm:py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-          <div>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold">Featured vehicles</h2>
-            <motion.div
-              className="mt-3 h-[3px] accent-bar"
-              initial={{ width: 0 }}
-              whileInView={{ width: 56 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            />
-            <p className="mt-3 text-sm text-muted">
-              Luxury sedans, electrics, and performance SUVs available through Copart and IAAI sourcing.
+        <Reveal className="grid gap-5 border-b ui-divider pb-7 lg:grid-cols-12 lg:items-end lg:gap-8">
+          <div className="lg:col-span-8">
+            <p className="eyebrow text-muted">Vehicles</p>
+            <h2 className="mt-2 font-display text-3xl sm:text-4xl">
+              Cars sourced, inspected and shipped
+            </h2>
+            <p className="mt-3 max-w-xl text-base text-muted">
+              Luxury sedans, electrics and performance SUVs from Copart, IAAI and our dealer network.
             </p>
           </div>
 
-          <motion.button
-            type="button"
-            onClick={onBrowseAll}
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.96 }}
-            className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full btn-theme text-xs font-semibold cursor-pointer self-start sm:self-auto shrink-0"
-          >
-            View all
-            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-          </motion.button>
+          <div className="lg:col-span-4 lg:text-right">
+            <button
+              type="button"
+              onClick={onBrowseAll}
+              className="group inline-flex items-center gap-2 rounded-full btn-theme px-5 py-3 text-sm font-bold cursor-pointer"
+            >
+              Browse all vehicles
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+            </button>
+          </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+        <div className="mt-8 grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4">
           {SAMPLE_VEHICLES.map((vehicle, idx) => (
             <motion.article
               key={vehicle.id}
               onMouseMove={trackSpotlight}
               {...rise(idx)}
-              className={`spotlight group flex flex-col justify-between rounded-3xl border p-5 sm:p-6 transition-colors duration-300 ${card}`}
+              className="spotlight ui-card group flex h-full flex-col overflow-hidden rounded-panel"
             >
-              <div>
-                <div className="flex items-center justify-between text-[11px] text-muted">
-                  <span className="uppercase tracking-[0.14em]">{vehicle.sourceType}</span>
-                  <span className="ui-well rounded-full px-2.5 py-1 font-semibold text-accent">
+              {/* Image sits flush in the card rather than as a second rounded box inside it. */}
+              <button
+                type="button"
+                onClick={() => onViewDetails(vehicle)}
+                className="ui-well relative block aspect-[4/3] w-full overflow-hidden cursor-pointer"
+                aria-label={`View details for ${vehicle.title}`}
+              >
+                <img
+                  src={vehicle.imageUrl}
+                  alt={vehicle.title}
+                  className="h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
+                  loading="lazy"
+                />
+                {vehicle.availability !== 'Available' && (
+                  <span className="absolute left-3 top-3 rounded-full bg-[#111113] px-3 py-1 text-xs font-bold text-white">
                     {vehicle.availability}
                   </span>
-                </div>
+                )}
+              </button>
 
-                <button
-                  type="button"
-                  onClick={() => onViewDetails(vehicle)}
-                  className="ui-well relative my-5 block aspect-[16/10] w-full overflow-hidden rounded-2xl cursor-pointer"
-                >
-                  <img
-                    src={vehicle.imageUrl}
-                    alt={vehicle.title}
-                    className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
-                    loading="lazy"
-                  />
-                </button>
+              <div className="flex flex-1 flex-col p-5">
+                <p className="text-xs font-semibold text-muted">
+                  {vehicle.sourceType} · {vehicle.year}
+                </p>
+                <h3 className="clamp-2 mt-1.5 min-h-[2.4em] font-display text-lg leading-snug">
+                  {vehicle.title}
+                </h3>
 
-                <h3 className="font-display text-lg font-bold leading-snug">{vehicle.title}</h3>
-
-                <dl className="mt-3 space-y-1 text-[12px] text-muted">
-                  <div className="flex items-center justify-between gap-3">
-                    <dt>Transmission</dt>
-                    <dd className={`text-right ${dark ? 'text-white/90' : 'text-[#18181B]'}`}>{vehicle.specs.transmission}</dd>
-                  </div>
-                  <div className="flex items-center justify-between gap-3">
-                    <dt>Condition</dt>
-                    <dd className={`text-right ${dark ? 'text-white/90' : 'text-[#18181B]'}`}>{vehicle.condition.split('·')[0]}</dd>
-                  </div>
+                <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 border-t ui-divider pt-4">
+                  <Spec label="Mileage" value={vehicle.specs.mileage ?? '—'} />
+                  <Spec label="Fuel" value={vehicle.specs.fuelType} />
+                  <Spec label="Drivetrain" value={shortDrivetrain(vehicle.specs.drivetrain)} />
+                  <Spec label="Condition" value={shortCondition(vehicle.condition)} />
                 </dl>
-              </div>
 
-              <div className={`mt-6 flex items-center justify-between gap-2 border-t pt-4 ${dark ? 'border-white/10' : 'border-black/5'}`}>
-                <div>
-                  <span className="block text-[10px] uppercase tracking-[0.14em] text-muted">Pricing</span>
-                  <span className="text-sm font-semibold text-accent">On enquiry</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <AddToListButton
-                    item={{
-                      id: vehicle.id,
-                      title: vehicle.title,
-                      reference: vehicle.listingRef,
-                      imageUrl: vehicle.imageUrl,
-                      service: 'vehicle_sourcing',
-                    }}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => onViewDetails(vehicle)}
-                    className={`px-3 py-1.5 text-xs font-semibold rounded-full border cursor-pointer transition-colors ${
-                      dark ? 'border-white/15 hover:bg-white/10' : 'border-black/15 hover:bg-black/5'
-                    }`}
-                  >
-                    Details
-                  </button>
-                  <motion.button
-                    type="button"
-                    onClick={() => onRequestPrice(vehicle)}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-3.5 py-1.5 text-xs font-semibold btn-theme rounded-full cursor-pointer whitespace-nowrap"
-                  >
-                    Request price
-                  </motion.button>
+                <div className="mt-auto pt-5">
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-xs text-muted">Pricing</p>
+                      <p className="text-sm font-bold">On enquiry</p>
+                    </div>
+                    <AddToListButton
+                      item={{
+                        id: vehicle.id,
+                        title: vehicle.title,
+                        reference: vehicle.listingRef,
+                        imageUrl: vehicle.imageUrl,
+                        service: 'vehicle_sourcing',
+                      }}
+                    />
+                  </div>
+
+                  <div className="mt-3 grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => onViewDetails(vehicle)}
+                      className="rounded-full border ui-divider px-3 py-2.5 text-sm font-bold cursor-pointer transition-colors hover:bg-black/5 dark:hover:bg-white/10"
+                    >
+                      Details
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => onRequestPrice(vehicle)}
+                      className="rounded-full btn-theme px-3 py-2.5 text-sm font-bold cursor-pointer"
+                    >
+                      Request price
+                    </button>
+                  </div>
                 </div>
               </div>
             </motion.article>

@@ -3,11 +3,16 @@ import { motion } from 'motion/react';
 
 export const EASE = [0.22, 1, 0.36, 1] as const;
 
-export const rise = (index = 0, distance = 20) => ({
-  initial: { opacity: 0, y: distance, scale: 0.97, filter: 'blur(8px)' },
-  whileInView: { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' },
-  viewport: { once: true, amount: 0.2 },
-  transition: { duration: 0.8, delay: index * 0.08, ease: EASE },
+/**
+ * Entrance for an item in a grid. Plays once, short, and only moves opacity and
+ * position so it stays cheap on a phone. Stagger is capped at three steps so a
+ * long row never leaves the last card waiting.
+ */
+export const rise = (index = 0) => ({
+  initial: { opacity: 0, y: 12 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.15 },
+  transition: { duration: 0.4, delay: Math.min(index, 3) * 0.06, ease: EASE },
 });
 
 export const trackSpotlight = (e: React.MouseEvent<HTMLElement>) => {
@@ -25,10 +30,10 @@ interface RevealProps {
 export const Reveal: React.FC<RevealProps> = ({ children, className, index = 0 }) => (
   <motion.div
     className={className}
-    initial={{ opacity: 0, y: 24 }}
+    initial={{ opacity: 0, y: 12 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, amount: 0.15 }}
-    transition={{ duration: 0.8, delay: index * 0.08, ease: EASE }}
+    transition={{ duration: 0.4, delay: Math.min(index, 3) * 0.06, ease: EASE }}
   >
     {children}
   </motion.div>

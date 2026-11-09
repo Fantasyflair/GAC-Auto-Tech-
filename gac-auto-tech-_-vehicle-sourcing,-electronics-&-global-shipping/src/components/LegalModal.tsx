@@ -18,27 +18,27 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
       aria-modal="true"
     >
       <div 
-        className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-[#E4E6EB] overflow-hidden my-8"
+        className="relative my-8 w-full max-w-2xl overflow-hidden rounded-panel bg-white text-[#111113] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between p-6 border-b border-[#E4E6EB] bg-[#F6F7F9]">
+        <div className="flex items-center justify-between border-b border-black/10 p-6">
           <div className="flex items-center gap-2.5">
             <Shield className="w-5 h-5 text-accent" />
-            <h2 className="text-lg font-bold text-[#18181B]">
-              {isPrivacy ? 'Privacy Policy' : 'Terms of Service'}
+            <h2 className="font-display text-lg">
+              {isPrivacy ? 'Privacy policy' : 'Terms of service'}
             </h2>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg hover:bg-[#EAECEF] text-[#606570] transition-colors cursor-pointer"
+            className="flex h-10 w-10 items-center justify-center rounded-full text-[#52525b] transition-colors hover:bg-black/5 cursor-pointer"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="p-6 sm:p-8 max-h-[60vh] overflow-y-auto space-y-4 text-xs sm:text-sm text-[#606570] leading-relaxed">
+        <div className="max-h-[60vh] space-y-4 overflow-y-auto p-6 text-base text-[#52525b] sm:p-8">
           {isPrivacy ? (
             <>
               <p>
@@ -87,11 +87,11 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
           )}
         </div>
 
-        <div className="p-4 bg-[#F6F7F9] border-t border-[#E4E6EB] text-right">
+        <div className="border-t border-black/10 p-5 text-right">
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2 text-xs font-semibold text-white bg-[#18181B] hover:bg-black rounded-xl transition-colors cursor-pointer"
+            className="btn-ink rounded-full px-5 py-2.5 text-sm font-bold transition-colors cursor-pointer"
           >
             Close
           </button>

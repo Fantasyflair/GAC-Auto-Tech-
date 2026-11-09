@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { FAQ_ITEMS } from '../data/mockData';
 import { ChevronDown } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
 
 export const FaqSection: React.FC = () => {
-  const { theme } = useTheme();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggle = (index: number) => {
@@ -12,93 +10,66 @@ export const FaqSection: React.FC = () => {
   };
 
   return (
-    <section className={`py-20 lg:py-28 border-b transition-colors duration-200 ${
-      theme === 'dark' ? 'bg-[#09090B] border-[#26262A] text-white' : 'bg-white border-[#E4E6EB] text-[#18181B]'
-    }`}>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 mb-3">
-            <span className="w-1.5 h-1.5 rounded-full dot-accent" />
-            <span className="text-xs font-bold tracking-[0.2em] text-muted uppercase">
-              COMMON QUESTIONS
-            </span>
+    <section className="bg-white py-14 text-[#111113] sm:py-20 lg:py-24 dark:bg-[#09090B] dark:text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-8 lg:grid-cols-12 lg:gap-14">
+          {/* Intro sits beside the list on desktop instead of leaving a centred gap. */}
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-28">
+              <p className="eyebrow text-muted">Common questions</p>
+              <h2 className="mt-2 font-display text-3xl sm:text-4xl">Frequently asked questions</h2>
+              <p className="mt-4 text-base text-muted">
+                Clear answers about sourcing scope, auctions, wholesale, and destinations.
+              </p>
+            </div>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-            Frequently Asked Questions
-          </h2>
+          <div className="lg:col-span-8">
+            <div className="border-t ui-divider">
+              {FAQ_ITEMS.map((item, index) => {
+                const isOpen = openIndex === index;
+                const contentId = `faq-content-${index}`;
+                const headerId = `faq-header-${index}`;
 
-          <p className="text-base text-muted">
-            Clear answers about sourcing scope, auctions, wholesale, and destinations.
-          </p>
-        </div>
+                return (
+                  <div key={index} className="border-b ui-divider">
+                    <h3>
+                      <button
+                        type="button"
+                        id={headerId}
+                        aria-expanded={isOpen}
+                        aria-controls={contentId}
+                        onClick={() => toggle(index)}
+                        className="flex w-full items-center justify-between gap-4 py-5 text-left cursor-pointer"
+                      >
+                        <span className="font-display text-lg">{item.question}</span>
+                        <span
+                          className={`ui-icon flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-transform duration-200 ${
+                            isOpen ? 'rotate-180' : ''
+                          }`}
+                          aria-hidden="true"
+                        >
+                          <ChevronDown className="w-4 h-4" />
+                        </span>
+                      </button>
+                    </h3>
 
-        {/* Accessible Accordion List */}
-        <div className="space-y-3.5">
-          {FAQ_ITEMS.map((item, index) => {
-            const isOpen = openIndex === index;
-            const contentId = `faq-content-${index}`;
-            const headerId = `faq-header-${index}`;
-
-            return (
-              <div
-                key={index}
-                className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
-                  isOpen
-                    ? 'border-blush shadow-md'
-                    : theme === 'dark'
-                      ? 'border-[#26262A] bg-[#141416] hover:border-[#333338]'
-                      : 'border-[#E4E6EB] bg-[#F6F7F9] hover:border-[#D0D4DC]'
-                } ${
-                  theme === 'dark' ? 'bg-[#141416]' : isOpen ? 'bg-white' : 'bg-[#F6F7F9]'
-                }`}
-              >
-                <h3>
-                  <button
-                    type="button"
-                    id={headerId}
-                    aria-expanded={isOpen}
-                    aria-controls={contentId}
-                    onClick={() => toggle(index)}
-                    className="w-full px-6 py-4 sm:py-5 text-left flex items-center justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#09090B]/25"
-                  >
-                    <span className="text-base sm:text-lg font-bold">
-                      {item.question}
-                    </span>
-                    <span 
-                      className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 border transition-transform duration-200 ${
-                        isOpen 
-                          ? 'rotate-180 btn-theme border-transparent' 
-                          : theme === 'dark'
-                            ? 'bg-[#141416] text-[#BFC2C8] border-[#26262A]'
-                            : 'bg-white text-[#606570] border-[#E4E6EB]'
-                      }`}
-                      aria-hidden="true"
-                    >
-                      <ChevronDown className="w-4 h-4" />
-                    </span>
-                  </button>
-                </h3>
-
-                {isOpen && (
-                  <div
-                    id={contentId}
-                    role="region"
-                    aria-labelledby={headerId}
-                    className={`px-6 pb-5 pt-1 text-sm sm:text-base leading-relaxed border-t ${
-                      theme === 'dark' ? 'border-[#26262A] text-[#BFC2C8]' : 'border-[#E4E6EB]/60 text-[#606570]'
-                    }`}
-                  >
-                    {item.answer}
+                    {isOpen && (
+                      <div
+                        id={contentId}
+                        role="region"
+                        aria-labelledby={headerId}
+                        className="max-w-2xl pb-6 text-base text-muted"
+                      >
+                        {item.answer}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            );
-          })}
+                );
+              })}
+            </div>
+          </div>
         </div>
-
       </div>
     </section>
   );

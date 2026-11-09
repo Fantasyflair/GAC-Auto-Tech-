@@ -1,6 +1,6 @@
 import React from 'react';
 import { ElectronicProduct } from '../types';
-import { X, Check, ArrowRight, MessageCircle, Building2, ShieldCheck } from 'lucide-react';
+import { X, Check, ArrowRight, MessageCircle } from 'lucide-react';
 import { getWhatsAppUrl } from '../data/mockData';
 
 interface ProductDetailModalProps {
@@ -19,93 +19,70 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const whatsAppEnquiryMessage = `Hello GAC Auto Tech, I would like to enquire about pricing and availability for ${product.title} (Ref: ${product.listingRef}).`;
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-black/80 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-labelledby="product-modal-title"
     >
-      <div 
-        className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E4E6EB] overflow-hidden my-8"
+      <div
+        className="relative my-8 w-full max-w-lg overflow-hidden rounded-panel bg-white text-[#111113] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/60 hover:bg-black text-white transition-colors cursor-pointer"
+          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-black cursor-pointer"
           aria-label="Close dialog"
         >
           <X className="w-5 h-5" />
         </button>
 
-        {/* Product Image */}
-        <div className="relative aspect-[4/3] w-full bg-[#F6F7F9] p-6 flex items-center justify-center">
+        <div className="flex aspect-[4/3] w-full items-center justify-center bg-[#f1f1f1] p-6">
           <img
             src={product.imageUrl}
             alt={product.title}
-            className="w-full h-full object-contain rounded-lg"
+            className="h-full w-full rounded-media object-contain"
           />
-          <div className="absolute top-4 left-4 flex items-center gap-2">
-            <span className="px-2.5 py-1 rounded-md text-xs font-semibold bg-white border border-[#E4E6EB] shadow-xs text-[#18181B]">
-              {product.availability}
-            </span>
-            {product.wholesaleEligible && (
-              <span className="px-2.5 py-1 rounded-md text-xs bg-accent-soft text-accent font-semibold">
-                Wholesale Supported
-              </span>
-            )}
-          </div>
         </div>
 
-        {/* Modal Body */}
-        <div className="p-6 sm:p-8">
-          
-          <div className="text-xs text-muted uppercase tracking-wider mb-1">
-            REF: {product.listingRef} · {product.category}
-          </div>
+        <div className="max-h-[65vh] overflow-y-auto p-6 sm:p-8">
+          <p className="text-sm font-semibold text-[#52525b]">
+            {product.category} · Ref {product.listingRef}
+          </p>
 
-          <h2 id="product-modal-title" className="text-xl sm:text-2xl font-bold text-[#18181B] mb-3">
+          <h2 id="product-modal-title" className="mt-1.5 font-display text-2xl">
             {product.title}
           </h2>
 
-          <div className="flex items-center gap-4 py-2.5 px-3 bg-[#F6F7F9] rounded-xl border border-[#E4E6EB] text-xs text-[#18181B] mb-5">
-            <div>
-              <span className="text-muted block text-[11px]">Condition</span>
-              <span className="font-semibold">{product.condition}</span>
-            </div>
-            <div className="h-6 w-px bg-[#E4E6EB]" />
-            <div>
-              <span className="text-muted block text-[11px]">Availability</span>
-              <span className="font-semibold">{product.availability}</span>
-            </div>
-          </div>
-
-          <h3 className="text-xs font-bold text-muted uppercase tracking-wider mb-2">
-            Key Specifications
-          </h3>
-          <div className="space-y-2 mb-5">
-            {product.specs.map((spec, i) => (
-              <div key={i} className="flex items-center gap-2 text-xs text-[#606570]">
-                <Check className="w-3.5 h-3.5 text-accent shrink-0" />
-                <span>{spec}</span>
-              </div>
-            ))}
-          </div>
-
-          <p className="text-xs text-[#606570] leading-relaxed mb-6">
-            {product.notes}
+          {/* Condition, availability and wholesale read as one plain line. */}
+          <p className="mt-2 text-base text-[#52525b]">
+            {product.condition} · {product.availability}
+            {product.wholesaleEligible ? ' · Wholesale supported' : ''}
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-[#F0F2F5]">
+          <h3 className="eyebrow mt-7 text-[#52525b]">Key specifications</h3>
+          <ul className="mt-3 space-y-2.5">
+            {product.specs.map((spec, i) => (
+              <li key={i} className="flex items-start gap-2.5 text-base text-[#52525b]">
+                <Check className="mt-1 w-4 h-4 shrink-0 text-accent" />
+                <span>{spec}</span>
+              </li>
+            ))}
+          </ul>
+
+          <p className="mt-5 text-base text-[#52525b]">{product.notes}</p>
+
+          <div className="mt-6 flex flex-col gap-3 border-t border-black/10 pt-5 sm:flex-row">
             <button
               type="button"
               onClick={() => {
                 onClose();
                 onEnquire(product);
               }}
-              className="w-full sm:flex-1 py-3 px-5 text-xs sm:text-sm font-semibold btn-ink rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+              className="btn-ink flex w-full items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-bold transition-colors cursor-pointer sm:flex-1"
             >
-              <span>Enquire for Price & Sourcing</span>
+              <span>Enquire for price</span>
               <ArrowRight className="w-4 h-4" />
             </button>
 
@@ -113,13 +90,12 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               href={getWhatsAppUrl(whatsAppEnquiryMessage)}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto py-3 px-5 text-xs sm:text-sm font-semibold text-[#18181B] bg-[#F6F7F9] hover:bg-[#EAECEF] border border-[#E4E6EB] rounded-xl transition-colors flex items-center justify-center gap-2"
+              className="flex w-full items-center justify-center gap-2 rounded-full border border-black/20 px-5 py-3.5 text-sm font-bold text-[#111113] transition-colors hover:bg-black/5 sm:w-auto"
             >
               <MessageCircle className="w-4 h-4 fill-current" />
               <span>WhatsApp</span>
             </a>
           </div>
-
         </div>
       </div>
     </div>

@@ -19,35 +19,35 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReque
       aria-labelledby="about-modal-title"
     >
       <div 
-        className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-[#E4E6EB] overflow-hidden my-8"
+        className="relative my-8 w-full max-w-2xl overflow-hidden rounded-panel bg-white text-[#111113] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-[#F6F7F9] hover:bg-[#EAECEF] text-[#18181B] transition-colors cursor-pointer"
+          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full text-white/85 transition-colors hover:bg-white/10 cursor-pointer"
           aria-label="Close dialog"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Header Banner */}
-        <div className="bg-[#09090B] p-6 sm:p-8 text-white border-b border-[#26262A]">
+        <div className="bg-[#09090B] p-6 text-white sm:p-8">
           <div className="mb-4">
             <GacLogo size="md" />
           </div>
-          <h2 id="about-modal-title" className="text-2xl font-bold tracking-tight">
+          <h2 id="about-modal-title" className="font-display text-2xl">
             About GAC Auto Tech Canada Inc.
           </h2>
-          <p className="text-xs sm:text-sm text-[#BFC2C8] mt-1">
+          <p className="mt-1.5 text-base text-white/80">
             Connecting buyers with global auction sourcing, electronics procurement, and international logistics.
           </p>
         </div>
 
         {/* Content */}
-        <div className="p-6 sm:p-8 max-h-[60vh] overflow-y-auto space-y-6 text-sm text-[#606570] leading-relaxed">
+        <div className="max-h-[60vh] space-y-6 overflow-y-auto p-6 text-base text-[#52525b] sm:p-8">
           <div>
-            <h3 className="text-base font-bold text-[#18181B] mb-2 flex items-center gap-2">
+            <h3 className="mb-2 flex items-center gap-2 font-display text-lg text-[#111113]">
               <Car className="w-4 h-4 text-accent" />
               <span>Automotive Sourcing</span>
             </h3>
@@ -60,7 +60,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReque
           </div>
 
           <div>
-            <h3 className="text-base font-bold text-[#18181B] mb-2 flex items-center gap-2">
+            <h3 className="mb-2 flex items-center gap-2 font-display text-lg text-[#111113]">
               <Laptop className="w-4 h-4 text-accent" />
               <span>Technology & Electronics</span>
             </h3>
@@ -72,7 +72,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReque
           </div>
 
           <div>
-            <h3 className="text-base font-bold text-[#18181B] mb-2 flex items-center gap-2">
+            <h3 className="mb-2 flex items-center gap-2 font-display text-lg text-[#111113]">
               <Truck className="w-4 h-4 text-accent" />
               <span>International Shipping & Logistics</span>
             </h3>
@@ -85,7 +85,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReque
           </div>
 
           <div>
-            <h3 className="text-base font-bold text-[#18181B] mb-2 flex items-center gap-2">
+            <h3 className="mb-2 flex items-center gap-2 font-display text-lg text-[#111113]">
               <Globe className="w-4 h-4 text-accent" />
               <span>General Merchandise & Custom Sourcing</span>
             </h3>
@@ -98,9 +98,9 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReque
         </div>
 
         {/* Footer Actions */}
-        <div className="p-6 bg-[#F6F7F9] border-t border-[#E4E6EB] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-muted">
-            Official corporate entity: GAC AUTO TECH CANADA INC.
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-black/10 p-6 sm:flex-row">
+          <span className="text-sm text-[#52525b]">
+            Official corporate entity: GAC Auto Tech Canada Inc.
           </span>
           <button
             type="button"
@@ -108,9 +108,9 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReque
               onClose();
               onRequestQuote();
             }}
-            className="w-full sm:w-auto px-5 py-2.5 text-xs font-semibold btn-ink rounded-xl transition-colors cursor-pointer"
+            className="btn-ink w-full rounded-full px-5 py-3 text-sm font-bold transition-colors cursor-pointer sm:w-auto"
           >
-            Start Your Enquiry
+            Start your enquiry
           </button>
         </div>
       </div>

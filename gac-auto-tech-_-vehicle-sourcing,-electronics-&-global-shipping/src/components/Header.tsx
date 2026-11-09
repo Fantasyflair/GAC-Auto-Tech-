@@ -175,8 +175,8 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
     );
 
   const navText = (id: string) =>
-    `relative flex items-center gap-1 px-3.5 py-2 text-[13px] font-medium cursor-pointer transition-colors duration-300 ${
-      indicator === id ? 'text-[#111113]' : 'text-white/80 hover:text-white'
+    `relative flex items-center gap-1 px-3.5 py-2 text-sm font-semibold cursor-pointer transition-colors duration-300 ${
+      indicator === id ? 'text-[#111113]' : 'text-white/85 hover:text-white'
     }`;
 
   const iconButton =
@@ -195,7 +195,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
         }}
       >
         <div
-          className={`relative mx-auto max-w-7xl rounded-2xl text-white transition-[background-color,border-color,box-shadow] duration-500 ${
+          className={`relative mx-auto max-w-7xl rounded-media text-white transition-[background-color,border-color,box-shadow] duration-500 ${
             scrolled || panelOpen
               ? 'bg-[#09090B]/90 backdrop-blur-xl border border-white/10 shadow-[0_14px_40px_rgba(0,0,0,0.3)]'
               : 'bg-[#09090B] border border-white/5'
@@ -297,7 +297,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
               <button
                 type="button"
                 onClick={() => { closeAll(); onOpenSignIn(); }}
-                className="hidden lg:inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[13px] font-medium text-white/85 transition-colors hover:bg-white/10 hover:text-white cursor-pointer"
+                className="hidden lg:inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-semibold text-white/85 transition-colors hover:bg-white/10 hover:text-white cursor-pointer"
               >
                 <UserRound className="w-4 h-4" />
                 Sign in
@@ -350,7 +350,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                 type="button"
                 onClick={() => quote('vehicle_sourcing', '')}
                 whileTap={{ scale: 0.96 }}
-                className="group hidden lg:inline-flex items-center gap-2 rounded-full btn-on-dark py-2 pl-4 pr-1.5 text-[13px] font-semibold cursor-pointer"
+                className="group hidden lg:inline-flex items-center gap-2 rounded-full btn-on-dark py-2 pl-4 pr-1.5 text-sm font-bold cursor-pointer"
               >
                 Get a quote
                 <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#111113] text-white transition-transform duration-300 group-hover:rotate-45">
@@ -390,7 +390,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                 className="overflow-hidden"
               >
                 <div className="border-t border-white/10 px-4 pb-5 pt-4 sm:px-5">
-                  <p className="mb-2 text-xs text-white/60">Add all the details you can. We'll find what you need.</p>
+                  <p className="mb-2.5 text-sm text-white/70">Add all the details you can. We'll find what you need.</p>
                   <form onSubmit={submitSearch} className="relative">
                     <Search className="pointer-events-none absolute left-4 top-1/2 w-5 h-5 -translate-y-1/2 text-white/50" />
                     <input
@@ -398,7 +398,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                       aria-label="Search vehicles, electronics, or shipping"
-                      className="w-full rounded-2xl border border-white/15 bg-white/[0.06] py-4 pl-12 pr-28 text-base text-white placeholder:text-transparent focus:border-white/40 focus:outline-none"
+                      className="w-full rounded-media border border-white/15 bg-white/[0.06] py-4 pl-12 pr-28 text-base text-white placeholder:text-transparent focus:border-white/40 focus:outline-none"
                       placeholder={searchExamples[exampleIndex]}
                     />
                     {!query && (
@@ -409,7 +409,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -8 }}
                           transition={{ duration: 0.3 }}
-                          className="pointer-events-none absolute left-12 right-28 top-1/2 -translate-y-1/2 truncate text-base text-white/40"
+                          className="pointer-events-none absolute left-12 right-28 top-1/2 -translate-y-1/2 truncate text-base text-white/55"
                         >
                           {searchExamples[exampleIndex]}
                         </motion.span>
@@ -417,7 +417,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                     )}
                     <button
                       type="submit"
-                      className="btn-on-dark absolute right-2 top-1/2 inline-flex -translate-y-1/2 items-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-semibold cursor-pointer"
+                      className="btn-on-dark absolute right-2 top-1/2 inline-flex -translate-y-1/2 items-center gap-1.5 rounded-control px-4 py-2.5 text-sm font-bold cursor-pointer"
                     >
                       Find it
                       <CornerDownLeft className="w-4 h-4" />
@@ -431,7 +431,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                           key={category.title}
                           type="button"
                           onClick={() => go(category.section)}
-                          className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 text-xs text-white/80 transition-colors hover:bg-white hover:text-[#111113] cursor-pointer"
+                          className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3.5 py-2 text-sm font-medium text-white/85 transition-colors hover:bg-white hover:text-[#111113] cursor-pointer"
                         >
                           <Icon className="w-3.5 h-3.5" />
                           {category.title}
@@ -468,18 +468,18 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                             onClick={() => go(category.section)}
                             className="group flex items-center gap-2 font-display text-base font-semibold cursor-pointer"
                           >
-                            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/[0.08] transition-colors group-hover:bg-white group-hover:text-[#111113]">
+                            <span className="flex h-9 w-9 items-center justify-center rounded-control bg-white/[0.08] transition-colors group-hover:bg-white group-hover:text-[#111113]">
                               <Icon className="w-4 h-4" />
                             </span>
                             {category.title}
                           </button>
-                          <ul className="mt-3 space-y-1.5">
+                          <ul className="mt-3 space-y-2">
                             {category.items.map((item) => (
                               <li key={item}>
                                 <button
                                   type="button"
                                   onClick={() => quote(category.service, `${category.title}: ${item}`)}
-                                  className="text-sm text-white/65 transition-colors hover:text-white cursor-pointer"
+                                  className="text-sm text-white/75 transition-colors hover:text-white cursor-pointer"
                                 >
                                   {item}
                                 </button>
@@ -493,13 +493,13 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                   <button
                     type="button"
                     onClick={() => { setOpenMenu(null); setSearchOpen(true); }}
-                    className="group relative col-span-3 overflow-hidden rounded-2xl text-left cursor-pointer"
+                    className="group relative col-span-3 overflow-hidden rounded-media text-left cursor-pointer"
                   >
-                    <img src="/images/g-wagon.jpg" alt="" className="absolute inset-0 h-full w-full object-cover brightness-[0.45] transition-transform duration-700 group-hover:scale-105" />
+                    <img src="/images/g-wagon.jpg" alt="" className="absolute inset-0 h-full w-full object-cover brightness-[0.45] transition-transform duration-500 group-hover:scale-105" />
                     <div className="relative flex h-full min-h-[170px] flex-col justify-end p-4">
-                      <p className="font-display text-lg font-semibold">Can't find it?</p>
-                      <p className="mt-1 text-xs text-white/75">Describe what you need and we'll source it.</p>
-                      <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold">
+                      <p className="font-display text-lg font-bold">Can't find it?</p>
+                      <p className="mt-1 text-sm text-white/80">Describe what you need and we'll source it.</p>
+                      <span className="mt-3 inline-flex items-center gap-1 text-sm font-bold">
                         Search by description <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:rotate-45" />
                       </span>
                     </div>
@@ -528,13 +528,13 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.35, delay: 0.05 + i * 0.05 }}
-                        className="group rounded-2xl border border-white/10 p-4 text-left transition-colors hover:bg-white/[0.06] cursor-pointer"
+                        className="group rounded-media border border-white/10 p-4 text-left transition-colors hover:bg-white/[0.06] cursor-pointer"
                       >
-                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.08] transition-colors group-hover:bg-white group-hover:text-[#111113]">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-control bg-white/[0.08] transition-colors group-hover:bg-white group-hover:text-[#111113]">
                           <Icon className="w-4 h-4" />
                         </span>
-                        <p className="mt-3 font-display text-sm font-semibold">{partner.title}</p>
-                        <p className="mt-1 text-xs text-white/60">{partner.copy}</p>
+                        <p className="mt-3 font-display text-base font-bold">{partner.title}</p>
+                        <p className="mt-1 text-sm text-white/70">{partner.copy}</p>
                       </motion.button>
                     );
                   })}
@@ -560,11 +560,11 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search vehicles, electronics, shipping"
-                className="w-full rounded-2xl border border-black/10 bg-[#f4f4f4] py-3.5 pl-11 pr-4 text-sm placeholder:text-black/40 focus:outline-none dark:border-white/15 dark:bg-white/[0.06] dark:placeholder:text-black/30 dark:text-white/40"
+                className="w-full rounded-media border ui-divider bg-transparent py-3.5 pl-11 pr-4 text-base placeholder:text-[#78787f] focus:border-black/50 focus:outline-none dark:focus:border-white/55"
               />
             </form>
 
-            <p className="text-[11px] uppercase tracking-[0.18em] text-muted">Categories</p>
+            <p className="eyebrow text-muted">Categories</p>
             <div className="mt-3 grid grid-cols-2 gap-2">
               {categories.map((category) => {
                 const Icon = category.icon;
@@ -573,7 +573,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                     key={category.title}
                     type="button"
                     onClick={() => go(category.section)}
-                    className="flex items-center gap-2 rounded-2xl border border-black/10 dark:border-white/10 px-3 py-3 text-left text-sm font-semibold cursor-pointer"
+                    className="flex items-center gap-2 rounded-media border ui-divider px-3.5 py-3.5 text-left text-sm font-bold cursor-pointer"
                   >
                     <Icon className="w-4 h-4" />
                     {category.title}
@@ -591,26 +591,26 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                   key={link.id}
                   type="button"
                   onClick={() => go(link.id)}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.45, delay: 0.15 + i * 0.05, ease: EASE }}
-                  className="flex items-center justify-between border-b border-black/10 dark:border-white/10 py-3.5 text-left font-display text-2xl font-semibold cursor-pointer"
+                  transition={{ duration: 0.3, delay: 0.08 + i * 0.04, ease: EASE }}
+                  className="flex items-center justify-between border-b ui-divider py-4 text-left font-display text-2xl cursor-pointer"
                 >
                   {link.label}
-                  <ArrowUpRight className="w-5 h-5 text-black/30 dark:text-white/40" />
+                  <ArrowUpRight className="w-5 h-5 text-muted" />
                 </motion.button>
               ))}
               <button
                 type="button"
                 onClick={() => { closeAll(); onNavigateAbout(); }}
-                className="flex items-center justify-between border-b border-black/10 dark:border-white/10 py-3.5 text-left font-display text-2xl font-semibold cursor-pointer"
+                className="flex items-center justify-between border-b ui-divider py-4 text-left font-display text-2xl cursor-pointer"
               >
                 About
-                <ArrowUpRight className="w-5 h-5 text-black/30 dark:text-white/40" />
+                <ArrowUpRight className="w-5 h-5 text-muted" />
               </button>
             </nav>
 
-            <p className="mt-8 text-[11px] uppercase tracking-[0.18em] text-muted">Partners</p>
+            <p className="mt-8 eyebrow text-muted">Partners</p>
             <div className="mt-3 grid grid-cols-2 gap-2">
               {partners.map((partner) => {
                 const Icon = partner.icon;
@@ -619,7 +619,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                     key={partner.title}
                     type="button"
                     onClick={() => quote('general_merchandise', `Partner enquiry: ${partner.title}`)}
-                    className="flex items-center gap-2 rounded-2xl border border-black/10 dark:border-white/10 px-3 py-3 text-left text-sm cursor-pointer"
+                    className="flex items-center gap-2 rounded-media border ui-divider px-3.5 py-3.5 text-left text-sm font-medium cursor-pointer"
                   >
                     <Icon className="w-4 h-4 shrink-0" />
                     {partner.title}
@@ -632,7 +632,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
               <button
                 type="button"
                 onClick={() => { closeAll(); onOpenSignIn(); }}
-                className="flex items-center justify-center gap-2 rounded-full border border-black/15 dark:border-white/15 py-3 text-sm font-semibold cursor-pointer"
+                className="flex items-center justify-center gap-2 rounded-full border ui-divider py-3.5 text-sm font-bold cursor-pointer"
               >
                 <UserRound className="w-4 h-4" />
                 Sign in
@@ -640,7 +640,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
               <button
                 type="button"
                 onClick={() => quote('vehicle_sourcing', '')}
-                className="rounded-full btn-theme py-3 text-sm font-semibold cursor-pointer"
+                className="rounded-full btn-theme py-3.5 text-sm font-bold cursor-pointer"
               >
                 Get a quote
               </button>
@@ -648,7 +648,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
                 href={getWhatsAppUrl('Hello GAC Auto Tech, I would like to chat regarding an enquiry.')}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="col-span-2 flex items-center justify-center gap-2 rounded-full border border-black/15 dark:border-white/15 py-3 text-sm font-semibold"
+                className="col-span-2 flex items-center justify-center gap-2 rounded-full border ui-divider py-3.5 text-sm font-bold"
               >
                 <WhatsAppIcon className="w-4 h-4" />
                 Chat on WhatsApp
@@ -656,7 +656,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigateAbout,
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="col-span-2 flex items-center justify-center gap-2 rounded-full border border-black/15 dark:border-white/15 py-3 text-sm font-semibold cursor-pointer sm:hidden"
+                className="col-span-2 flex items-center justify-center gap-2 rounded-full border ui-divider py-3.5 text-sm font-bold cursor-pointer sm:hidden"
               >
                 {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
                 {theme === 'dark' ? 'Light mode' : 'Dark mode'}

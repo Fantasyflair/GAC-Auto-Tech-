@@ -1,6 +1,6 @@
 import React from 'react';
 import { VehicleListing } from '../types';
-import { X, CheckCircle, ArrowRight, MessageCircle, Gauge, Cog, Fuel, Shield, AlertCircle } from 'lucide-react';
+import { X, ArrowRight, MessageCircle, AlertCircle } from 'lucide-react';
 import { getWhatsAppUrl } from '../data/mockData';
 
 interface VehicleDetailModalProps {
@@ -8,6 +8,13 @@ interface VehicleDetailModalProps {
   onClose: () => void;
   onRequestQuote: (vehicle: VehicleListing) => void;
 }
+
+const Row: React.FC<{ label: string; value: string }> = ({ label, value }) => (
+  <div className="flex items-baseline justify-between gap-4 border-b border-black/10 py-2.5">
+    <dt className="text-sm text-[#52525b]">{label}</dt>
+    <dd className="text-right text-sm font-bold text-[#111113]">{value}</dd>
+  </div>
+);
 
 export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
   vehicle,
@@ -19,121 +26,76 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
   const whatsAppEnquiryMessage = `Hello GAC Auto Tech, I would like to enquire about vehicle pricing, auction history, and shipping for: ${vehicle.title} (Ref: ${vehicle.listingRef}).`;
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-black/80 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-labelledby="vehicle-modal-title"
     >
-      <div 
-        className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-[#E4E6EB] overflow-hidden my-8"
+      <div
+        className="relative my-8 w-full max-w-2xl overflow-hidden rounded-panel bg-white text-[#111113] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close button */}
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/60 hover:bg-black text-white transition-colors cursor-pointer"
+          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-black cursor-pointer"
           aria-label="Close dialog"
         >
           <X className="w-5 h-5" />
         </button>
 
-        {/* Vehicle Image Header */}
-        <div className="relative aspect-[16/10] w-full bg-[#17171C] overflow-hidden">
+        <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#17171C]">
           <img
             src={vehicle.imageUrl}
             alt={vehicle.title}
-            className="w-full h-full object-cover object-center"
+            className="h-full w-full object-cover object-center"
           />
-          <div className="absolute bottom-3 left-4 flex items-center gap-2">
-            <span className="px-2.5 py-1 rounded-md text-xs font-semibold bg-black/80 text-white backdrop-blur-md border border-white/10">
+          {vehicle.availability !== 'Available' && (
+            <span className="absolute bottom-4 left-4 rounded-full bg-[#111113] px-3 py-1 text-xs font-bold text-white">
               {vehicle.availability}
             </span>
-            <span className="px-2.5 py-1 rounded-md text-xs bg-accent-soft text-accent font-semibold">
-              {vehicle.category}
-            </span>
-          </div>
+          )}
         </div>
 
-        {/* Modal Body */}
-        <div className="p-6 sm:p-8 max-h-[65vh] overflow-y-auto">
-          
-          <div className="flex items-center justify-between text-xs text-muted mb-2">
-            <span>REFERENCE: {vehicle.listingRef}</span>
-            <span>SOURCE: {vehicle.sourceType} AUCTION NETWORK</span>
-          </div>
+        <div className="max-h-[65vh] overflow-y-auto p-6 sm:p-8">
+          <p className="text-sm font-semibold text-[#52525b]">
+            {vehicle.sourceType} · {vehicle.year} · Ref {vehicle.listingRef}
+          </p>
 
-          <h2 id="vehicle-modal-title" className="text-2xl font-bold text-[#18181B] mb-4">
+          <h2 id="vehicle-modal-title" className="mt-1.5 font-display text-2xl">
             {vehicle.title}
           </h2>
 
-          {/* Condition note */}
-          <div className="p-3.5 bg-[#F6F7F9] rounded-xl border border-[#E4E6EB] mb-6 flex items-start gap-3">
-            <Shield className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-            <div className="text-xs">
-              <span className="font-bold text-[#18181B] block">Condition Assessment:</span>
-              <span className="text-[#606570]">{vehicle.condition}</span>
-            </div>
-          </div>
+          <p className="mt-3 text-base text-[#52525b]">{vehicle.notes}</p>
 
-          {/* Detailed Specifications Grid */}
-          <h3 className="text-xs font-bold text-muted uppercase tracking-wider mb-3">
-            Technical Specifications
-          </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6 text-xs">
-            {vehicle.specs.mileage && (
-              <div className="p-3 bg-[#F6F7F9] rounded-xl border border-[#E4E6EB]">
-                <span className="text-muted block text-[11px]">Mileage</span>
-                <span className="font-bold text-[#18181B]">{vehicle.specs.mileage}</span>
-              </div>
-            )}
-            <div className="p-3 bg-[#F6F7F9] rounded-xl border border-[#E4E6EB]">
-              <span className="text-muted block text-[11px]">Engine</span>
-              <span className="font-bold text-[#18181B]">{vehicle.specs.engine || 'Standard'}</span>
-            </div>
-            <div className="p-3 bg-[#F6F7F9] rounded-xl border border-[#E4E6EB]">
-              <span className="text-muted block text-[11px]">Transmission</span>
-              <span className="font-bold text-[#18181B]">{vehicle.specs.transmission}</span>
-            </div>
-            <div className="p-3 bg-[#F6F7F9] rounded-xl border border-[#E4E6EB]">
-              <span className="text-muted block text-[11px]">Drivetrain</span>
-              <span className="font-bold text-[#18181B]">{vehicle.specs.drivetrain}</span>
-            </div>
-            <div className="p-3 bg-[#F6F7F9] rounded-xl border border-[#E4E6EB]">
-              <span className="text-muted block text-[11px]">Fuel Type</span>
-              <span className="font-bold text-[#18181B]">{vehicle.specs.fuelType}</span>
-            </div>
-            <div className="p-3 bg-[#F6F7F9] rounded-xl border border-[#E4E6EB]">
-              <span className="text-muted block text-[11px]">Model Year</span>
-              <span className="font-bold text-[#18181B]">{vehicle.year}</span>
-            </div>
-          </div>
+          {/* One flat list rather than a grid of tinted boxes inside the card. */}
+          <h3 className="eyebrow mt-7 text-[#52525b]">Specifications</h3>
+          <dl className="mt-3 border-t border-black/10">
+            {vehicle.specs.mileage && <Row label="Mileage" value={vehicle.specs.mileage} />}
+            <Row label="Engine" value={vehicle.specs.engine || 'Standard'} />
+            <Row label="Transmission" value={vehicle.specs.transmission} />
+            <Row label="Drivetrain" value={vehicle.specs.drivetrain} />
+            <Row label="Fuel type" value={vehicle.specs.fuelType} />
+            <Row label="Category" value={vehicle.category} />
+            <Row label="Condition" value={vehicle.condition} />
+          </dl>
 
-          {/* Overview Notes */}
-          <h3 className="text-xs font-bold text-muted uppercase tracking-wider mb-2">
-            Vehicle Overview
-          </h3>
-          <p className="text-sm text-[#606570] leading-relaxed mb-6">
-            {vehicle.notes}
+          <p className="mt-5 flex items-start gap-2 text-sm text-[#52525b]">
+            <AlertCircle className="mt-0.5 w-4 h-4 shrink-0" />
+            <span>Sample vehicle listing shown for layout preview. Final pricing depends on auction bids, fees, and destination shipping.</span>
           </p>
 
-          <div className="p-3 bg-white rounded-xl border border-[#E4E6EB] text-xs text-[#606570] flex items-center gap-2 mb-6">
-            <AlertCircle className="w-4 h-4 text-muted shrink-0" />
-            <span>Sample vehicle listing shown for layout preview. Final pricing depends on auction bids, fees, and destination shipping.</span>
-          </div>
-
-          {/* Actions */}
-          <div className="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-[#F0F2F5]">
+          <div className="mt-6 flex flex-col gap-3 border-t border-black/10 pt-5 sm:flex-row">
             <button
               type="button"
               onClick={() => {
                 onClose();
                 onRequestQuote(vehicle);
               }}
-              className="w-full sm:flex-1 py-3 px-5 text-xs sm:text-sm font-semibold btn-ink rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+              className="btn-ink flex w-full items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-bold transition-colors cursor-pointer sm:flex-1"
             >
-              <span>Request Price & Sourcing Quote</span>
+              <span>Request price and sourcing quote</span>
               <ArrowRight className="w-4 h-4" />
             </button>
 
@@ -141,13 +103,12 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
               href={getWhatsAppUrl(whatsAppEnquiryMessage)}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto py-3 px-5 text-xs sm:text-sm font-semibold text-[#18181B] bg-[#F6F7F9] hover:bg-[#EAECEF] border border-[#E4E6EB] rounded-xl transition-colors flex items-center justify-center gap-2"
+              className="flex w-full items-center justify-center gap-2 rounded-full border border-black/20 px-5 py-3.5 text-sm font-bold text-[#111113] transition-colors hover:bg-black/5 sm:w-auto"
             >
               <MessageCircle className="w-4 h-4 fill-current" />
-              <span>Chat on WhatsApp</span>
+              <span>WhatsApp</span>
             </a>
           </div>
-
         </div>
       </div>
     </div>

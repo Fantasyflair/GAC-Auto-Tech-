@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
   ArrowRight,
@@ -25,13 +25,10 @@ interface HeroProps {
   onNavigate: (sectionId: string) => void;
 }
 
-const SLIDE_MS = 7000;
-
 interface Slide {
   service: ServiceType;
   tab: string;
   icon: React.ElementType;
-  tag: string;
   title: string;
   accent: string;
   copy: string;
@@ -47,7 +44,6 @@ const slides: Slide[] = [
     service: 'vehicle_sourcing',
     tab: 'Vehicles',
     icon: CarFront,
-    tag: 'Vehicle sourcing',
     title: 'Your next car,',
     accent: 'sourced and shipped.',
     copy: 'Auction and dealer vehicles from Canada, the USA, and the UK, checked and delivered to Ghana.',
@@ -64,7 +60,6 @@ const slides: Slide[] = [
     service: 'electronics_enquiry',
     tab: 'Electronics',
     icon: MonitorSmartphone,
-    tag: 'Electronics',
     title: 'Phones, laptops',
     accent: 'and gaming gear.',
     copy: 'Brand-new Apple, Samsung, and Sony products for personal use, resale, or wholesale orders.',
@@ -81,7 +76,6 @@ const slides: Slide[] = [
     service: 'shipping_quote',
     tab: 'Shipping',
     icon: Container,
-    tag: 'Shipping and freight',
     title: 'Cars and cargo,',
     accent: 'shipped to Tema.',
     copy: 'RoRo and container freight from North America and the UK, with export paperwork handled.',
@@ -98,7 +92,6 @@ const slides: Slide[] = [
     service: 'general_merchandise',
     tab: 'General goods',
     icon: Boxes,
-    tag: 'General goods',
     title: 'Anything else?',
     accent: "We'll find it.",
     copy: 'Equipment, spare parts, and personal goods, combined with your other items in one shipment.',
@@ -121,12 +114,13 @@ const services: { id: ServiceType; title: string; copy: string; icon: React.Elem
 ];
 
 const fadeUp = (delay: number) => ({
-  initial: { opacity: 0, y: 18 },
+  initial: { opacity: 0, y: 14 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.7, delay, ease: EASE },
+  transition: { duration: 0.5, delay, ease: EASE },
 });
 
 export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
+  // Vehicles lead; the panel only changes when the visitor picks another tab.
   const [slide, setSlide] = useState(0);
   const [service, setService] = useState<ServiceType>('vehicle_sourcing');
   const [origin, setOrigin] = useState('Canada / USA (Auctions)');
@@ -136,11 +130,6 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
 
   const current = slides[slide];
   const activeService = services.find((s) => s.id === service) ?? services[0];
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => setSlide((s) => (s + 1) % slides.length), SLIDE_MS);
-    return () => window.clearTimeout(timer);
-  }, [slide]);
 
   const chooseSlide = (index: number) => {
     setSlide(index);
@@ -163,63 +152,54 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
     onRequestQuote(service, parts.join(' · '));
   };
 
-  const chip = 'inline-flex items-center gap-1.5 rounded-full bg-white dark:bg-white/[0.07] px-3 py-1.5 text-xs font-medium';
+  const field =
+    'flex items-center gap-2 rounded-control border ui-divider px-3 py-2.5 text-sm font-medium';
   const secondaryClass =
-    'inline-flex items-center gap-2 rounded-xl border border-black/15 bg-white/60 px-5 py-3 text-sm font-semibold text-[#111113] backdrop-blur transition-colors hover:bg-white cursor-pointer dark:border-white/15 dark:bg-white/[0.05] dark:text-white dark:hover:bg-white/10';
+    'inline-flex items-center justify-center gap-2 rounded-full border border-black/20 px-5 py-3 text-sm font-bold text-[#111113] transition-colors hover:bg-black/5 cursor-pointer dark:border-white/25 dark:text-white dark:hover:bg-white/10';
 
   return (
-    <section className="ui-canvas pt-[92px] sm:pt-[100px] pb-12 sm:pb-16">
+    <section className="ui-canvas pt-[88px] pb-10 sm:pt-[104px] sm:pb-16">
       <h1 className="sr-only">GAC Auto Tech: vehicle sourcing, electronics, shipping, and general goods to Ghana</h1>
 
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
-        {/* Rotating showcase across every service */}
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-5 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+        {/* Showcase. Starts on vehicles and switches only on a tab press. */}
         <motion.div
-          {...fadeUp(0.1)}
-          className="relative overflow-hidden rounded-[28px] bg-[#d9d9d9] p-5 sm:p-7 dark:bg-[#151517] lg:col-span-8 lg:min-h-[580px]"
+          {...fadeUp(0.05)}
+          className="relative overflow-hidden rounded-panel bg-white p-5 sm:p-7 dark:bg-[#151517] lg:col-span-8 lg:min-h-[560px]"
         >
-          <div className="relative z-10 flex flex-col lg:h-full lg:max-w-[44%]">
+          <div className="relative z-10 flex flex-col lg:h-full lg:max-w-[52%] xl:max-w-[44%]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={current.tab}
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.45, ease: EASE }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.3, ease: EASE }}
               >
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-semibold text-[#111113] dark:bg-white/10 dark:text-white">
-                  <current.icon className="w-3.5 h-3.5" strokeWidth={1.8} />
-                  {current.tag}
-                </span>
-
-                <h2 className="mt-5 text-[34px] font-semibold leading-[1.06] text-[#111113] sm:text-[44px] dark:text-white">
+                <h2 className="font-display text-4xl text-[#111113] sm:text-5xl dark:text-white">
                   {current.title}
-                  <span className="block text-[#6b6b72] dark:text-white/55">{current.accent}</span>
+                  <span className="block text-muted">{current.accent}</span>
                 </h2>
-                <p className="mt-3 text-sm leading-relaxed text-[#4f4f56] dark:text-white/65">{current.copy}</p>
+                <p className="mt-4 max-w-md text-base font-medium text-muted">{current.copy}</p>
 
-                <div className="mt-5 space-y-2.5 sm:max-w-[280px]">
-                  {current.facts.map(({ icon: Icon, label, value }, i) => (
-                    <div key={label} className="flex items-center gap-3 rounded-2xl bg-white/55 p-2.5 backdrop-blur dark:bg-white/[0.05]">
-                      <span
-                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
-                          i === 0 ? 'bg-[#111113] text-white dark:bg-white dark:text-[#111113]' : 'bg-white text-[#111113] dark:bg-white/10 dark:text-white'
-                        }`}
-                      >
-                        <Icon className="w-[18px] h-[18px]" strokeWidth={1.6} />
-                      </span>
+                {/* Facts read as a labelled list, not as cards stacked inside a card. */}
+                <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-4 border-t ui-divider pt-5">
+                  {current.facts.map(({ icon: Icon, label, value }) => (
+                    <div key={label} className="flex items-start gap-2.5">
+                      <Icon className="mt-0.5 w-5 h-5 shrink-0 text-accent" strokeWidth={1.8} />
                       <div className="min-w-0">
-                        <p className="text-[11px] text-[#55555c] dark:text-white/55">{label}</p>
-                        <p className="truncate text-sm font-semibold text-[#111113] dark:text-white">{value}</p>
+                        <dt className="text-xs font-semibold text-muted">{label}</dt>
+                        <dd className="text-base font-bold text-[#111113] dark:text-white">{value}</dd>
                       </div>
                     </div>
                   ))}
-                </div>
+                </dl>
 
-                <div className="mt-6 flex flex-wrap gap-2.5">
+                <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                   <button
                     type="button"
                     onClick={primaryAction}
-                    className="btn-theme inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold cursor-pointer"
+                    className="btn-theme inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold cursor-pointer"
                   >
                     {current.primary}
                     <ArrowUpRight className="w-4 h-4" />
@@ -247,27 +227,22 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
           </div>
 
           {/* Photo: masked on the right on desktop, stacked below on mobile */}
-          <div className="relative mt-6 aspect-[16/10] overflow-hidden rounded-2xl lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:aspect-auto lg:w-[62%] lg:rounded-none lg:[mask-image:linear-gradient(to_right,transparent,black_32%)]">
+          <div className="relative mt-6 aspect-[16/10] overflow-hidden rounded-media lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:aspect-auto lg:w-[52%] lg:rounded-none lg:[mask-image:linear-gradient(to_right,transparent,black_40%)] xl:w-[58%]">
             <AnimatePresence initial={false}>
               <motion.img
                 key={current.image}
                 src={current.image}
                 alt={current.alt}
                 className="absolute inset-0 h-full w-full object-cover"
-                initial={{ opacity: 0, scale: 1.08, x: '3%' }}
-                animate={{
-                  opacity: 1,
-                  scale: 1.02,
-                  x: '-2%',
-                  transition: { opacity: { duration: 1 }, default: { duration: SLIDE_MS / 1000 + 1, ease: 'linear' } },
-                }}
-                exit={{ opacity: 0, transition: { duration: 1 } }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { duration: 0.45 } }}
+                exit={{ opacity: 0, transition: { duration: 0.45 } }}
               />
             </AnimatePresence>
           </div>
 
           {/* Service tabs */}
-          <div className="relative z-10 mt-5 grid grid-cols-2 gap-1.5 rounded-2xl bg-white/70 p-1.5 backdrop-blur-md sm:grid-cols-4 dark:bg-black/45 lg:absolute lg:bottom-6 lg:left-7 lg:right-7 lg:mt-0">
+          <div className="relative z-10 mt-5 grid grid-cols-2 gap-1.5 rounded-media bg-black/[0.04] p-1.5 sm:grid-cols-4 dark:bg-white/[0.06] lg:absolute lg:bottom-7 lg:left-7 lg:right-7 lg:mt-0 lg:bg-white/80 lg:backdrop-blur-md lg:dark:bg-black/55">
             {slides.map((s, i) => {
               const Icon = s.icon;
               const active = i === slide;
@@ -277,21 +252,14 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
                   type="button"
                   onClick={() => chooseSlide(i)}
                   aria-pressed={active}
-                  className={`relative flex items-center gap-2 overflow-hidden rounded-xl px-3 py-2.5 text-left text-sm font-semibold transition-colors cursor-pointer ${
-                    active ? 'bg-[#111113] text-white dark:bg-white dark:text-[#111113]' : 'text-[#111113] hover:bg-white dark:text-white dark:hover:bg-white/10'
+                  className={`flex items-center justify-center gap-2 rounded-control px-3 py-3 text-sm font-bold transition-colors cursor-pointer ${
+                    active
+                      ? 'bg-[#111113] text-white dark:bg-white dark:text-[#111113]'
+                      : 'text-[#111113] hover:bg-black/5 dark:text-white dark:hover:bg-white/10'
                   }`}
                 >
-                  <Icon className="w-4 h-4 shrink-0" strokeWidth={1.7} />
+                  <Icon className="w-4 h-4 shrink-0" strokeWidth={1.8} />
                   <span className="truncate">{s.tab}</span>
-                  {active && (
-                    <motion.span
-                      key={`progress-${slide}`}
-                      className="absolute bottom-0 left-0 h-[2px] bg-white/70 dark:bg-black/40"
-                      initial={{ width: '0%' }}
-                      animate={{ width: '100%' }}
-                      transition={{ duration: SLIDE_MS / 1000, ease: 'linear' }}
-                    />
-                  )}
                 </button>
               );
             })}
@@ -300,16 +268,16 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
 
         {/* Concierge panel */}
         <motion.div
-          {...fadeUp(0.2)}
-          className="flex flex-col rounded-[28px] bg-[#f8f8f8] p-5 text-[#111113] sm:p-6 dark:bg-[#151517] dark:text-white lg:col-span-4"
+          {...fadeUp(0.12)}
+          className="flex flex-col rounded-panel bg-white p-5 text-[#111113] sm:p-6 dark:bg-[#151517] dark:text-white lg:col-span-4"
         >
           <div className="flex items-center gap-3">
-            <span className="ui-icon flex h-10 w-10 items-center justify-center rounded-xl">
-              <Sparkles className="w-[18px] h-[18px]" strokeWidth={1.6} />
+            <span className="ui-icon flex h-11 w-11 items-center justify-center rounded-media">
+              <Sparkles className="w-5 h-5" strokeWidth={1.7} />
             </span>
             <div>
-              <p className="text-base font-semibold">Sourcing concierge</p>
-              <p className="text-xs text-muted">Tell us what you need and where it's going</p>
+              <p className="font-display text-lg font-bold">Sourcing concierge</p>
+              <p className="text-sm text-muted">Tell us what you need and where it's going</p>
             </div>
           </div>
 
@@ -323,22 +291,22 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
                   type="button"
                   onClick={() => setService(item.id)}
                   aria-pressed={selected}
-                  className={`rounded-2xl p-3.5 text-left transition-colors cursor-pointer ${
+                  className={`rounded-media border p-3.5 text-left transition-colors cursor-pointer ${
                     selected
-                      ? 'bg-[#111113] text-white dark:bg-white dark:text-[#111113]'
-                      : 'bg-[#ececec] hover:bg-[#e2e2e2] dark:bg-white/[0.06] dark:hover:bg-white/[0.1]'
+                      ? 'border-transparent bg-[#111113] text-white dark:bg-white dark:text-[#111113]'
+                      : 'ui-divider hover:bg-black/[0.04] dark:hover:bg-white/[0.07]'
                   }`}
                 >
-                  <Icon className="w-[18px] h-[18px]" strokeWidth={1.6} />
-                  <p className="mt-6 text-sm font-semibold leading-tight">{item.title}</p>
-                  <p className={`mt-0.5 text-[11px] ${selected ? 'opacity-70' : 'text-muted'}`}>{item.copy}</p>
+                  <Icon className="w-5 h-5" strokeWidth={1.7} />
+                  <p className="mt-4 text-sm font-bold leading-tight">{item.title}</p>
+                  <p className={`mt-0.5 text-xs font-medium ${selected ? 'opacity-75' : 'text-muted'}`}>{item.copy}</p>
                 </button>
               );
             })}
           </div>
 
-          <form onSubmit={handleSubmit} className="ui-well mt-4 flex flex-1 flex-col rounded-2xl p-4">
-            <label htmlFor="hero-request" className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">
+          <form onSubmit={handleSubmit} className="mt-5 flex flex-1 flex-col border-t ui-divider pt-5">
+            <label htmlFor="hero-request" className="eyebrow text-muted">
               What are you looking for?
             </label>
             <textarea
@@ -347,12 +315,12 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
               value={request}
               onChange={(e) => setRequest(e.target.value)}
               placeholder={activeService.placeholder}
-              className="mt-2 w-full flex-1 resize-none bg-transparent text-sm leading-relaxed placeholder:text-[#8e8e95] focus:outline-none"
+              className="mt-2 w-full flex-1 resize-none rounded-control border ui-divider bg-transparent p-3 text-sm leading-relaxed placeholder:text-[#78787f] focus:border-black/40 focus:outline-none dark:focus:border-white/50"
             />
 
-            <div className="mt-3 grid grid-cols-2 gap-2">
-              <label className={chip}>
-                <MapPin className="w-3.5 h-3.5 shrink-0 text-muted" />
+            <div className="mt-2.5 grid grid-cols-2 gap-2">
+              <label className={field}>
+                <MapPin className="w-4 h-4 shrink-0 text-muted" />
                 <span className="sr-only">Origin market</span>
                 <select
                   value={origin}
@@ -364,8 +332,8 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
                   <option value="Dealer Network">Dealer network</option>
                 </select>
               </label>
-              <label className={chip}>
-                <Anchor className="w-3.5 h-3.5 shrink-0 text-muted" />
+              <label className={field}>
+                <Anchor className="w-4 h-4 shrink-0 text-muted" />
                 <span className="sr-only">Destination</span>
                 <select
                   value={destination}
@@ -378,27 +346,26 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
               </label>
             </div>
 
-            <div className="mt-2 flex items-center gap-2">
-              <label className={`${chip} flex-1`}>
-                <CircleDollarSign className="w-3.5 h-3.5 shrink-0 text-muted" />
-                <span className="sr-only">Target budget</span>
-                <input
-                  type="number"
-                  min="0"
-                  value={budget}
-                  onChange={(e) => setBudget(e.target.value)}
-                  placeholder="Budget (optional)"
-                  className="w-full min-w-0 bg-transparent placeholder:text-[#8e8e95] focus:outline-none"
-                />
-              </label>
-              <button
-                type="submit"
-                className="btn-theme inline-flex shrink-0 items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold cursor-pointer"
-              >
-                Find it
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
+            <label className={`${field} mt-2`}>
+              <CircleDollarSign className="w-4 h-4 shrink-0 text-muted" />
+              <span className="sr-only">Target budget</span>
+              <input
+                type="number"
+                min="0"
+                value={budget}
+                onChange={(e) => setBudget(e.target.value)}
+                placeholder="Budget (optional)"
+                className="w-full min-w-0 bg-transparent placeholder:text-[#78787f] focus:outline-none"
+              />
+            </label>
+
+            <button
+              type="submit"
+              className="btn-theme mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-bold cursor-pointer"
+            >
+              Find it
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </form>
         </motion.div>
       </div>

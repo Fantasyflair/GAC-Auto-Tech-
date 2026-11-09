@@ -4,7 +4,6 @@ import { SocialIcons } from './SocialIcons';
 import { getWhatsAppUrl } from '../data/mockData';
 import { ServiceType } from '../types';
 import { ArrowRight, MessageCircle, CheckCircle2 } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
 
 interface FooterProps {
   onNavigateHome: () => void;
@@ -27,7 +26,6 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenPrivacy,
   onOpenTerms
 }) => {
-  const { theme } = useTheme();
   const currentYear = new Date().getFullYear();
   const [quickEmail, setQuickEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -42,37 +40,33 @@ export const Footer: React.FC<FooterProps> = ({
   };
 
   return (
-    <footer className={`border-t transition-colors duration-200 pt-16 pb-12 ${
-      theme === 'dark' ? 'bg-[#09090B] border-[#26262A] text-[#BFC2C8]' : 'bg-white border-[#E4E6EB] text-[#606570]'
-    }`}>
+    <footer className="border-t ui-divider bg-white pt-14 pb-10 text-[#52525b] dark:bg-[#09090B] dark:text-[#b1b1ba]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Main Footer Grid (Matches reference screenshot's footer layout) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-14 border-b border-[#26262A] dark:border-[#26262A] border-slate-200">
-          
-          {/* Brand & Subscribe Column (Left side of reference screenshot) */}
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-12 border-b ui-divider">
+
+          {/* Brand & Subscribe Column */}
           <div className="lg:col-span-5 flex flex-col items-start">
             <div className="mb-4">
               <GacLogo size="lg" />
             </div>
 
-            <p className="text-xs sm:text-sm text-muted leading-relaxed max-w-sm mb-5">
+            <p className="text-base text-muted max-w-sm mb-6">
               Vehicle sourcing, electronics, international shipping, and general merchandise support from Canada, the USA, and the UK to Ghana.
             </p>
 
             <div className="mb-7">
-              <span className="block text-xs font-semibold text-[#18181B] dark:text-white mb-2.5">Follow us</span>
+              <span className="mb-3 block text-sm font-bold text-[#111113] dark:text-white">Follow us</span>
               <SocialIcons />
             </div>
 
-            {/* Quick Email Inquiry / Subscribe Form (Exact match to reference screenshot) */}
             <div className="w-full max-w-sm">
-              <span className="block text-xs font-bold text-[#18181B] dark:text-white mb-2">
+              <span className="mb-2.5 block text-sm font-bold text-[#111113] dark:text-white">
                 Stay updated on incoming inventory
               </span>
-              
+
               {isSubscribed ? (
-                <div className="flex items-center gap-2 p-2.5 rounded-full bg-black/5 dark:bg-white/10 text-xs font-semibold">
+                <div className="flex items-center gap-2 rounded-full bg-black/5 p-3 text-sm font-bold dark:bg-white/10">
                   <CheckCircle2 className="w-4 h-4" />
                   <span>Thank you for subscribing!</span>
                 </div>
@@ -83,16 +77,13 @@ export const Footer: React.FC<FooterProps> = ({
                     required
                     value={quickEmail}
                     onChange={(e) => setQuickEmail(e.target.value)}
-                    placeholder="Email address..."
-                    className={`w-full py-2.5 pl-4 pr-12 text-xs rounded-full border focus:outline-none focus:border-[#09090B] transition-colors ${
-                      theme === 'dark' 
-                        ? 'bg-[#141416] border-[#26262A] text-white placeholder:text-[#606570]' 
-                        : 'bg-[#F6F7F9] border-[#E4E6EB] text-[#18181B] placeholder:text-muted'
-                    }`}
+                    placeholder="Email address"
+                    aria-label="Email address"
+                    className="w-full rounded-full border ui-divider bg-transparent py-3 pl-4 pr-14 text-base text-[#111113] placeholder:text-[#78787f] transition-colors focus:border-black/50 focus:outline-none dark:text-white dark:focus:border-white/55"
                   />
                   <button
                     type="submit"
-                    className="absolute right-1 w-8 h-8 rounded-full btn-theme flex items-center justify-center transition-transform active:scale-95 cursor-pointer shadow-xs"
+                    className="btn-theme absolute right-1.5 flex h-9 w-9 items-center justify-center rounded-full transition-transform active:scale-95 cursor-pointer"
                     aria-label="Submit email"
                   >
                     <ArrowRight className="w-4 h-4" />
@@ -107,10 +98,10 @@ export const Footer: React.FC<FooterProps> = ({
             
             {/* Column 1: Services */}
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider mb-4 text-[#18181B] dark:text-white">
+              <h4 className="eyebrow mb-4 text-[#111113] dark:text-white">
                 Services
               </h4>
-              <ul className="space-y-2.5 text-xs sm:text-sm">
+              <ul className="space-y-3 text-base">
                 <li>
                   <button
                     type="button"
@@ -152,10 +143,10 @@ export const Footer: React.FC<FooterProps> = ({
 
             {/* Column 2: Explore */}
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider mb-4 text-[#18181B] dark:text-white">
+              <h4 className="eyebrow mb-4 text-[#111113] dark:text-white">
                 Explore
               </h4>
-              <ul className="space-y-2.5 text-xs sm:text-sm">
+              <ul className="space-y-3 text-base">
                 <li>
                   <button
                     type="button"
@@ -197,10 +188,10 @@ export const Footer: React.FC<FooterProps> = ({
 
             {/* Column 3: Shipping Corridors */}
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider mb-4 text-[#18181B] dark:text-white">
-                Supported Corridors
+              <h4 className="eyebrow mb-4 text-[#111113] dark:text-white">
+                Supported corridors
               </h4>
-              <ul className="space-y-2.5 text-xs sm:text-sm text-muted">
+              <ul className="space-y-3 text-base text-muted">
                 <li>Canada ➔ Ghana (Tema Port)</li>
                 <li>USA ➔ Ghana Direct</li>
                 <li>UK Consolidation ➔ West Africa</li>
@@ -212,8 +203,8 @@ export const Footer: React.FC<FooterProps> = ({
 
         </div>
 
-        {/* Bottom Bar: Copyright & Legal Links (Matches reference screenshot) */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted">
+        {/* Bottom Bar: Copyright & Legal Links */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted">
           <div>
             © {currentYear} GAC Auto Tech Canada Inc. All rights reserved.
           </div>

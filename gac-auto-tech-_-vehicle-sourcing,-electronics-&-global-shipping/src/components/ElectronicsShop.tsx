@@ -53,8 +53,6 @@ const filters: { id: FilterId; label: string; icon: React.ElementType; test: (p:
   { id: 'wholesale', label: 'Wholesale ready', icon: Boxes, test: (p) => p.wholesaleEligible },
 ];
 
-const categoryLabel = (id: ElectronicProduct['category']) => categories.find((c) => c.id === id)?.label ?? id;
-
 const ProductTile: React.FC<{
   product: ElectronicProduct;
   index: number;
@@ -84,20 +82,17 @@ const ProductTile: React.FC<{
       <button
         type="button"
         onClick={onView}
-        className="ui-well relative block aspect-square w-full overflow-hidden rounded-2xl cursor-pointer"
+        className="ui-well relative block aspect-square w-full overflow-hidden rounded-media cursor-pointer"
         aria-label={`View details for ${product.title}`}
       >
         <img
           src={product.imageUrl}
           alt={product.title}
-          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           loading="lazy"
         />
-        <span className="absolute right-3 top-3 rounded-full bg-white px-2.5 py-1 text-[11px] font-semibold text-[#111113] shadow-sm">
-          {categoryLabel(product.category)}
-        </span>
         {product.availability !== 'Available' && (
-          <span className="absolute left-3 top-3 rounded-full bg-[#111113] px-2.5 py-1 text-[11px] font-semibold text-white">
+          <span className="absolute left-3 top-3 rounded-full bg-[#111113] px-3 py-1 text-xs font-bold text-white">
             {product.availability === 'Incoming' ? 'Arriving soon' : 'Sourced to order'}
           </span>
         )}
@@ -105,32 +100,32 @@ const ProductTile: React.FC<{
 
       <div className={`flex flex-1 flex-col ${compact ? 'pt-3' : 'pt-4'}`}>
         <div className="flex items-start justify-between gap-3">
-          <h3 className="text-[15px] font-semibold leading-snug">{product.title}</h3>
-          <span className="shrink-0 text-sm font-semibold">On request</span>
+          <h3 className="clamp-2 text-base leading-snug">{product.title}</h3>
+          <span className="shrink-0 text-sm font-bold">On request</span>
         </div>
-        <p className="mt-1 text-xs text-muted">
+        <p className="mt-1.5 text-sm text-muted">
           {product.condition}
           {product.wholesaleEligible ? ' · Wholesale available' : ''}
         </p>
 
-        <div className="mt-4 grid grid-cols-2 gap-2">
+        <div className="mt-auto grid grid-cols-2 gap-2 pt-4">
           <button
             type="button"
             onClick={toggleCart}
             aria-pressed={inCart}
-            className={`inline-flex items-center justify-center gap-1.5 rounded-full border px-3 py-2 text-xs font-semibold transition-colors cursor-pointer ${
+            className={`inline-flex items-center justify-center gap-1.5 rounded-full border px-3 py-2.5 text-sm font-bold transition-colors cursor-pointer ${
               inCart
                 ? 'border-transparent bg-[#ececec] dark:bg-white/10'
-                : 'border-black/15 hover:bg-black/5 dark:border-white/20 dark:hover:bg-white/10'
+                : 'border-black/20 hover:bg-black/5 dark:border-white/25 dark:hover:bg-white/10'
             }`}
           >
-            {inCart ? <Check className="w-3.5 h-3.5" /> : <ShoppingCart className="w-3.5 h-3.5" />}
+            {inCart ? <Check className="w-4 h-4" /> : <ShoppingCart className="w-4 h-4" />}
             {inCart ? 'In cart' : 'Add to cart'}
           </button>
           <button
             type="button"
             onClick={onBuy}
-            className="btn-theme rounded-full px-3 py-2 text-xs font-semibold cursor-pointer"
+            className="btn-theme rounded-full px-3 py-2.5 text-sm font-bold cursor-pointer"
           >
             Buy now
           </button>
@@ -177,24 +172,24 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
   };
 
   const sidebarItem = (selected: boolean) =>
-    `flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm transition-colors cursor-pointer ${
-      selected ? 'bg-[#111113] text-white dark:bg-white dark:text-[#111113]' : 'hover:bg-black/5 dark:hover:bg-white/[0.06]'
+    `flex w-full items-center gap-2.5 rounded-control px-3 py-2.5 text-sm font-medium transition-colors cursor-pointer ${
+      selected ? 'bg-[#111113] font-bold text-white dark:bg-white dark:text-[#111113]' : 'hover:bg-black/5 dark:hover:bg-white/[0.06]'
     }`;
 
   return (
-    <section id="electronics" className="bg-white py-16 text-[#111113] sm:py-24 dark:bg-[#09090B] dark:text-white">
+    <section id="electronics" className="bg-white py-14 text-[#111113] sm:py-20 lg:py-24 dark:bg-[#09090B] dark:text-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <Reveal className="flex flex-col gap-5 border-b border-black/10 pb-6 md:flex-row md:items-end md:justify-between dark:border-white/10">
+        <Reveal className="flex flex-col gap-5 border-b ui-divider pb-7 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">Electronics store</p>
-            <h2 className="mt-2 text-3xl font-semibold sm:text-4xl">Everything you need, shipped to Ghana</h2>
-            <p className="mt-2 max-w-xl text-sm text-muted">
+            <p className="eyebrow text-muted">Electronics store</p>
+            <h2 className="mt-2 font-display text-3xl sm:text-4xl">Everything you need, shipped to Ghana</h2>
+            <p className="mt-3 max-w-xl text-base text-muted">
               Laptops, phones, audio, and gaming. Buy one or order wholesale. Every price is quoted to your destination.
             </p>
           </div>
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="flex w-full items-center gap-2 rounded-full border border-black/10 bg-[#f4f4f4] p-1.5 pl-4 md:w-80 dark:border-white/10 dark:bg-white/[0.05]"
+            className="flex w-full items-center gap-2 rounded-full border ui-divider p-1.5 pl-4 md:w-80"
             role="search"
           >
             <Search className="w-4 h-4 shrink-0 text-muted" />
@@ -206,19 +201,19 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
               }}
               placeholder="Search electronics"
               aria-label="Search electronics"
-              className="min-w-0 flex-1 bg-transparent text-sm placeholder:text-[#8e8e95] focus:outline-none"
+              className="min-w-0 flex-1 bg-transparent text-sm placeholder:text-[#78787f] focus:outline-none"
             />
             {query && (
               <button
                 type="button"
                 onClick={() => setQuery('')}
-                className="flex h-7 w-7 items-center justify-center rounded-full text-muted hover:bg-black/5 cursor-pointer dark:hover:bg-white/10"
+                className="flex h-8 w-8 items-center justify-center rounded-full text-muted hover:bg-black/5 cursor-pointer dark:hover:bg-white/10"
                 aria-label="Clear search"
               >
-                <X className="w-3.5 h-3.5" />
+                <X className="w-4 h-4" />
               </button>
             )}
-            <button type="submit" className="btn-theme rounded-full px-4 py-2 text-xs font-semibold cursor-pointer">
+            <button type="submit" className="btn-theme rounded-full px-4 py-2.5 text-sm font-bold cursor-pointer">
               Search
             </button>
           </form>
@@ -228,18 +223,14 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
           {/* Sidebar */}
           <aside className="lg:col-span-3">
             <div className="lg:sticky lg:top-28">
-              <p className="text-sm font-semibold">Category</p>
+              <p className="text-base font-bold">Category</p>
               <ul className="mt-3 flex gap-1.5 overflow-x-auto pb-1 lg:block lg:space-y-1 lg:overflow-visible">
                 {categories.map(({ id, label, icon: Icon }) => (
                   <li key={id} className="shrink-0">
                     <button type="button" onClick={() => pickCategory(id)} className={sidebarItem(category === id)} aria-pressed={category === id}>
                       <Icon className="w-4 h-4 shrink-0" strokeWidth={1.6} />
                       <span className="whitespace-nowrap">{label}</span>
-                      <span
-                        className={`ml-auto rounded-full px-1.5 text-[11px] font-semibold ${
-                          category === id ? 'bg-white/15 dark:bg-black/10' : 'bg-black/5 text-muted dark:bg-white/[0.08]'
-                        }`}
-                      >
+                      <span className={`ml-auto text-xs font-bold ${category === id ? 'opacity-70' : 'text-muted'}`}>
                         {counts[id] ?? 0}
                       </span>
                     </button>
@@ -247,7 +238,7 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
                 ))}
               </ul>
 
-              <p className="mt-6 text-sm font-semibold">Shop by</p>
+              <p className="mt-6 text-base font-bold">Shop by</p>
               <ul className="mt-3 flex gap-1.5 overflow-x-auto pb-1 lg:block lg:space-y-1 lg:overflow-visible">
                 {filters.map(({ id, label, icon: Icon }) => {
                   const on = activeFilters.includes(id);
@@ -262,12 +253,27 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
                   );
                 })}
               </ul>
+
+              {/* Fills the space under the filters with the next useful step. */}
+              <div className="mt-8 hidden rounded-panel border ui-divider p-5 lg:block">
+                <p className="font-display text-base font-bold">Not listed here?</p>
+                <p className="mt-1.5 text-sm text-muted">
+                  We source to order. Send the model and quantity and we'll quote it to your destination.
+                </p>
+                <button
+                  type="button"
+                  onClick={onRequestProduct}
+                  className="btn-theme mt-4 w-full rounded-full px-4 py-2.5 text-sm font-bold cursor-pointer"
+                >
+                  Request a product
+                </button>
+              </div>
             </div>
           </aside>
 
           {/* Product grid */}
           <div className="lg:col-span-9">
-            <div className="mb-5 flex items-center justify-between text-xs text-muted">
+            <div className="mb-5 flex items-center justify-between text-sm text-muted">
               <span>
                 Showing {visible.length} of {results.length} product{results.length === 1 ? '' : 's'}
               </span>
@@ -313,12 +319,12 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="ui-well flex flex-col items-center rounded-3xl px-6 py-14 text-center"
+                  className="ui-well flex flex-col items-center rounded-panel px-6 py-14 text-center"
                 >
                   <Search className="w-6 h-6 text-muted" />
-                  <p className="mt-3 text-base font-semibold">No products match</p>
-                  <p className="mt-1 max-w-sm text-sm text-muted">We source to order, so tell us the exact model and we'll find it for you.</p>
-                  <button type="button" onClick={onRequestProduct} className="btn-theme mt-5 rounded-full px-5 py-2.5 text-sm font-semibold cursor-pointer">
+                  <p className="mt-3 font-display text-lg">No products match</p>
+                  <p className="mt-1.5 max-w-sm text-base text-muted">We source to order, so tell us the exact model and we'll find it for you.</p>
+                  <button type="button" onClick={onRequestProduct} className="btn-theme mt-5 rounded-full px-5 py-3 text-sm font-bold cursor-pointer">
                     Request a product
                   </button>
                 </motion.div>
@@ -326,12 +332,12 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
             </AnimatePresence>
 
             {pageCount > 1 && (
-              <nav className="mt-10 flex items-center justify-between border-t border-black/10 pt-5 text-sm dark:border-white/10" aria-label="Product pages">
+              <nav className="mt-10 flex items-center justify-between border-t ui-divider pt-5 text-sm" aria-label="Product pages">
                 <button
                   type="button"
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
-                  className="inline-flex items-center gap-1.5 font-medium disabled:opacity-30 cursor-pointer disabled:cursor-default"
+                  className="inline-flex items-center gap-1.5 font-bold disabled:opacity-30 cursor-pointer disabled:cursor-default"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Previous
@@ -343,7 +349,7 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
                       type="button"
                       onClick={() => setPage(n)}
                       aria-current={n === currentPage ? 'page' : undefined}
-                      className={`h-8 w-8 rounded-full text-xs font-semibold transition-colors cursor-pointer ${
+                      className={`h-9 w-9 rounded-full text-sm font-bold transition-colors cursor-pointer ${
                         n === currentPage ? 'bg-[#111113] text-white dark:bg-white dark:text-[#111113]' : 'hover:bg-black/5 dark:hover:bg-white/10'
                       }`}
                     >
@@ -355,7 +361,7 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
                   type="button"
                   onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
                   disabled={currentPage === pageCount}
-                  className="inline-flex items-center gap-1.5 font-medium disabled:opacity-30 cursor-pointer disabled:cursor-default"
+                  className="inline-flex items-center gap-1.5 font-bold disabled:opacity-30 cursor-pointer disabled:cursor-default"
                 >
                   Next
                   <ArrowRight className="w-4 h-4" />
@@ -365,20 +371,16 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
           </div>
         </div>
 
-        <Reveal className="mt-16">
-          <div className="grid grid-cols-1 items-end gap-8 rounded-[28px] bg-[#111113] p-8 text-white sm:p-10 md:grid-cols-2 dark:bg-[#151517] dark:ring-1 dark:ring-white/10">
+        <Reveal className="mt-14">
+          <div className="grid grid-cols-1 items-end gap-8 rounded-panel bg-[#111113] p-7 text-white sm:p-10 md:grid-cols-2 dark:bg-[#151517] dark:ring-1 dark:ring-white/10">
             <div>
-              <h3 className="text-3xl font-semibold leading-tight sm:text-4xl">
-                Ready to get new
-                <br />
-                stock first?
-              </h3>
-              <div className="mt-6 flex flex-wrap gap-3">
+              <h3 className="font-display text-3xl sm:text-4xl">Ready to get new stock first?</h3>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <a
                   href={getWhatsAppUrl('Hello GAC Auto Tech, please add me to your electronics stock updates.')}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-on-dark inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold"
+                  className="btn-on-dark inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-bold"
                 >
                   <WhatsAppIcon className="w-4 h-4" />
                   Get stock alerts
@@ -386,7 +388,7 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
                 <button
                   type="button"
                   onClick={onRequestProduct}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/25 px-5 py-2.5 text-sm font-semibold hover:bg-white/10 cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-bold hover:bg-white/10 cursor-pointer"
                 >
                   Request a product
                   <ArrowRight className="w-4 h-4" />
@@ -394,8 +396,8 @@ export const ElectronicsShop: React.FC<ElectronicsShopProps> = ({ onViewProduct,
               </div>
             </div>
             <div className="md:justify-self-end md:max-w-xs">
-              <p className="text-sm font-semibold">Electronics for homes and businesses</p>
-              <p className="mt-2 text-sm text-white/60">
+              <p className="font-display text-base font-bold">Electronics for homes and businesses</p>
+              <p className="mt-2 text-sm text-white/75">
                 Tell us the model, quantity, and destination. We confirm availability, the landed price, and the shipping time before you pay.
               </p>
             </div>

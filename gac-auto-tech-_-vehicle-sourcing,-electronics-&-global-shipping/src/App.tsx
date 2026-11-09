@@ -101,15 +101,16 @@ function MainApp() {
 
         <Marquee />
 
-        <BentoHome
-          onSelectService={(service) => scrollToQuote(service)}
-          onExploreVehicles={() => scrollToSection('vehicles')}
-        />
-
+        {/* Vehicles lead the page: they are the service most visitors arrive for. */}
         <FeaturedVehicles
           onViewDetails={(vehicle) => setSelectedVehicle(vehicle)}
           onRequestPrice={(vehicle) => scrollToQuote('vehicle_sourcing', `${vehicle.year} ${vehicle.make} ${vehicle.model} (Ref: ${vehicle.listingRef})`)}
           onBrowseAll={() => scrollToQuote('vehicle_sourcing', 'All vehicle listings inquiry')}
+        />
+
+        <BentoHome
+          onSelectService={(service) => scrollToQuote(service)}
+          onExploreVehicles={() => scrollToSection('vehicles')}
         />
 
         <ElectronicsShop

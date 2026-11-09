@@ -8,15 +8,15 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: 'dark',
+  theme: 'light',
   toggleTheme: () => {}
 });
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>('dark');
+  const [theme, setTheme] = useState<Theme>('light');
 
   useEffect(() => {
-    // Check saved preference or default to dark
+    // First-time visitors get light mode; returning visitors keep their choice.
     const saved = localStorage.getItem('gac_theme') as Theme | null;
     if (saved === 'dark' || saved === 'light') {
       setTheme(saved);
