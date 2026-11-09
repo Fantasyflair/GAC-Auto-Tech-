@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { X, CheckCircle2 } from 'lucide-react';
 import { GacLogo } from './GacLogo';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { getWhatsAppUrl } from '../data/mockData';
 import { EASE } from './Reveal';
+import { useDialogBehavior } from './ModalShell';
 
 interface SignInModalProps {
   isOpen: boolean;
@@ -15,31 +16,38 @@ export const SignInModal: React.FC<SignInModalProps> = ({ isOpen, onClose }) => 
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
+  const panelRef = useRef<HTMLDivElement>(null);
+
   const handleClose = () => {
     setSubmitted(false);
     onClose();
   };
 
+  useDialogBehavior(isOpen, handleClose, panelRef);
+
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/70 p-3 backdrop-blur-sm sm:p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={handleClose}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="sign-in-title"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) handleClose();
+          }}
         >
           <motion.div
-            className="relative w-full max-w-md overflow-hidden rounded-panel bg-white text-[#111113] shadow-2xl"
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="sign-in-title"
+            tabIndex={-1}
+            className="relative max-h-[calc(100dvh-1.5rem)] w-full max-w-md overflow-y-auto overscroll-contain rounded-panel bg-white text-[#111113] shadow-2xl focus:outline-none"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 12 }}
             transition={{ duration: 0.3, ease: EASE }}
-            onClick={(e) => e.stopPropagation()}
           >
             <div className="bg-[#09090B] px-7 pb-6 pt-7 text-white">
               <GacLogo size="sm" />
@@ -48,7 +56,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({ isOpen, onClose }) => 
               <button
                 type="button"
                 onClick={handleClose}
-                className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full text-white/80 hover:bg-white/10 cursor-pointer"
+                className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full text-white/85 hover:bg-white/10 hover:text-white cursor-pointer"
                 aria-label="Close sign in"
               >
                 <X className="w-5 h-5" />

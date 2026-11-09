@@ -1,5 +1,6 @@
-import React from 'react';
-import { X, Shield } from 'lucide-react';
+import React, { useRef } from 'react';
+import { Shield } from 'lucide-react';
+import { ModalShell } from './ModalShell';
 
 interface LegalModalProps {
   type: 'privacy' | 'terms' | null;
@@ -7,38 +8,23 @@ interface LegalModalProps {
 }
 
 export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
-  if (!type) return null;
+  // Keeps the last document on screen while the closing animation plays.
+  const lastType = useRef(type);
+  if (type) lastType.current = type;
+  if (!lastType.current) return null;
 
-  const isPrivacy = type === 'privacy';
+  const isPrivacy = lastType.current === 'privacy';
 
   return (
-    <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-black/80 backdrop-blur-sm"
-      role="dialog"
-      aria-modal="true"
-    >
-      <div 
-        className="relative my-8 w-full max-w-2xl overflow-hidden rounded-panel bg-white text-[#111113] shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between border-b border-black/10 p-6">
-          <div className="flex items-center gap-2.5">
-            <Shield className="w-5 h-5 text-accent" />
-            <h2 className="font-display text-lg">
-              {isPrivacy ? 'Privacy policy' : 'Terms of service'}
-            </h2>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="flex h-10 w-10 items-center justify-center rounded-full text-[#52525b] transition-colors hover:bg-black/5 cursor-pointer"
-            aria-label="Close dialog"
-          >
-            <X className="w-5 h-5" />
-          </button>
+    <ModalShell open={!!type} onClose={onClose} labelledBy="legal-modal-title">
+        <div className="flex items-center gap-2.5 border-b border-black/10 p-6 pr-16">
+          <Shield className="w-5 h-5 text-accent" />
+          <h2 id="legal-modal-title" className="font-display text-lg">
+            {isPrivacy ? 'Privacy policy' : 'Terms of service'}
+          </h2>
         </div>
 
-        <div className="max-h-[60vh] space-y-4 overflow-y-auto p-6 text-base text-[#52525b] sm:p-8">
+        <div className="space-y-4 p-6 text-base text-[#52525b] sm:p-8">
           {isPrivacy ? (
             <>
               <p>
@@ -91,12 +77,11 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
           <button
             type="button"
             onClick={onClose}
-            className="btn-ink rounded-full px-5 py-2.5 text-sm font-bold transition-colors cursor-pointer"
+            className="btn-ink rounded-control px-5 py-2.5 text-sm font-bold transition-colors cursor-pointer"
           >
             Close
           </button>
         </div>
-      </div>
-    </div>
+    </ModalShell>
   );
 };

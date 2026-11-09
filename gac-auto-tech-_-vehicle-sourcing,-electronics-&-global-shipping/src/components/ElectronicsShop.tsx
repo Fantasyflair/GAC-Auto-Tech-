@@ -99,11 +99,6 @@ const ProductTile: React.FC<{
 
       <div className="flex flex-1 flex-col pt-3">
         <h3 className="clamp-2 min-h-[2.7em] text-sm leading-snug sm:text-base">{product.title}</h3>
-        <p className="mt-1 truncate text-xs text-muted">
-          {product.condition}
-          {product.wholesaleEligible ? ' · Wholesale' : ''}
-        </p>
-        <p className="mt-1.5 text-sm font-bold">On request</p>
 
         <div className="mt-auto flex gap-2 pt-3">
           <button

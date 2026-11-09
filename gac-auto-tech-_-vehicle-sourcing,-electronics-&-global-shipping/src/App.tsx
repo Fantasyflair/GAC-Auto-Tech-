@@ -13,8 +13,8 @@ import { Header } from './components/Header';
 import { EnquiryDrawer } from './components/EnquiryDrawer';
 import { SignInModal } from './components/SignInModal';
 import { Hero } from './components/Hero';
-import { Marquee } from './components/Marquee';
 import { Reveal } from './components/Reveal';
+import { Marquee } from './components/Marquee';
 import { BentoHome } from './components/BentoHome';
 import { ElectronicsShop } from './components/ElectronicsShop';
 import { FeaturedVehicles } from './components/FeaturedVehicles';
@@ -101,14 +101,14 @@ function MainApp() {
           onNavigate={scrollToSection}
         />
 
-        <Marquee />
-
         {/* Vehicles lead the page: they are the service most visitors arrive for. */}
         <FeaturedVehicles
           onViewDetails={(vehicle) => setSelectedVehicle(vehicle)}
           onRequestPrice={(vehicle) => scrollToQuote('vehicle_sourcing', `${vehicle.year} ${vehicle.make} ${vehicle.model} (Ref: ${vehicle.listingRef})`)}
           onBrowseAll={() => scrollToQuote('vehicle_sourcing', 'All vehicle listings inquiry')}
         />
+
+        <Marquee />
 
         <BentoHome
           onSelectService={(service) => scrollToQuote(service)}

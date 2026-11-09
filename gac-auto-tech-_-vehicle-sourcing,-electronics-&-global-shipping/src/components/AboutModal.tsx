@@ -1,6 +1,7 @@
 import React from 'react';
-import { X, ShieldCheck, Globe, Truck, Laptop, Car } from 'lucide-react';
+import { Globe, Truck, Laptop, Car } from 'lucide-react';
 import { GacLogo } from './GacLogo';
+import { ModalShell } from './ModalShell';
 
 interface AboutModalProps {
   isOpen: boolean;
@@ -9,30 +10,10 @@ interface AboutModalProps {
 }
 
 export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onRequestQuote }) => {
-  if (!isOpen) return null;
-
   return (
-    <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-black/80 backdrop-blur-sm"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="about-modal-title"
-    >
-      <div 
-        className="relative my-8 w-full max-w-2xl overflow-hidden rounded-panel bg-white text-[#111113] shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full text-white/85 transition-colors hover:bg-white/10 cursor-pointer"
-          aria-label="Close dialog"
-        >
-          <X className="w-5 h-5" />
-        </button>
-
+    <ModalShell open={isOpen} onClose={onClose} labelledBy="about-modal-title" closeLabel="Close about">
         {/* Header Banner */}
-        <div className="bg-[#09090B] p-6 text-white sm:p-8">
+        <div className="bg-[#09090B] p-6 pr-16 text-white sm:p-8 sm:pr-16">
           <div className="mb-4">
             <GacLogo size="md" />
           </div>
@@ -45,7 +26,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReque
         </div>
 
         {/* Content */}
-        <div className="max-h-[60vh] space-y-6 overflow-y-auto p-6 text-base text-[#52525b] sm:p-8">
+        <div className="space-y-6 p-6 text-base text-[#52525b] sm:p-8">
           <div>
             <h3 className="mb-2 flex items-center gap-2 font-display text-lg text-[#111113]">
               <Car className="w-4 h-4 text-accent" />
@@ -108,12 +89,11 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, onReque
               onClose();
               onRequestQuote();
             }}
-            className="btn-ink w-full rounded-full px-5 py-3 text-sm font-bold transition-colors cursor-pointer sm:w-auto"
+            className="btn-ink w-full rounded-control px-5 py-3 text-sm font-bold transition-colors cursor-pointer sm:w-auto"
           >
             Start your enquiry
           </button>
         </div>
-      </div>
-    </div>
+    </ModalShell>
   );
 };

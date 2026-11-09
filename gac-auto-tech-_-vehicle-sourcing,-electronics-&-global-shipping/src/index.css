@@ -36,6 +36,15 @@
   --color-signal: #d7262f;
 }
 
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 .pill-light {
   color: #111113;
   background-color: #ffffff;
@@ -261,6 +270,20 @@
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
+  }
+
+  .marquee-track {
+    animation: marquee-scroll 45s linear infinite;
+  }
+
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
   }
 
   /* Caps the title of a card to two lines so every card in a row lines up. */

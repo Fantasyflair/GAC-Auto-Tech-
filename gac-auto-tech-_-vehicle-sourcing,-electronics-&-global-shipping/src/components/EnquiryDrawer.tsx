@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { X, Trash2, ShoppingCart, ArrowRight } from 'lucide-react';
 import { useEnquiryList } from '../context/EnquiryListContext';
 import { useTheme } from '../context/ThemeContext';
 import { ServiceType } from '../types';
 import { EASE } from './Reveal';
+import { useDialogBehavior } from './ModalShell';
 
 interface EnquiryDrawerProps {
   onRequestQuote: (service: ServiceType, details: string) => void;
@@ -14,6 +15,8 @@ export const EnquiryDrawer: React.FC<EnquiryDrawerProps> = ({ onRequestQuote }) 
   const { items, isOpen, close, remove, clear } = useEnquiryList();
   const { theme } = useTheme();
   const dark = theme === 'dark';
+  const panelRef = useRef<HTMLElement>(null);
+  useDialogBehavior(isOpen, close, panelRef);
 
   const submit = () => {
     if (!items.length) return;
@@ -36,7 +39,9 @@ export const EnquiryDrawer: React.FC<EnquiryDrawerProps> = ({ onRequestQuote }) 
             onClick={close}
           />
           <motion.aside
-            className={`fixed right-0 top-0 z-[61] flex h-full w-full max-w-md flex-col shadow-2xl ${
+            ref={panelRef}
+            tabIndex={-1}
+            className={`fixed right-0 top-0 z-[61] flex h-full w-full max-w-md flex-col shadow-2xl focus:outline-none ${
               dark ? 'bg-[#0B0B0D] text-white' : 'bg-white text-[#18181B]'
             }`}
             initial={{ x: '100%' }}
@@ -57,7 +62,7 @@ export const EnquiryDrawer: React.FC<EnquiryDrawerProps> = ({ onRequestQuote }) 
               <button
                 type="button"
                 onClick={close}
-                className={`flex h-9 w-9 items-center justify-center rounded-full cursor-pointer ${dark ? 'hover:bg-white/10' : 'hover:bg-black/5'}`}
+                className={`flex h-11 w-11 items-center justify-center rounded-full border cursor-pointer ${dark ? 'border-white/15 hover:bg-white/10' : 'border-black/10 hover:bg-black/5'}`}
                 aria-label="Close cart"
               >
                 <X className="w-5 h-5" />
