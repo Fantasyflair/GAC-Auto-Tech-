@@ -25,19 +25,24 @@ const STORAGE_KEY = 'gac_enquiry_list';
 const EnquiryListContext = createContext<EnquiryListContextType | null>(null);
 
 export const EnquiryListProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [items, setItems] = useState<EnquiryItem[]>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      return saved ? (JSON.parse(saved) as EnquiryItem[]) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [items, setItems] = useState<EnquiryItem[]>([]);
+  const [loaded, setLoaded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  // Saved items are read after mount so the server-rendered HTML matches the first client render.
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  }, [items]);
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) setItems(JSON.parse(saved) as EnquiryItem[]);
+    } catch {
+      // Ignore unreadable storage and start with an empty cart.
+    }
+    setLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (loaded) localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  }, [items, loaded]);
 
   const value: EnquiryListContextType = {
     items,
