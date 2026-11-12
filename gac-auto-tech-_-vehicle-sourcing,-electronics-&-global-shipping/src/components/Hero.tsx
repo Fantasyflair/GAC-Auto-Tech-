@@ -1,104 +1,67 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowRight, Boxes, CarFront, Container, MonitorSmartphone } from 'lucide-react';
-import { ServiceType } from '../types';
-import { getWhatsAppUrl } from '../data/mockData';
+import { ArrowRight, Boxes, CarFront, Container } from 'lucide-react';
+import { HeroSlide, ServiceType } from '../types';
+import { useSite } from './SiteShell';
 import { EASE } from './Reveal';
 
 interface HeroProps {
+  slides: HeroSlide[];
   onRequestQuote: (service?: ServiceType, details?: string) => void;
   onNavigate: (sectionId: string) => void;
 }
 
-interface Slide {
-  service: ServiceType;
-  tab: string;
-  shortTab: string;
-  icon: React.ElementType;
-  eyebrow: string;
-  title: string;
-  copy: string;
-  image: string;
-  alt: string;
-  primary: string;
-  secondary: { label: string; section?: string; whatsapp?: string };
-}
-
-const slides: Slide[] = [
-  {
-    service: 'vehicle_sourcing',
+/* The admin edits each slide's photo and wording; the tab, icon and buttons stay tied to the service. */
+const SERVICE_CHROME: Record<
+  ServiceType,
+  { tab: string; shortTab: string; icon: React.ElementType; primary: string; secondary: { label: string; section?: string; whatsapp?: string } }
+> = {
+  vehicle_sourcing: {
     tab: 'Vehicles',
     shortTab: 'Cars',
     icon: CarFront,
-    eyebrow: 'Copart · IAAI · Dealers',
-    title: 'Auction cars, delivered to Ghana',
-    copy: 'We bid, inspect, and ship from Canada, the USA, and the UK.',
-    image: '/images/porsche-911.jpg',
-    alt: 'Black Porsche Panamera on the highway',
     primary: 'Source a vehicle',
     secondary: { label: 'View vehicles', section: 'vehicles' },
   },
-  {
-    service: 'electronics_enquiry',
-    tab: 'Electronics',
-    shortTab: 'Tech',
-    icon: MonitorSmartphone,
-    eyebrow: 'Apple · Samsung · Sony',
-    title: 'Sealed tech, retail or wholesale',
-    copy: 'One unit or a full pallet, brand new and boxed.',
-    image: '/images/macbook-pro.jpg',
-    alt: 'MacBook Pro on a desk',
-    primary: 'Shop electronics',
-    secondary: { label: 'Wholesale quote' },
-  },
-  {
-    service: 'shipping_quote',
+  shipping_quote: {
     tab: 'Shipping',
     shortTab: 'Freight',
     icon: Container,
-    eyebrow: 'RoRo · Containers',
-    title: 'Canada, USA and UK to Tema',
-    copy: 'Cars and cargo shipped, with export paperwork handled.',
-    image: '/images/port-hamburg.jpg',
-    alt: 'Container ships and cranes at a busy port',
     primary: 'Get a shipping quote',
     secondary: { label: 'How it works', section: 'services' },
   },
-  {
-    service: 'general_merchandise',
+  general_merchandise: {
     tab: 'General goods',
     shortTab: 'Goods',
     icon: Boxes,
-    eyebrow: 'Parts · Equipment · Goods',
-    title: "If it exists, we'll source it",
-    copy: 'Combined with your other items in one shipment.',
-    image: '/images/warehouse-boxes.jpg',
-    alt: 'Boxes packed and ready in a warehouse',
     primary: 'Request an item',
     secondary: { label: 'Chat with us', whatsapp: 'Hello GAC Auto Tech, I need help sourcing an item.' },
   },
-];
+};
 
-const SLIDE_MS = 3000;
+const SLIDE_MS = 8000;
 
-export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
+export const Hero: React.FC<HeroProps> = ({ slides: slideContent, onRequestQuote, onNavigate }) => {
+  const { whatsappUrl } = useSite();
+  const slides = slideContent.filter((s) => SERVICE_CHROME[s.service]).map((s) => ({ ...s, ...SERVICE_CHROME[s.service] }));
   const [slide, setSlide] = useState(0);
   // Pauses while the visitor is reading or about to click, so the copy doesn't change under them.
   const [paused, setPaused] = useState(false);
-  const current = slides[slide];
+  const current = slides[Math.min(slide, slides.length - 1)];
 
+  const imageKey = slides.map((s) => s.image).join('|');
   useEffect(() => {
-    slides.forEach((s) => {
+    imageKey.split('|').forEach((src) => {
       const img = new Image();
-      img.src = s.image;
+      img.src = src;
     });
-  }, []);
+  }, [imageKey]);
 
   useEffect(() => {
-    if (paused) return;
+    if (paused || slides.length < 2) return;
     const timer = window.setTimeout(() => setSlide((i) => (i + 1) % slides.length), SLIDE_MS);
     return () => window.clearTimeout(timer);
-  }, [slide, paused]);
+  }, [slide, paused, slides.length]);
 
   const pauseHandlers = {
     onMouseEnter: () => setPaused(true),
@@ -109,13 +72,7 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
     },
   };
 
-  const primaryAction = () => {
-    if (current.service === 'electronics_enquiry') {
-      onNavigate('electronics');
-      return;
-    }
-    onRequestQuote(current.service, '');
-  };
+  if (!current) return null;
 
   const secondaryClass =
     'group inline-flex items-center gap-2 py-3 text-sm font-bold text-white/85 transition-colors hover:text-white cursor-pointer';
@@ -123,7 +80,7 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
   return (
     // Full-bleed from the top of the page; the fixed header floats over the photo.
     <section className="relative flex min-h-[max(600px,100svh)] flex-col overflow-hidden bg-[#0b0b0d] text-white">
-      <h1 className="sr-only">GAC Auto Tech: vehicle sourcing, electronics, shipping, and general goods to Ghana</h1>
+      <h1 className="sr-only">GAC Auto Tech: vehicle sourcing, shipping, and general goods to Ghana</h1>
 
       <AnimatePresence initial={false}>
         <motion.img
@@ -168,25 +125,21 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
               <button
                 type="button"
-                onClick={primaryAction}
+                onClick={() => onRequestQuote(current.service, '')}
                 className="inline-flex items-center gap-2 rounded-control bg-white px-6 py-3.5 text-sm font-bold text-[#111113] transition-colors hover:bg-[#ececec] cursor-pointer"
               >
                 {current.primary}
                 <ArrowRight className="w-4 h-4" />
               </button>
               {current.secondary.whatsapp ? (
-                <a href={getWhatsAppUrl(current.secondary.whatsapp)} target="_blank" rel="noopener noreferrer" className={secondaryClass}>
+                <a href={whatsappUrl(current.secondary.whatsapp)} target="_blank" rel="noopener noreferrer" className={secondaryClass}>
                   {current.secondary.label}
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                 </a>
               ) : (
                 <button
                   type="button"
-                  onClick={() =>
-                    current.secondary.section
-                      ? onNavigate(current.secondary.section)
-                      : onRequestQuote(current.service, 'Wholesale electronics order')
-                  }
+                  onClick={() => onNavigate(current.secondary.section ?? 'quote-form')}
                   className={secondaryClass}
                 >
                   {current.secondary.label}
@@ -200,7 +153,10 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote, onNavigate }) => {
 
       {/* Service tabs. Advance every few seconds; the red bar on the active tab shows the countdown. */}
       <div className="relative z-10 border-t border-white/15 bg-black/35 backdrop-blur-md" {...pauseHandlers}>
-        <div className="mx-auto grid max-w-7xl grid-cols-4 sm:px-3 lg:px-5">
+        <div
+          className="mx-auto grid max-w-7xl sm:px-3 lg:px-5"
+          style={{ gridTemplateColumns: `repeat(${slides.length}, minmax(0, 1fr))` }}
+        >
           {slides.map((s, i) => {
             const Icon = s.icon;
             const active = i === slide;

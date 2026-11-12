@@ -77,7 +77,7 @@ export const EnquiryDrawer: React.FC<EnquiryDrawerProps> = ({ onRequestQuote }) 
                   </span>
                   <p className="mt-4 font-display text-lg">Your cart is empty</p>
                   <p className="mt-1.5 max-w-xs text-base text-muted">
-                    Add electronics or vehicles, then check out with one quote for everything.
+                    Add vehicles you like, then check out with one quote for everything.
                   </p>
                 </div>
               ) : (

@@ -7,9 +7,9 @@ const items = [
   'Porsche',
   'Lexus',
   'Toyota',
-  'Apple',
-  'Samsung',
-  'Sony',
+  'Land Rover',
+  'Honda',
+  'Ford',
 ];
 
 // Repeated so one row is always wider than the widest screen and the loop never shows a gap.

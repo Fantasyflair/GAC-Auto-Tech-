@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { X, CheckCircle2 } from 'lucide-react';
 import { GacLogo } from './GacLogo';
 import { WhatsAppIcon } from './WhatsAppIcon';
-import { getWhatsAppUrl } from '../data/mockData';
+import { useSite } from './SiteShell';
 import { EASE } from './Reveal';
 import { useDialogBehavior } from './ModalShell';
 
@@ -17,6 +17,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({ isOpen, onClose }) => 
   const [submitted, setSubmitted] = useState(false);
 
   const panelRef = useRef<HTMLDivElement>(null);
+  const { whatsappUrl } = useSite();
 
   const handleClose = () => {
     setSubmitted(false);
@@ -72,7 +73,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({ isOpen, onClose }) => 
                     Online sign-in isn't live yet. Our team can update you on any enquiry over WhatsApp in the meantime.
                   </p>
                   <a
-                    href={getWhatsAppUrl(`Hello GAC Auto Tech, I would like an update on my enquiry. My email is ${email}.`)}
+                    href={whatsappUrl(`Hello GAC Auto Tech, I would like an update on my enquiry. My email is ${email}.`)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-5 inline-flex items-center justify-center gap-2 rounded-full border border-black/20 px-5 py-3 text-sm font-bold hover:bg-black/5"
@@ -109,7 +110,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({ isOpen, onClose }) => 
                     <span className="h-px flex-1 bg-black/10" />
                   </div>
                   <a
-                    href={getWhatsAppUrl('Hello GAC Auto Tech, I would like an update on my enquiry.')}
+                    href={whatsappUrl('Hello GAC Auto Tech, I would like an update on my enquiry.')}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex w-full items-center justify-center gap-2 rounded-full border border-black/20 py-3.5 text-sm font-bold hover:bg-black/5"

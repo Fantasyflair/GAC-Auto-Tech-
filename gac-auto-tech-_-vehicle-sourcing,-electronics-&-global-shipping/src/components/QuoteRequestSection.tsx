@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { CURRENCIES, getWhatsAppUrl } from '../data/mockData';
-import { addEnquiry } from '../data/enquiries';
+import { CURRENCIES } from '../data/mockData';
+import { useSite } from './SiteShell';
+import { submitEnquiry } from '../data/enquiries';
 import { ServiceType, QuoteFormData } from '../types';
 import { MessageCircle, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 
@@ -20,6 +21,7 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
   initialItemTitle = '',
   onOpenPrivacy
 }) => {
+  const { whatsappUrl } = useSite();
   const [formData, setFormData] = useState<QuoteFormData>({
     fullName: '',
     email: '',
@@ -32,13 +34,13 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
     consentAgreed: false,
     vehicleMakeModelOrLink: '',
     shippingOriginAndCargo: '',
-    electronicsModelAndQty: initialItemTitle ? initialItemTitle : '',
     merchandiseDescriptionOrLink: ''
   });
 
   const [errors, setErrors] = useState<Partial<Record<keyof QuoteFormData, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   useEffect(() => {
     if (initialService) {
@@ -46,7 +48,6 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
         ...prev,
         serviceRequired: initialService,
         requirements: initialItemTitle ? `Enquiry regarding: ${initialItemTitle}` : prev.requirements,
-        electronicsModelAndQty: initialService === 'electronics_enquiry' && initialItemTitle ? initialItemTitle : prev.electronicsModelAndQty,
         vehicleMakeModelOrLink: initialService === 'vehicle_sourcing' && initialItemTitle ? initialItemTitle : prev.vehicleMakeModelOrLink
       }));
     }
@@ -81,31 +82,33 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
+    setSubmitError('');
     const specificDetail =
       formData.vehicleMakeModelOrLink ||
-      formData.electronicsModelAndQty ||
       formData.shippingOriginAndCargo ||
       formData.merchandiseDescriptionOrLink ||
       '';
-    addEnquiry({
-      name: formData.fullName.trim(),
-      email: formData.email.trim(),
-      whatsapp: formData.whatsappNumber.trim(),
-      service: formData.serviceRequired,
-      destination: formData.destinationCountry.trim(),
-      budget: formData.budgetAmount ? `${formData.currency} ${formData.budgetAmount}` : '',
-      details: [specificDetail.trim(), formData.requirements.trim()].filter(Boolean).join(' — '),
-    });
-    // Simulate real UI transition
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      await submitEnquiry({
+        name: formData.fullName.trim(),
+        email: formData.email.trim(),
+        whatsapp: formData.whatsappNumber.trim(),
+        service: formData.serviceRequired,
+        destination: formData.destinationCountry.trim(),
+        budget: formData.budgetAmount ? `${formData.currency} ${formData.budgetAmount}` : '',
+        details: [specificDetail.trim(), formData.requirements.trim()].filter(Boolean).join(' — '),
+      });
       setIsSuccess(true);
-    }, 900);
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'We could not send your enquiry. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
@@ -122,7 +125,6 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
       consentAgreed: false,
       vehicleMakeModelOrLink: '',
       shippingOriginAndCargo: '',
-      electronicsModelAndQty: '',
       merchandiseDescriptionOrLink: ''
     });
     setErrors({});
@@ -142,7 +144,7 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
             </h2>
 
             <p className="mt-4 text-base text-muted">
-              Tell us about your vehicle, electronics, merchandise, or shipping requirements.
+              Tell us about your vehicle, merchandise, or shipping requirements.
               Share the details below so we can review your enquiry.
             </p>
 
@@ -159,11 +161,11 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
               </div>
 
               <p className="mt-4 text-sm text-muted">
-                Send vehicle links, electronics specs, or shipping questions directly on WhatsApp for real-time discussion.
+                Send vehicle links, item details, or shipping questions directly on WhatsApp for real-time discussion.
               </p>
 
               <a
-                href={getWhatsAppUrl('Hello GAC Auto Tech, I would like to discuss my requirements.')}
+                href={whatsappUrl('Hello GAC Auto Tech, I would like to discuss my requirements.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-theme mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-bold transition-colors"
@@ -197,7 +199,7 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
 
                   <div className="flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center">
                     <a
-                      href={getWhatsAppUrl(`Hello GAC Auto Tech, I submitted an enquiry for ${formData.fullName} regarding ${formData.serviceRequired}.`)}
+                      href={whatsappUrl(`Hello GAC Auto Tech, I submitted an enquiry for ${formData.fullName} regarding ${formData.serviceRequired}.`)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn-theme inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-bold transition-colors"
@@ -313,7 +315,6 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                         className={`${inputBase} ui-divider cursor-pointer`}
                       >
                         <option value="vehicle_sourcing">Vehicle sourcing</option>
-                        <option value="electronics_enquiry">Electronics enquiry</option>
                         <option value="shipping_quote">Shipping quote</option>
                         <option value="general_merchandise">General merchandise</option>
                       </select>
@@ -329,7 +330,7 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                           id="vehicleMakeModelOrLink"
                           value={formData.vehicleMakeModelOrLink}
                           onChange={(e) => setFormData({ ...formData, vehicleMakeModelOrLink: e.target.value })}
-                          placeholder="e.g. 2022 Audi Q5 or Copart Lot #12345678"
+                          placeholder="e.g. 2022 Audi Q5 or a listing link"
                           className={`${inputBase} ui-divider`}
                         />
                       </div>
@@ -346,22 +347,6 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                           value={formData.shippingOriginAndCargo}
                           onChange={(e) => setFormData({ ...formData, shippingOriginAndCargo: e.target.value })}
                           placeholder="e.g. Toronto · 1 vehicle and 2 barrels"
-                          className={`${inputBase} ui-divider`}
-                        />
-                      </div>
-                    )}
-
-                    {formData.serviceRequired === 'electronics_enquiry' && (
-                      <div>
-                        <label htmlFor="electronicsModelAndQty" className={labelBase}>
-                          Product and quantity
-                        </label>
-                        <input
-                          type="text"
-                          id="electronicsModelAndQty"
-                          value={formData.electronicsModelAndQty}
-                          onChange={(e) => setFormData({ ...formData, electronicsModelAndQty: e.target.value })}
-                          placeholder="e.g. 5x iPhone 15 Pro Max 256GB"
                           className={`${inputBase} ui-divider`}
                         />
                       </div>
@@ -461,6 +446,13 @@ export const QuoteRequestSection: React.FC<QuoteRequestSectionProps> = ({
                       </p>
                     )}
                   </div>
+
+                  {submitError && (
+                    <p role="alert" className="flex items-start gap-2 rounded-control border border-black/15 px-3.5 py-3 text-sm font-semibold dark:border-white/20">
+                      <AlertCircle className="mt-0.5 w-4 h-4 shrink-0" />
+                      <span>{submitError}</span>
+                    </p>
+                  )}
 
                   {/* Submit Button */}
                   <button

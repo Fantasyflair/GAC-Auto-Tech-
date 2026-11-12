@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { X, ArrowUpRight } from 'lucide-react';
-import { getWhatsAppUrl } from '../data/mockData';
+import { useSite } from './SiteShell';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { EASE } from './Reveal';
 import { useDialogBehavior } from './ModalShell';
@@ -10,12 +10,13 @@ export const FloatingWhatsApp: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [quickMessage, setQuickMessage] = useState('');
   const panelRef = useRef<HTMLDivElement>(null);
+  const { whatsappUrl } = useSite();
 
   useDialogBehavior(isOpen, () => setIsOpen(false), panelRef, { lockScroll: false, trapFocus: false });
 
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
-    const url = getWhatsAppUrl(quickMessage.trim() || 'Hello GAC Auto Tech, I would like to make an enquiry.');
+    const url = whatsappUrl(quickMessage.trim() || 'Hello GAC Auto Tech, I would like to make an enquiry.');
     window.open(url, '_blank', 'noopener,noreferrer');
     setIsOpen(false);
     setQuickMessage('');

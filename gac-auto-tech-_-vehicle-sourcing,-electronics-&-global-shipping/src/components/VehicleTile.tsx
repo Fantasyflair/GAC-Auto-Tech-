@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'motion/react';
 import { VehicleListing } from '../types';
-import { vehicleQuoteDetails } from '../data/catalog';
+import { damageSummary, vehicleQuoteDetails } from '../data/catalog';
 import { useSite } from './SiteShell';
 import { AddToListButton } from './AddToListButton';
 import { rise, trackSpotlight } from './Reveal';
@@ -67,7 +67,11 @@ export const VehicleTile: React.FC<{ vehicle: VehicleListing; index?: number }> 
           <Spec label="Mileage" value={vehicle.specs.mileage ?? '—'} />
           <Spec label="Fuel" value={vehicle.specs.fuelType} />
           <Spec label="Drivetrain" value={shortDrivetrain(vehicle.specs.drivetrain)} />
-          <Spec label="Condition" value={shortCondition(vehicle.condition)} />
+          {damageSummary(vehicle) ? (
+            <Spec label="Damage" value={damageSummary(vehicle)!} />
+          ) : (
+            <Spec label="Condition" value={shortCondition(vehicle.condition)} />
+          )}
         </dl>
 
         <div className="mt-auto pt-3 sm:pt-5">

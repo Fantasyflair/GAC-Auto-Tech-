@@ -10,13 +10,13 @@ import { Hero } from './components/Hero';
 import { Reveal } from './components/Reveal';
 import { Marquee } from './components/Marquee';
 import { BentoHome } from './components/BentoHome';
-import { ElectronicsShop } from './components/ElectronicsShop';
 import { FeaturedVehicles } from './components/FeaturedVehicles';
 import { QuoteRequestSection } from './components/QuoteRequestSection';
 import { FaqSection } from './components/FaqSection';
 import { scrollToId, useSite } from './components/SiteShell';
+import { HeroSlide, VehicleListing } from './types';
 
-export default function App() {
+export default function App({ vehicles, heroSlides }: { vehicles: VehicleListing[]; heroSlides: HeroSlide[] }) {
   const { requestQuote, goToSection, openPrivacy, quotePrefill } = useSite();
 
   // Arriving from another page with a section in the URL (e.g. /#quote-form): scroll once it has rendered.
@@ -29,10 +29,10 @@ export default function App() {
 
   return (
     <>
-      <Hero onRequestQuote={requestQuote} onNavigate={goToSection} />
+      <Hero slides={heroSlides} onRequestQuote={requestQuote} onNavigate={goToSection} />
 
       {/* Vehicles lead the page: they are the service most visitors arrive for. */}
-      <FeaturedVehicles />
+      <FeaturedVehicles vehicles={vehicles} />
 
       <Marquee />
 
@@ -40,8 +40,6 @@ export default function App() {
         onSelectService={(service) => requestQuote(service)}
         onExploreVehicles={() => goToSection('vehicles')}
       />
-
-      <ElectronicsShop onRequestProduct={() => requestQuote('electronics_enquiry', '')} />
 
       <Reveal>
         <QuoteRequestSection

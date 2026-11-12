@@ -14,7 +14,6 @@ import {
   ShoppingCart,
   UserRound,
   CarFront,
-  MonitorSmartphone,
   Container,
   Boxes,
   Tag,
@@ -25,8 +24,8 @@ import {
 } from 'lucide-react';
 import { GacLogo } from './GacLogo';
 import { WhatsAppIcon } from './WhatsAppIcon';
-import { getWhatsAppUrl } from '../data/mockData';
 import { ServiceType } from '../types';
+import { useSite } from './SiteShell';
 import { useTheme } from '../context/ThemeContext';
 import { useEnquiryList } from '../context/EnquiryListContext';
 import { EASE } from './Reveal';
@@ -43,7 +42,6 @@ type MenuId = 'categories' | 'partners';
 
 const categories = [
   { title: 'Vehicles', icon: CarFront, section: 'vehicles', service: 'vehicle_sourcing' as ServiceType, items: ['SUVs & 4x4s', 'Sedans & coupés', 'Electric & hybrid', 'Performance cars'] },
-  { title: 'Electronics', icon: MonitorSmartphone, section: 'electronics', service: 'electronics_enquiry' as ServiceType, items: ['Laptops', 'Phones', 'Gaming consoles', 'Accessories'] },
   { title: 'Shipping', icon: Container, section: 'shipping', service: 'shipping_quote' as ServiceType, items: ['Vehicle RoRo', 'Container freight', 'Air cargo', 'Clearing documents'] },
   { title: 'General goods', icon: Boxes, section: 'services', service: 'general_merchandise' as ServiceType, items: ['Equipment', 'Spare parts', 'Personal effects', 'Custom sourcing'] },
 ];
@@ -51,7 +49,7 @@ const categories = [
 const partners = [
   { title: 'Sell your vehicle', copy: 'Get an offer or list your car with us.', icon: Tag },
   { title: 'Become an affiliate', copy: 'Refer buyers and earn on every deal.', icon: Users },
-  { title: 'Supply wholesale', copy: 'Stock electronics or parts for our buyers.', icon: Warehouse },
+  { title: 'Supply wholesale', copy: 'Stock parts or equipment for our buyers.', icon: Warehouse },
   { title: 'Delivery partner', copy: 'Haulage and last-mile delivery in Ghana.', icon: Truck },
 ];
 
@@ -61,17 +59,18 @@ const links = [
   { id: 'quote-form', label: 'Contact' },
 ];
 
-const spyIds = ['services', 'vehicles', 'electronics', 'quote-form', 'faq'];
+const spyIds = ['services', 'vehicles', 'quote-form', 'faq'];
 
 const searchExamples = [
-  '2021 Toyota Land Cruiser under $40,000 from Copart',
-  'MacBook Pro 14", 10 units for wholesale',
+  '2021 Toyota Land Cruiser under $40,000',
   'Ship a 20ft container from Toronto to Tema',
-  'iPhone 15 Pro, unlocked, 256GB',
+  'Lexus RX 350, 2020 or newer',
+  'Workshop equipment and spare parts',
 ];
 
 export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigate, onNavigateAbout, onOpenSignIn, onSearch }) => {
   const { theme, toggleTheme } = useTheme();
+  const { whatsappUrl } = useSite();
   const onHome = usePathname() === '/';
   const enquiryList = useEnquiryList();
   const [scrolled, setScrolled] = useState(false);
@@ -162,7 +161,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigate, onNa
     onSearch(text);
   };
 
-  const categoriesActive = active === 'services' || active === 'electronics';
+  const categoriesActive = active === 'services';
   // Section highlighting only applies on the home page, where those sections live.
   const sectionIndicator = onHome ? (categoriesActive ? 'categories' : active === 'vehicles' ? 'vehicles' : active) : null;
   const indicator = hovered ?? openMenu ?? sectionIndicator;
@@ -277,6 +276,16 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigate, onNa
                 {pill('about')}
                 <span className="relative">About</span>
               </button>
+
+              <Link
+                href="/admin"
+                onClick={closeAll}
+                onMouseEnter={() => { setHovered('admin'); setOpenMenu(null); }}
+                className={navText('admin')}
+              >
+                {pill('admin')}
+                <span className="relative">Admin</span>
+              </Link>
             </nav>
 
             <div className="flex items-center gap-1.5 sm:gap-2">
@@ -403,7 +412,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigate, onNa
                       ref={searchInput}
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
-                      aria-label="Search vehicles, electronics, or shipping"
+                      aria-label="Search vehicles, shipping, or goods"
                       className="w-full rounded-media border border-white/15 bg-white/[0.06] py-4 pl-12 pr-28 text-base text-white placeholder:text-transparent focus:border-white/40 focus:outline-none"
                       placeholder={searchExamples[exampleIndex]}
                     />
@@ -459,7 +468,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigate, onNa
                 className="hidden xl:block overflow-hidden"
               >
                 <div className="grid grid-cols-12 gap-6 border-t border-white/10 px-5 pb-6 pt-5">
-                  <div className="col-span-9 grid grid-cols-4 gap-6">
+                  <div className="col-span-9 grid grid-cols-3 gap-6">
                     {categories.map((category, i) => {
                       const Icon = category.icon;
                       return (
@@ -565,7 +574,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigate, onNa
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search vehicles, electronics, shipping"
+                placeholder="Search vehicles, shipping, goods"
                 className="w-full rounded-media border ui-divider bg-transparent py-3.5 pl-11 pr-4 text-base placeholder:text-[#78787f] focus:border-black/50 focus:outline-none dark:focus:border-white/55"
               />
             </form>
@@ -615,11 +624,11 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigate, onNa
                 <ArrowUpRight className="w-5 h-5 text-muted" />
               </button>
               <Link
-                href="/products"
+                href="/vehicles"
                 onClick={closeAll}
                 className="flex items-center justify-between border-b ui-divider py-4 text-left font-display text-2xl"
               >
-                All products
+                All vehicles
                 <LayoutGrid className="w-5 h-5 text-muted" />
               </Link>
               <Link
@@ -667,7 +676,7 @@ export const Header: React.FC<HeaderProps> = ({ onRequestQuote, onNavigate, onNa
                 Get a quote
               </button>
               <a
-                href={getWhatsAppUrl('Hello GAC Auto Tech, I would like to chat regarding an enquiry.')}
+                href={whatsappUrl('Hello GAC Auto Tech, I would like to chat regarding an enquiry.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="col-span-2 flex items-center justify-center gap-2 rounded-full border ui-divider py-3.5 text-sm font-bold"

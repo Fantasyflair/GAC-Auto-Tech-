@@ -3,7 +3,6 @@ import { motion } from 'motion/react';
 import {
   ArrowUpRight,
   CarFront,
-  MonitorSmartphone,
   Container,
   Boxes,
 } from 'lucide-react';
@@ -34,14 +33,6 @@ const services: {
     action: 'See vehicles',
   },
   {
-    id: 'electronics_enquiry',
-    icon: MonitorSmartphone,
-    image: '/images/iphone-15-pro.jpg',
-    title: 'Electronics',
-    copy: 'Laptops, phones, consoles and accessories, as single units or wholesale orders.',
-    action: 'Start an enquiry',
-  },
-  {
     id: 'shipping_quote',
     anchor: 'shipping',
     icon: Container,
@@ -70,14 +61,14 @@ export const BentoHome: React.FC<BentoHomeProps> = ({
         <Reveal className="grid gap-4 border-b ui-divider pb-7 lg:grid-cols-12 lg:items-end lg:gap-8">
           <div className="lg:col-span-7">
             <p className="eyebrow text-muted">Services</p>
-            <h2 className="mt-2 font-display text-3xl sm:text-4xl">Four ways we help</h2>
+            <h2 className="mt-2 font-display text-3xl sm:text-4xl">Three ways we help</h2>
           </div>
           <p className="text-base text-muted lg:col-span-5 lg:text-right">
             Pick the service you need, or send one enquiry and we will route it to the right desk.
           </p>
         </Reveal>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
           {services.map((service, i) => {
             const Icon = service.icon;
             return (

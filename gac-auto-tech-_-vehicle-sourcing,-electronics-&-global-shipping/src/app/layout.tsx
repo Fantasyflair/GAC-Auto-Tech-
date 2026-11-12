@@ -13,15 +13,15 @@ const urbanist = Urbanist({
 export const metadata: Metadata = {
   metadataBase: new URL('https://gac-auto-tech.vercel.app'),
   title: {
-    default: 'GAC Auto Tech | Vehicle Sourcing, Electronics & Global Shipping',
+    default: 'GAC Auto Tech | Vehicle Sourcing & Global Shipping',
     template: '%s | GAC Auto Tech',
   },
   description:
-    'Vehicle sourcing through Copart & IAAI, electronics retail & wholesale, and international shipping from Canada, USA, and UK to Ghana and supported destinations.',
+    'Vehicle sourcing from auctions and dealers, general merchandise, and international shipping from Canada, USA, and UK to Ghana and supported destinations.',
   openGraph: {
-    title: 'GAC Auto Tech | Vehicle Sourcing, Electronics & Global Shipping',
+    title: 'GAC Auto Tech | Vehicle Sourcing & Global Shipping',
     description:
-      'Sourcing auction vehicles, personal and wholesale electronics, and coordinating international freight to Ghana and supported destinations.',
+      'Sourcing auction vehicles and general goods, and coordinating international freight to Ghana and supported destinations.',
     type: 'website',
   },
   twitter: {

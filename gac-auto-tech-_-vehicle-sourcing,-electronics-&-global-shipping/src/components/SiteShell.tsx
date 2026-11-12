@@ -2,7 +2,8 @@
 
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { ServiceType } from '../types';
+import { ServiceType, SiteSettings } from '../types';
+import { buildWhatsAppUrl } from '../data/mockData';
 import { useTheme } from '../context/ThemeContext';
 import { Header } from './Header';
 import { Footer } from './Footer';
@@ -28,11 +29,8 @@ export const scrollToId = (id: string) => {
 
 const guessService = (query: string): ServiceType => {
   const text = query.toLowerCase();
-  if (/(laptop|macbook|iphone|phone|samsung|playstation|ps5|xbox|console|controller|tablet|ipad|airpods)/.test(text)) {
-    return 'electronics_enquiry';
-  }
   if (/(ship|container|freight|cargo|roro|clearing)/.test(text)) return 'shipping_quote';
-  if (/(car|suv|sedan|truck|toyota|honda|lexus|bmw|audi|mercedes|porsche|benz|copart|iaai|vehicle)/.test(text)) {
+  if (/(car|suv|sedan|truck|toyota|honda|lexus|bmw|audi|mercedes|porsche|benz|auction|vehicle)/.test(text)) {
     return 'vehicle_sourcing';
   }
   return 'general_merchandise';
@@ -50,6 +48,9 @@ interface SiteContextValue {
   goToSection: (id: string) => void;
   openPrivacy: () => void;
   quotePrefill: QuotePrefill;
+  /** Contact details managed from the admin dashboard. */
+  settings: SiteSettings;
+  whatsappUrl: (message?: string) => string;
 }
 
 const SiteContext = createContext<SiteContextValue | null>(null);
@@ -60,7 +61,7 @@ export const useSite = () => {
   return ctx;
 };
 
-export const SiteShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const SiteShell: React.FC<{ children: React.ReactNode; settings: SiteSettings }> = ({ children, settings }) => {
   const router = useRouter();
   const pathname = usePathname();
   const { theme } = useTheme();
@@ -88,8 +89,15 @@ export const SiteShell: React.FC<{ children: React.ReactNode }> = ({ children })
   );
 
   const value = useMemo(
-    () => ({ requestQuote, goToSection, openPrivacy: () => setLegal('privacy'), quotePrefill }),
-    [requestQuote, goToSection, quotePrefill]
+    () => ({
+      requestQuote,
+      goToSection,
+      openPrivacy: () => setLegal('privacy'),
+      quotePrefill,
+      settings,
+      whatsappUrl: (message?: string) => buildWhatsAppUrl(settings.whatsappNumber, message),
+    }),
+    [requestQuote, goToSection, quotePrefill, settings]
   );
 
   return (

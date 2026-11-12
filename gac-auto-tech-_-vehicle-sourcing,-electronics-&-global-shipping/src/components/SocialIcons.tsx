@@ -1,6 +1,6 @@
 import React from 'react';
-import { SOCIAL_LINKS, getWhatsAppUrl } from '../data/mockData';
 import { WhatsAppIcon } from './WhatsAppIcon';
+import { useSite } from './SiteShell';
 
 type IconProps = { className?: string };
 
@@ -37,24 +37,30 @@ const LinkedInIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' }) => (
 );
 
 const networks = [
-  { label: 'Instagram', href: SOCIAL_LINKS.instagram, Icon: InstagramIcon },
-  { label: 'Facebook', href: SOCIAL_LINKS.facebook, Icon: FacebookIcon },
-  { label: 'X', href: SOCIAL_LINKS.x, Icon: XIcon },
-  { label: 'TikTok', href: SOCIAL_LINKS.tiktok, Icon: TikTokIcon },
-  { label: 'LinkedIn', href: SOCIAL_LINKS.linkedin, Icon: LinkedInIcon },
-];
+  { key: 'instagram', label: 'Instagram', Icon: InstagramIcon },
+  { key: 'facebook', label: 'Facebook', Icon: FacebookIcon },
+  { key: 'x', label: 'X', Icon: XIcon },
+  { key: 'tiktok', label: 'TikTok', Icon: TikTokIcon },
+  { key: 'linkedin', label: 'LinkedIn', Icon: LinkedInIcon },
+] as const;
 
 interface SocialIconsProps {
   className?: string;
   itemClassName?: string;
 }
 
+/* Links come from the admin dashboard; a network left blank there is hidden here. */
 export const SocialIcons: React.FC<SocialIconsProps> = ({
   className = '',
   itemClassName = 'bg-[#111113] text-white hover:bg-black dark:bg-white dark:text-[#111113] dark:hover:bg-white/90',
-}) => (
+}) => {
+  const { settings, whatsappUrl } = useSite();
+  return (
   <div className={`flex items-center gap-2 ${className}`}>
-    {networks.map(({ label, href, Icon }) => (
+    {networks
+      .map(({ key, label, Icon }) => ({ label, Icon, href: settings.social[key] }))
+      .filter(({ href }) => href)
+      .map(({ label, href, Icon }) => (
       <a
         key={label}
         href={href}
@@ -67,7 +73,7 @@ export const SocialIcons: React.FC<SocialIconsProps> = ({
       </a>
     ))}
     <a
-      href={getWhatsAppUrl('Hello GAC Auto Tech, I found you through your website.')}
+      href={whatsappUrl('Hello GAC Auto Tech, I found you through your website.')}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with GAC Auto Tech on WhatsApp"
@@ -76,4 +82,5 @@ export const SocialIcons: React.FC<SocialIconsProps> = ({
       <WhatsAppIcon className="w-4 h-4" />
     </a>
   </div>
-);
+  );
+};

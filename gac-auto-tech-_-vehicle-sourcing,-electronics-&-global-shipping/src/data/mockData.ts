@@ -1,13 +1,53 @@
-import { VehicleListing, ElectronicProduct } from '../types';
+import { HeroSlide, SiteSettings, VehicleListing } from '../types';
 
-export const WHATSAPP_NUMBER_DISPLAY = '+1 (647) 000-0000'; // Configurable placeholder for production deployment
-export const WHATSAPP_CLEAN_NUMBER = '16470000000';
-
-export function getWhatsAppUrl(customMessage?: string): string {
+/** Builds a WhatsApp chat link for the given number (digits only, with country code). */
+export function buildWhatsAppUrl(number: string, customMessage?: string): string {
   const defaultMsg = 'Hello GAC Auto Tech, I would like to make an enquiry regarding your services.';
   const text = encodeURIComponent(customMessage || defaultMsg);
-  return `https://wa.me/${WHATSAPP_CLEAN_NUMBER}?text=${text}`;
+  return `https://wa.me/${number.replace(/\D/g, '')}?text=${text}`;
 }
+
+/* Everything below is starting content. It seeds the database the first time it is used,
+   and the site falls back to it if the database cannot be reached. */
+
+export const DEFAULT_SETTINGS: SiteSettings = {
+  whatsappNumber: '16470000000',
+  email: '',
+  social: {
+    instagram: 'https://www.instagram.com/',
+    facebook: 'https://www.facebook.com/',
+    x: 'https://x.com/',
+    tiktok: 'https://www.tiktok.com/',
+    linkedin: 'https://www.linkedin.com/',
+  },
+};
+
+export const DEFAULT_HERO_SLIDES: HeroSlide[] = [
+  {
+    service: 'vehicle_sourcing',
+    eyebrow: 'Auctions · Dealers',
+    title: 'Auction cars, delivered to Ghana',
+    copy: 'We bid, inspect, and ship from Canada, the USA, and the UK.',
+    image: '/images/porsche-911.jpg',
+    alt: 'Black Porsche Panamera on the highway',
+  },
+  {
+    service: 'shipping_quote',
+    eyebrow: 'RoRo · Containers',
+    title: 'Canada, USA and UK to Tema',
+    copy: 'Cars and cargo shipped, with export paperwork handled.',
+    image: '/images/port-hamburg.jpg',
+    alt: 'Container ships and cranes at a busy port',
+  },
+  {
+    service: 'general_merchandise',
+    eyebrow: 'Parts · Equipment · Goods',
+    title: "If it exists, we'll source it",
+    copy: 'Combined with your other items in one shipment.',
+    image: '/images/warehouse-boxes.jpg',
+    alt: 'Boxes packed and ready in a warehouse',
+  },
+];
 
 export const SAMPLE_VEHICLES: VehicleListing[] = [
   {
@@ -28,8 +68,8 @@ export const SAMPLE_VEHICLES: VehicleListing[] = [
     availability: 'Available',
     listingRef: 'GAC-VEH-2023-BI4',
     imageUrl: '/images/bmw.jpg',
-    notes: 'M-Sport package with curved display, wireless charging, and verified Copart clean-title inspection report. Export ready for Ghana.',
-    sourceType: 'Copart'
+    notes: 'M-Sport package with curved display, wireless charging, and a verified clean-title inspection report. Export ready for Ghana.',
+    sourceType: 'Auction'
   },
   {
     id: 'veh-02',
@@ -49,8 +89,8 @@ export const SAMPLE_VEHICLES: VehicleListing[] = [
     availability: 'Available',
     listingRef: 'GAC-VEH-2023-AA7',
     imageUrl: '/images/audi-a7.jpg',
-    notes: 'Premium Plus trim with Matrix LED headlights, Bang & Olufsen sound, and verified mechanical running condition from IAAI auction.',
-    sourceType: 'IAAI'
+    notes: 'Premium Plus trim with Matrix LED headlights, Bang & Olufsen sound, and verified mechanical running condition at auction.',
+    sourceType: 'Auction'
   },
   {
     id: 'veh-03',
@@ -91,143 +131,23 @@ export const SAMPLE_VEHICLES: VehicleListing[] = [
     availability: 'On request',
     listingRef: 'GAC-VEH-2021-PNMT',
     imageUrl: '/images/porsche-911.jpg',
-    notes: 'Sport Chrono package, active rear spoiler, and adaptive air suspension. Sourced via specialist Copart premier recovery division.',
-    sourceType: 'Copart'
+    notes: 'Sport Chrono package, active rear spoiler, and adaptive air suspension. Sourced through a specialist auction recovery partner.',
+    sourceType: 'Auction'
   }
 ];
-
-export const SAMPLE_ELECTRONICS: ElectronicProduct[] = [
-  {
-    id: 'elec-01',
-    title: 'Apple MacBook Pro 16"',
-    category: 'laptops',
-    specs: ['Apple M3 Pro Chip (12-Core CPU / 18-Core GPU)', '36GB Unified Memory', '512GB High-Speed NVMe SSD', 'Liquid Retina XDR Display'],
-    condition: 'Brand New',
-    availability: 'Available',
-    listingRef: 'GAC-TECH-MBP16',
-    imageUrl: '/images/macbook-pro.jpg',
-    wholesaleEligible: true,
-    notes: 'Factory sealed units. Canadian/US keyboard layout. Wholesale cartons available for bulk orders.'
-  },
-  {
-    id: 'elec-02',
-    title: 'Apple iPhone 15 Pro 256GB',
-    category: 'phones',
-    specs: ['Natural Titanium Finish', 'A17 Pro Bionic Chip', 'Factory Unlocked (Dual eSIM / Physical SIM)', 'Super Retina XDR OLED'],
-    condition: 'Brand New',
-    availability: 'Available',
-    listingRef: 'GAC-TECH-IP15P',
-    imageUrl: '/images/iphone-15-pro.jpg',
-    wholesaleEligible: true,
-    notes: 'Global carrier unlocked. Tested and verified for networks across North America, Europe, and Ghana.'
-  },
-  {
-    id: 'elec-03',
-    title: 'Sony PlayStation 5 Console',
-    category: 'gaming',
-    specs: ['Ultra-High Speed 825GB SSD', 'Ray Tracing & 4K 120Hz Output', 'DualSense Wireless Controller Included', 'Digital Edition'],
-    condition: 'Brand New',
-    availability: 'Available',
-    listingRef: 'GAC-TECH-PS5',
-    imageUrl: '/images/ps5.jpg',
-    wholesaleEligible: true,
-    notes: 'Original manufacturer packaging with regional power cable. Wholesale pallet orders supported.'
-  },
-  {
-    id: 'elec-04',
-    title: 'PlayStation DualSense Wireless Controller',
-    category: 'accessories',
-    specs: ['Haptic Feedback & Adaptive Triggers', 'Integrated Microphone & Audio Jack', 'USB-C Fast Charging', 'White Edition'],
-    condition: 'Brand New',
-    availability: 'Incoming',
-    listingRef: 'GAC-TECH-DSE-WHT',
-    imageUrl: '/images/dualsense.jpg',
-    wholesaleEligible: true,
-    notes: 'High turnover gaming accessory. Ideal for electronics retailers and retail consumers.'
-  },
-  {
-    id: 'elec-05',
-    title: 'Samsung Galaxy S24 Ultra 512GB',
-    category: 'phones',
-    specs: ['Titanium Gray Finish', 'Built-in S Pen', '200MP Main Camera', 'Factory Unlocked'],
-    condition: 'Brand New',
-    availability: 'Available',
-    listingRef: 'GAC-TECH-S24U',
-    imageUrl: '/images/galaxy-s24-ultra.jpg',
-    wholesaleEligible: true,
-    notes: 'International unlocked units that work on Ghanaian networks. Bulk orders welcome.'
-  },
-  {
-    id: 'elec-06',
-    title: 'Apple iPad Pro 12.9"',
-    category: 'tablets',
-    specs: ['Liquid Retina XDR Display', 'Apple Pencil Support', 'Wi-Fi + Cellular Options', '256GB Storage'],
-    condition: 'Brand New',
-    availability: 'Available',
-    listingRef: 'GAC-TECH-IPADP',
-    imageUrl: '/images/ipad-pro.jpg',
-    wholesaleEligible: false,
-    notes: 'Sealed units with Canadian warranty. Apple Pencil can be added to the same order.'
-  },
-  {
-    id: 'elec-07',
-    title: 'Apple AirPods Pro',
-    category: 'audio',
-    specs: ['Active Noise Cancellation', 'Transparency Mode', 'MagSafe Charging Case', 'Spatial Audio'],
-    condition: 'Brand New',
-    availability: 'Available',
-    listingRef: 'GAC-TECH-APP',
-    imageUrl: '/images/airpods-pro.jpg',
-    wholesaleEligible: true,
-    notes: 'Popular retail item. Wholesale cartons available for resellers.'
-  },
-  {
-    id: 'elec-08',
-    title: 'Sony WH-1000XM5 Headphones',
-    category: 'audio',
-    specs: ['Industry-Leading Noise Cancelling', '30-Hour Battery Life', 'Multipoint Bluetooth', 'Black Edition'],
-    condition: 'Brand New',
-    availability: 'Incoming',
-    listingRef: 'GAC-TECH-WHXM5',
-    imageUrl: '/images/sony-wh1000xm5.jpg',
-    wholesaleEligible: true,
-    notes: 'Next shipment is being consolidated. Reserve units ahead of arrival.'
-  },
-  {
-    id: 'elec-09',
-    title: 'Apple Watch Ultra',
-    category: 'wearables',
-    specs: ['49mm Titanium Case', 'Precision Dual-Frequency GPS', 'Cellular Built In', 'Up to 36-Hour Battery'],
-    condition: 'Brand New',
-    availability: 'On request',
-    listingRef: 'GAC-TECH-AWU',
-    imageUrl: '/images/apple-watch-ultra.jpg',
-    wholesaleEligible: false,
-    notes: 'Sourced to order. Tell us your preferred band and size.'
-  }
-];
-
-// Replace these with GAC Auto Tech's real profile links.
-export const SOCIAL_LINKS = {
-  instagram: 'https://www.instagram.com/',
-  facebook: 'https://www.facebook.com/',
-  x: 'https://x.com/',
-  tiktok: 'https://www.tiktok.com/',
-  linkedin: 'https://www.linkedin.com/',
-};
 
 export const FAQ_ITEMS = [
   {
     question: 'What can GAC Auto Tech help me source?',
-    answer: 'We assist with vehicle sourcing, electronics, and general merchandise. Send us your requirements to discuss available options.'
+    answer: 'We assist with vehicle sourcing, international shipping, and general merchandise. Send us your requirements to discuss available options.'
   },
   {
-    question: 'Can you help me find a vehicle from Copart or IAAI?',
+    question: 'Can you help me find a vehicle from a car auction?',
     answer: 'Yes. Share your budget, preferred vehicle details, or a listing link to discuss sourcing support.'
   },
   {
     question: 'Do you work with wholesale customers?',
-    answer: 'Yes. We welcome enquiries from individual buyers and wholesale customers.'
+    answer: 'Yes. We welcome enquiries from individual buyers and businesses ordering in volume.'
   },
   {
     question: 'Where do you arrange shipping from?',

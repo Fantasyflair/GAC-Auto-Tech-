@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { GacLogo } from './GacLogo';
 import { SocialIcons } from './SocialIcons';
-import { getWhatsAppUrl } from '../data/mockData';
 import { ServiceType } from '../types';
+import { useSite } from './SiteShell';
 import { ArrowRight, MessageCircle, CheckCircle2 } from 'lucide-react';
 
 interface FooterProps {
@@ -22,6 +22,7 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenTerms
 }) => {
   const currentYear = new Date().getFullYear();
+  const { whatsappUrl } = useSite();
   const [quickEmail, setQuickEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -47,7 +48,7 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
 
             <p className="text-base text-muted max-w-sm mb-6">
-              Vehicle sourcing, electronics, international shipping, and general merchandise support from Canada, the USA, and the UK to Ghana.
+              Vehicle sourcing, international shipping, and general merchandise support from Canada, the USA, and the UK to Ghana.
             </p>
 
             <div className="mb-7">
@@ -118,15 +119,6 @@ export const Footer: React.FC<FooterProps> = ({
                 <li>
                   <button
                     type="button"
-                    onClick={() => onSelectService('electronics_enquiry')}
-                    className="hover:text-accent transition-colors cursor-pointer text-left"
-                  >
-                    Electronics & Tech
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
                     onClick={() => onSelectService('general_merchandise')}
                     className="hover:text-accent transition-colors cursor-pointer text-left"
                   >
@@ -152,8 +144,8 @@ export const Footer: React.FC<FooterProps> = ({
                   </button>
                 </li>
                 <li>
-                  <Link href="/products" className="hover:text-accent transition-colors">
-                    All products
+                  <Link href="/vehicles" className="hover:text-accent transition-colors">
+                    All vehicles
                   </Link>
                 </li>
                 <li>
@@ -163,15 +155,6 @@ export const Footer: React.FC<FooterProps> = ({
                     className="hover:text-accent transition-colors cursor-pointer"
                   >
                     Featured Vehicles
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    onClick={() => onNavigate('electronics')}
-                    className="hover:text-accent transition-colors cursor-pointer"
-                  >
-                    Electronics Showcase
                   </button>
                 </li>
                 <li>
@@ -235,7 +218,7 @@ export const Footer: React.FC<FooterProps> = ({
               Legal notice
             </button>
             <a
-              href={getWhatsAppUrl('Hello GAC Auto Tech, I would like to make an enquiry.')}
+              href={whatsappUrl('Hello GAC Auto Tech, I would like to make an enquiry.')}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:opacity-80 transition-opacity flex items-center gap-1"

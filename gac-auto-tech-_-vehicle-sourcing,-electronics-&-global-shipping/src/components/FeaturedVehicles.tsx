@@ -1,11 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { SAMPLE_VEHICLES } from '../data/mockData';
+import { VehicleListing } from '../types';
 import { Reveal } from './Reveal';
 import { VehicleTile } from './VehicleTile';
 
-export const FeaturedVehicles: React.FC = () => {
+const FEATURED_COUNT = 4;
+
+export const FeaturedVehicles: React.FC<{ vehicles: VehicleListing[] }> = ({ vehicles }) => {
+  const featured = vehicles.filter((v) => v.availability !== 'Sold').slice(0, FEATURED_COUNT);
+
   return (
     <section id="vehicles" className="ui-canvas py-14 sm:py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,13 +20,13 @@ export const FeaturedVehicles: React.FC = () => {
               Cars sourced, inspected and shipped
             </h2>
             <p className="mt-3 max-w-xl text-base text-muted">
-              Luxury sedans, electrics and performance SUVs from Copart, IAAI and our dealer network.
+              Luxury sedans, electrics and performance SUVs from auctions and our dealer network.
             </p>
           </div>
 
           <div className="lg:col-span-4 lg:text-right">
             <Link
-              href="/products?dept=vehicles"
+              href="/vehicles"
               className="group inline-flex items-center gap-2 rounded-control btn-theme px-5 py-3 text-sm font-bold"
             >
               Browse all vehicles
@@ -31,11 +35,17 @@ export const FeaturedVehicles: React.FC = () => {
           </div>
         </Reveal>
 
-        <div className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-5 lg:grid-cols-4">
-          {SAMPLE_VEHICLES.map((vehicle, idx) => (
-            <VehicleTile key={vehicle.id} vehicle={vehicle} index={idx} />
-          ))}
-        </div>
+        {featured.length > 0 ? (
+          <div className="mt-8 grid grid-cols-2 items-stretch gap-3 sm:gap-5 lg:grid-cols-4">
+            {featured.map((vehicle, idx) => (
+              <VehicleTile key={vehicle.id} vehicle={vehicle} index={idx} />
+            ))}
+          </div>
+        ) : (
+          <p className="ui-well mt-8 rounded-panel px-6 py-12 text-center text-base text-muted">
+            New vehicles are being added. Tell us what you're looking for and we'll source it.
+          </p>
+        )}
       </div>
     </section>
   );

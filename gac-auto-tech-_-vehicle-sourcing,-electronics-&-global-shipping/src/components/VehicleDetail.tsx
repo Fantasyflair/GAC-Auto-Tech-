@@ -2,10 +2,11 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { AlertCircle, ArrowRight, Check, Plus } from 'lucide-react';
+import { AlertCircle, AlertTriangle, ArrowRight, Check, Plus, ShieldCheck } from 'lucide-react';
 import { VehicleListing } from '../types';
-import { getWhatsAppUrl } from '../data/mockData';
-import { availabilityLabel, vehicleQuoteDetails } from '../data/catalog';
+import { availabilityLabel, vehicleImages, vehicleQuoteDetails } from '../data/catalog';
+import { VehicleGallery } from './VehicleGallery';
+import { VehicleEnquiryForm } from './VehicleEnquiryForm';
 import { useEnquiryList } from '../context/EnquiryListContext';
 import { useSite } from './SiteShell';
 import { Breadcrumbs } from './Breadcrumbs';
@@ -13,7 +14,8 @@ import { VehicleTile } from './VehicleTile';
 import { WhatsAppIcon } from './WhatsAppIcon';
 
 export const VehicleDetail: React.FC<{ vehicle: VehicleListing; related: VehicleListing[] }> = ({ vehicle, related }) => {
-  const { requestQuote } = useSite();
+  const { whatsappUrl } = useSite();
+  const damage = vehicle.damage;
   const cart = useEnquiryList();
   const inCart = cart.has(vehicle.id);
 
@@ -37,6 +39,7 @@ export const VehicleDetail: React.FC<{ vehicle: VehicleListing; related: Vehicle
     ['Fuel type', vehicle.specs.fuelType],
     ['Body', vehicle.category],
     ['Condition', vehicle.condition],
+    ...(damage ? [['Damage', damage.damaged ? (damage.areas.join(', ') || 'Yes, see report') : 'None'] as [string, string]] : []),
     ['Source', vehicle.sourceType],
     ['Reference', vehicle.listingRef],
   ];
@@ -47,18 +50,41 @@ export const VehicleDetail: React.FC<{ vehicle: VehicleListing; related: Vehicle
         <Breadcrumbs
           items={[
             { label: 'Home', href: '/' },
-            { label: 'All products', href: '/products' },
-            { label: 'Vehicles', href: '/products?dept=vehicles' },
+            { label: 'All vehicles', href: '/vehicles' },
             { label: vehicle.title },
           ]}
         />
 
         <div className="mt-6 grid gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
-            <div className="ui-well aspect-[16/11] overflow-hidden rounded-panel">
-              <img src={vehicle.imageUrl} alt={vehicle.title} className="h-full w-full object-cover" />
-            </div>
+            <VehicleGallery images={vehicleImages(vehicle)} title={vehicle.title} />
             <p className="mt-6 text-base text-muted">{vehicle.notes}</p>
+
+            {damage && (
+              <section className="ui-card mt-6 rounded-panel p-5 sm:p-6" aria-labelledby="damage-heading">
+                <h2 id="damage-heading" className="flex items-center gap-2 font-display text-lg">
+                  {damage.damaged ? <AlertTriangle className="h-5 w-5 text-signal" /> : <ShieldCheck className="h-5 w-5" />}
+                  {damage.damaged ? 'Damage report' : 'No damage reported'}
+                </h2>
+                {damage.damaged ? (
+                  <>
+                    {damage.areas.length > 0 && (
+                      <ul className="mt-4 flex flex-wrap gap-2" aria-label="Damaged areas">
+                        {damage.areas.map((area) => (
+                          <li key={area} className="rounded-control border ui-divider px-3 py-1.5 text-sm font-semibold">
+                            {area}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {damage.notes && <p className="mt-4 text-base">{damage.notes}</p>}
+                    <p className="mt-4 text-sm text-muted">Ask us for the full inspection photos and repair estimate before you commit.</p>
+                  </>
+                ) : (
+                  <p className="mt-2 text-base text-muted">This vehicle has no known body, mechanical or flood damage.</p>
+                )}
+              </section>
+            )}
           </div>
 
           <div className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
@@ -77,14 +103,18 @@ export const VehicleDetail: React.FC<{ vehicle: VehicleListing; related: Vehicle
             </div>
 
             <div className="mt-6 flex flex-col gap-3">
-              <button
-                type="button"
-                onClick={() => requestQuote('vehicle_sourcing', vehicleQuoteDetails(vehicle))}
-                className="btn-theme inline-flex w-full items-center justify-center gap-2 rounded-control px-5 py-3.5 text-sm font-bold cursor-pointer"
+              <a
+                href="#enquire"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('enquire')?.scrollIntoView({ behavior: 'smooth' });
+                  window.setTimeout(() => document.querySelector<HTMLInputElement>('#enquire input')?.focus({ preventScroll: true }), 500);
+                }}
+                className="btn-theme inline-flex w-full items-center justify-center gap-2 rounded-control px-5 py-3.5 text-sm font-bold"
               >
-                Request price and sourcing quote
+                Request price
                 <ArrowRight className="w-4 h-4" />
-              </button>
+              </a>
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
@@ -96,7 +126,7 @@ export const VehicleDetail: React.FC<{ vehicle: VehicleListing; related: Vehicle
                   {inCart ? 'In cart' : 'Add to cart'}
                 </button>
                 <a
-                  href={getWhatsAppUrl(`Hello GAC Auto Tech, I'd like pricing and shipping for ${vehicleQuoteDetails(vehicle)}.`)}
+                  href={whatsappUrl(`Hello GAC Auto Tech, I'd like pricing and shipping for ${vehicleQuoteDetails(vehicle)}.`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-control border border-black/20 px-4 py-3 text-sm font-bold transition-colors hover:bg-black/5 dark:border-white/25 dark:hover:bg-white/10"
@@ -119,10 +149,18 @@ export const VehicleDetail: React.FC<{ vehicle: VehicleListing; related: Vehicle
 
             <p className="mt-5 flex items-start gap-2 text-sm text-muted">
               <AlertCircle className="mt-0.5 w-4 h-4 shrink-0" />
-              <span>Sample listing. Final pricing depends on auction bids, fees, and destination shipping.</span>
+              <span>Final pricing depends on auction bids, fees, and destination shipping.</span>
             </p>
           </div>
         </div>
+
+        <section id="enquire" className="mt-14 scroll-mt-28 lg:max-w-3xl" aria-labelledby="enquire-heading">
+          <h2 id="enquire-heading" className="font-display text-2xl sm:text-3xl">Enquire about this vehicle</h2>
+          <p className="mt-1.5 text-base text-muted">Send your details and we'll reply with the full landed price to your port.</p>
+          <div className="mt-5">
+            <VehicleEnquiryForm vehicle={vehicle} />
+          </div>
+        </section>
 
         <section className="mt-16 border-t ui-divider pt-10" aria-labelledby="related-heading">
           <div className="flex flex-wrap items-end justify-between gap-4">
@@ -130,22 +168,24 @@ export const VehicleDetail: React.FC<{ vehicle: VehicleListing; related: Vehicle
               <p className="eyebrow text-muted">Related</p>
               <h2 id="related-heading" className="mt-2 font-display text-2xl sm:text-3xl">More vehicles like this</h2>
             </div>
-            <Link href="/products?dept=vehicles" className="group inline-flex items-center gap-1.5 text-sm font-bold">
+            <Link href="/vehicles" className="group inline-flex items-center gap-1.5 text-sm font-bold">
               All vehicles
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </div>
-          <div className="mt-6 grid grid-cols-2 items-stretch gap-3 sm:gap-5 lg:grid-cols-3">
-            {related.map((item, i) => (
-              <VehicleTile key={item.id} vehicle={item} index={i} />
-            ))}
-          </div>
+          {related.length > 0 && (
+            <div className="mt-6 grid grid-cols-2 items-stretch gap-3 sm:gap-5 lg:grid-cols-3">
+              {related.map((item, i) => (
+                <VehicleTile key={item.id} vehicle={item} index={i} />
+              ))}
+            </div>
+          )}
           <div className="mt-10 flex justify-center">
             <Link
-              href="/products"
+              href="/vehicles"
               className="btn-theme inline-flex items-center gap-2 rounded-control px-6 py-3.5 text-sm font-bold"
             >
-              View all products
+              View all vehicles
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

@@ -34,7 +34,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
               </p>
               <p>
                 <strong>2. Use of Information:</strong> Contact information is used exclusively to respond 
-                to your vehicle sourcing, electronics procurement, shipping quote, or general merchandise 
+                to your vehicle sourcing, shipping quote, or general merchandise 
                 requests. We do not sell or rent personal information to external marketers.
               </p>
               <p>
@@ -50,12 +50,12 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
           ) : (
             <>
               <p>
-                <strong>1. Scope of Services:</strong> GAC Auto Tech coordinates auction sourcing, electronics 
-                resale, and international logistics. Inventory displayed on this website is for illustrative 
+                <strong>1. Scope of Services:</strong> GAC Auto Tech coordinates auction sourcing, general 
+                merchandise, and international logistics. Inventory displayed on this website is for illustrative 
                 preview purposes unless confirmed in an active transaction agreement.
               </p>
               <p>
-                <strong>2. Sourcing & Auction Quotations:</strong> Vehicle auction purchases (via Copart, IAAI, 
+                <strong>2. Sourcing & Auction Quotations:</strong> Vehicle purchases (via auction houses 
                 or dealer networks) are subject to auction house buyer fees, local taxes, condition report 
                 disclosures, and currency exchange rates. Final purchase agreements are agreed upon in writing 
                 before bidding or purchasing.
